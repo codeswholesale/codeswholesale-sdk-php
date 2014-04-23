@@ -1,0 +1,33 @@
+{
+    "name": "codeswholesale/sdk",
+    "type": "library",
+    "description": "A PHP wrapper for CodesWholesale's API",
+    "keywords": [
+        "codeswholesale",
+        "cloud",
+        "security",
+        "api",
+        "games",
+        "cd-keys"],
+    "homepage": "https://github.com/codeswholesale/codeswholesale-sdk-php",
+    "license": "Apache 2.0",
+    "authors": [
+        {
+            "name": "CodesWholesale.com",
+            "email": "devteam@codeswholesale.com",
+            "role": "Developer"
+        }
+    ],
+    "autoload": {
+        "psr-0": {
+            "CodesWholesale\\": "src/"
+        }
+    },
+    "require": {
+        "php": ">=5.3.3",
+        "guzzle/http": "v3.7.4"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "3.7.*"
+    }
+}
