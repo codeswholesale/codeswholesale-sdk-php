@@ -1,0 +1,125 @@
+<?php
+session_start();
+
+require_once '../vendor/autoload.php';
+require_once 'utils.php';
+
+$params = array(
+    /**
+     *  API Keys
+     */
+    'cw.client_id' => '',
+    'cw.client_secret' => '',
+    /**
+     * CodesWholesale ENDPOINT
+     */
+    'cw.endpoint_uri' => \CodesWholesale\CodesWholesale::SANDBOX_ENDPOINT,
+    /**
+     * Due to security reasons you should use SessionStorage only while testing.
+     * In order to go live you should change it do database storage.
+     */
+    'cw.token_storage' => new \fkooman\OAuth\Client\SessionStorage()
+);
+/**
+ * Session information is stored under
+ * $_SESSION["php-oauth-client"] where we keep all connection tokens.
+ *
+ * Create client builder.
+ */
+$clientBuilder = new \CodesWholesale\ClientBuilder($params);
+$client = $clientBuilder->build();
+
+try{
+    /**
+     * If you would like to clean session storage you can use belows line,
+     * sometimes you can expire this issue in you development.
+     *
+     * $_SESSION["php-oauth-client"]= array();
+     */
+    $_SESSION["php-oauth-client"]= array();
+    /**
+     * Retrieve all products from price list
+     */
+    $products = $client->getProducts();
+    /**
+     * Chose an random product
+     */
+    $randomIndex = rand(0, count($products)-1);
+    $randomProduct = $products->get($randomIndex);
+    /**
+     * Find a product by Href - this is an id of product.
+     *
+     * Or directly by href url
+     *
+     * $url = "https://api.sandbox.codeswholesale.com/v1/products/8cc3f405-8453-4031-be49-f826814faa0c";
+     * \CodesWholesale\Resource\Product::get($url);
+     *
+     */
+    $product = \CodesWholesale\Resource\Product::get($randomProduct->getHref());
+    /**
+     * Make an order for this particular product
+     */
+    $code = \CodesWholesale\Resource\Order::createOrder($product);
+    /**
+     * There are 3 possible code types returned from CW.
+     *
+     * Pre Order (when codes are not in stock)
+     */
+    if($code->isPreOrder()) {
+        // nothing much to do with PreOrdered code - we are working on Post Back functionality,
+        // CW will send you a post back information
+        // once the code is added to your order, post back will be send directly to your site.
+        // For now you can send an notification email
+        echo "Pre-order";
+    }
+    /**
+     * Code as a TEXT
+     */
+    if($code->isText()) {
+        /**
+         * If code is sent as TEXT the use case is very simple,
+         * just retrieve code value from response message and present it to your customer
+         */
+        echo $code->getCode(). " <br />";
+    }
+    /**
+     * Code as a IMAGE
+     */
+    if($code->isImage()) {
+        /**
+         * If code is sent as IMAGE, we provide for you an image writer.
+         * Image writer will decode base64 data and save it to given directory.
+         *
+         * Afterwards you can present the code to your customer from $fullPath,
+         * which is a direct path to your image.
+         */
+        $fullPath = \CodesWholesale\Util\CodeImageWriter::write($code, "D:\\my-codes");
+        echo $fullPath;
+    }
+
+} catch (\CodesWholesale\Resource\ResourceError $e) {
+
+    if($e->isInvalidToken()) {
+        echo "if you are using SessionStorage refresh your session and try one more time.";
+    } else
+    // handle scenario when account's balance is not enough to make order
+    if($e->getStatus() == 400 && $e->getErrorCode() == 10002) {
+        // send email
+        // log it to database
+        echo $e->getMessage();
+    } else
+    // handle scenario when product was not found in price list
+    if($e->getStatus() == 404 && $e->getErrorCode() == 20001) {
+        // error can occurred when you present e.g. some old products that are now excluded from price list.
+        // redirect user to some error page
+    } else {
+        // handle general app error
+        // Log it to database, and give us a shout if it's our false at devteam@codeswholesale.com
+        echo $e->getCode();
+        echo $e->getErrorCode();
+        echo $e->getMoreInfo();
+        echo $e->getDeveloperMessage();
+        echo $e->getMessage();
+    }
+
+}
