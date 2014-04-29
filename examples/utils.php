@@ -10,6 +10,10 @@ function displayProductDetails(\CodesWholesale\Resource\Product $product) {
     echo "<b>" . $product->getProductId() . "</b> <br />";
     echo $product->getName() . "(" . $product->getIdentifier() . ")" . "<br />";
 
+    if($product->getReleaseDate()) {
+        echo "Release date: " . $product->getReleaseDate() . "<br />";
+    }
+
     foreach($product->getLanguages() as $lang) {
         echo $lang . ", ";
     }

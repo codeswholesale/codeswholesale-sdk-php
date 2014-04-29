@@ -33,6 +33,9 @@ class ResourceError extends \RuntimeException
     }
 
     public function isInvalidToken() {
-        return $this->error->getProperties()->error == "invalid_token";
+        if(isset($this->error->getProperties()->error)){
+            return $this->error->getProperties()->error == "invalid_token";
+        }
+        return false;
     }
 }

@@ -6,10 +6,11 @@ require_once 'utils.php';
 
 $params = array(
     /**
-     *  API Keys
+     * API Keys
+     * These are common api keys, you can use it to test integration.
      */
-    'cw.client_id' => '',
-    'cw.client_secret' => '',
+    'cw.client_id' => 'ff72ce315d1259e822f47d87d02d261e',
+    'cw.client_secret' => '$2a$10$E2jVWDADFA5gh6zlRVcrlOOX01Q/HJoT6hXuDMJxek.YEo.lkO2T6',
     /**
      * CodesWholesale ENDPOINT
      */
@@ -55,7 +56,15 @@ try{
      * \CodesWholesale\Resource\Product::get($url);
      *
      */
-    $product = \CodesWholesale\Resource\Product::get($randomProduct->getHref());
+
+    /**
+     * Sample products
+     */
+    // $url = "https://sandbox.codeswholesale.com/v1/products/33e3e81d-2b78-475a-8886-9848116f5133"; // - pre order product
+    // $url = "https://sandbox.codeswholesale.com/v1/products/04aeaf1e-f7b5-4ba9-ba19-91003a04db0a"; // - not enough balance
+    // $url = "https://sandbox.codeswholesale.com/v1/products/6313677f-5219-47e4-a067-7401f55c5a3a"; // - image code
+    $url = "https://sandbox.codeswholesale.com/v1/products/ffe2274d-5469-4b0f-b57b-f8d21b09c24c"; // - code text
+    $product = \CodesWholesale\Resource\Product::get($url);
     /**
      * Make an order for this particular product
      */

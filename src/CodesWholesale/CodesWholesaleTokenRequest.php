@@ -48,6 +48,12 @@ class CodesWholesaleTokenRequest {
      */
     protected function accessTokenRequest(array $p)
     {
+        $this->c->setConfig(array(\Guzzle\Http\Client::REQUEST_OPTIONS => array(
+            'allow_redirects' => false,
+            'exceptions' => false, // do not throw exceptions from the client
+            'verify' => false // do not verify SSL certificate
+        )));
+
         if ($this->clientConfig->getCredentialsInRequestBody()) {
             // provide credentials in the POST body
             $p['client_id'] = $this->clientConfig->getClientId();

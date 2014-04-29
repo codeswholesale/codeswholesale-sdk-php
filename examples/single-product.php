@@ -6,10 +6,11 @@ require_once 'utils.php';
 
 $params = array(
     /**
-     *  API Keys
+     * API Keys
+     * These are common api keys, you can use it to test integration.
      */
-    'cw.client_id' => '',
-    'cw.client_secret' => '',
+    'cw.client_id' => 'ff72ce315d1259e822f47d87d02d261e',
+    'cw.client_secret' => '$2a$10$E2jVWDADFA5gh6zlRVcrlOOX01Q/HJoT6hXuDMJxek.YEo.lkO2T6',
     /**
      * CodesWholesale ENDPOINT
      */

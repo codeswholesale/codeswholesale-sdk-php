@@ -21,6 +21,10 @@ class CodeImageWriter {
             throw new \InvalidArgumentException("Given code is not image code type.");
         }
 
+        if (!file_exists($whereToSaveDirectory)) {
+            mkdir($whereToSaveDirectory, 0755, true);
+        }
+
         if($fileName) {
             $whereToSaveDirectory .= "/" . $fileName;
         } else {

@@ -22,6 +22,7 @@ class Product extends Resource {
     const PRICES             = "prices";
     const BUY_HREF_REL_NAME  = "buy";
     const PRODUCT_ID         = "productId";
+    const RELEASE_DATE       = "releaseDate";
 
     const PATH               = "products";
 
@@ -58,6 +59,10 @@ class Product extends Resource {
 
     public function getLanguages() {
         return $this->getProperty(self::LANGUAGES);
+    }
+
+    public function getReleaseDate() {
+        return $this->getProperty(self::RELEASE_DATE);
     }
 
     public function getPrices() {
