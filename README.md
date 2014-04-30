@@ -23,3 +23,11 @@ Configure the **codeswholesale/sdk** dependency in your 'composer.json' file:
 On your project root, install the the SDK with its dependencies:
 
     php composer.phar install
+    
+## Create your CodesWholesale account
+
+If you have not already done so, register at
+[CodesWolesale](https://app.codeswholesale.com) and set up your API credentials:
+
+1. Create a [CodesWholesale](https://app.codeswholesale.com) account and
+   create your API keys in WEB API tab, under your profile name link. Save your keys in safe place. Your API password is visible only once.
