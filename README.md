@@ -1,7 +1,7 @@
 [![Build Status](https://api.travis-ci.org/codeswholesale/codeswholesale-sdk-php.png?branch=master,dev)](https://travis-ci.org/codeswholesale/codeswholesale-sdk-php)
 
 # CodesWholesale PHP SDK
-CodesWholesale is the first easy, secure API of game keys wholesaler . This is the PHP SDK to ease integration of its features with any PHP language based application.
+CodesWholesale is the first easy, secure API of game keys wholesaler. This is the PHP SDK to ease integration of its features with any PHP language based application.
 
 ## Installation
 You can install **codeswholesale-sdk-php** via Composer or by downloading the source.
