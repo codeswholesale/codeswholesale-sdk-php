@@ -6,7 +6,7 @@ You can install **codeswholesale-sdk-php** via Composer or by downloading the so
 
 ### Via Composer:
 
-**codeswholesale-sdk-php** is available on Packagist as the [codeswholesale/sdk][codeswholesale-packagist] package.
+**codeswholesale-sdk-php** is available on Packagist as the [codeswholesale/sdk](https://packagist.org/packages/codeswholesale/sdk) package.
 
 On your project root, install Composer
 
