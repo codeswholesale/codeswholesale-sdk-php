@@ -83,4 +83,4 @@ This project is licensed under the [Apache 2.0 Open Source License](http://www.a
 
 For additional information, please see:
 
-  fkooman OAuth2 client: https://github.com/fkooman/php-oauth-client
+  1.  fkooman OAuth2 client: https://github.com/fkooman/php-oauth-client
