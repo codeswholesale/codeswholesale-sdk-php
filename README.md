@@ -13,6 +13,8 @@ You can install **codeswholesale-sdk-php** via Composer or by downloading the so
 On your project root, install Composer
 
     curl -sS https://getcomposer.org/installer | php
+	
+Or download it from official page: https://getcomposer.org/download/
 
 Configure the **codeswholesale/sdk** dependency in your 'composer.json' file:
 
