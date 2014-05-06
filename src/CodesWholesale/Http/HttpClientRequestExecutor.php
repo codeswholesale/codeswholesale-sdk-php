@@ -6,6 +6,7 @@ namespace CodesWholesale\Http;
 use CodesWholesale\CodesWholesaleApi;
 use Guzzle\Http\Message\RequestInterface;
 use fkooman\Guzzle\Plugin\BearerAuth\BearerAuth;
+use CodesWholesale\Util\OAuthError;
 
 class HttpClientRequestExecutor implements RequestExecutor
 {
@@ -26,11 +27,13 @@ class HttpClientRequestExecutor implements RequestExecutor
     public function executeRequest(Request $request, $redirectsLimit = 10)
     {
         $requestHeaders = $request->getHeaders();
-        $accessToken = $this->oauthApi->getToken()->getAccessToken();
-        //if(false === $accessToken) {
-        //    throw new \Exception("Token not valid");
-        //}
-        $bearerAuth = new BearerAuth($accessToken);
+        $accessToken = $this->oauthApi->getToken();
+
+        if(false === $accessToken) {
+            throw new OAuthError("The access token that you've provided is not valid, check your credentials or endpoint.");
+        }
+
+        $bearerAuth = new BearerAuth($accessToken->getAccessToken());
         $this->httpClient->addSubscriber($bearerAuth);
 
         $httpRequest = $this->httpClient->

@@ -35,6 +35,7 @@ $client = $clientBuilder->build();
  *
  * $_SESSION["php-oauth-client"]= array();
  */
+
 try{
     /**
      * Retrieve all products from price list

@@ -23,6 +23,7 @@ class Product extends Resource {
     const BUY_HREF_REL_NAME  = "buy";
     const PRODUCT_ID         = "productId";
     const RELEASE_DATE       = "releaseDate";
+    const QUANTITY           = "quantity";
 
     const PATH               = "products";
 
@@ -67,6 +68,10 @@ class Product extends Resource {
 
     public function getPrices() {
         return $this->getProperty(self::PRICES);
+    }
+
+    public function getStockQuantity() {
+        return $this->getProperty(self::QUANTITY);
     }
 
     /**

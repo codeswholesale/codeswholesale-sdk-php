@@ -14,6 +14,8 @@ function displayProductDetails(\CodesWholesale\Resource\Product $product) {
         echo "Release date: " . $product->getReleaseDate() . "<br />";
     }
 
+    echo "Stock's quantity: ". $product->getStockQuantity() . "<br / >";
+
     foreach($product->getLanguages() as $lang) {
         echo $lang . ", ";
     }
