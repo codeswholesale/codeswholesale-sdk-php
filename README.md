@@ -74,6 +74,10 @@ For production release please remember to change endpoint from SANDBOX to LIVE.
 
     ```php
     $products = $client->getProducts();
+    foreach($products as $product) {
+        $product->getName(); // the name of product
+        $product->getStockQuantity(); // current stock quantity
+    }
     ```
     
 4.  **Single product details**
