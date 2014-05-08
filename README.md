@@ -67,13 +67,39 @@ If you have not already done so, register at
     $client = $clientBuilder->build();
     
     ```
+For production release please remember to change endpoint from SANDBOX to LIVE.
+
 
 3.  **List all products from price list**
 
     ```php
     $products = $client->getProducts();
     ```
+    
+4.  **Single product details**
 
+    ```php
+    $product = \CodesWholesale\Resource\Product::get($productHref);
+    ```
+    
+
+5.  **Retrive account details, balance value and available credit**
+
+    ```php
+    $account = $client->getAccount();
+    ```
+    
+6.  **Create single code order**
+
+    ```php
+    $code = \CodesWholesale\Resource\Order::createOrder($product);
+    ```
+    
+7.  **Create order for multiple codes**
+
+    ```php
+    $codes = \CodesWholesale\Resource\Order::createBatchOrder($product, array('quantity' => 10));
+    ```
 
 ## Copyright & Licensing
 
