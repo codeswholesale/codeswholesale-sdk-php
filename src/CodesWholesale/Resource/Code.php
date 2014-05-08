@@ -32,6 +32,11 @@ class Code extends Resource {
     }
 
     public function getCode() {
+        $code = trim($this->getProperty(self::CODE_PROP_NAME));
+        if(empty($code) || strlen($code) == 0 ){
+            $resource = $this->dataStore->getResource($this->getHref(), CodesWholesale::CODE, array());
+            $this->setProperties($resource->getProperties());
+        }
         return $this->getProperty(self::CODE_PROP_NAME);
     }
 

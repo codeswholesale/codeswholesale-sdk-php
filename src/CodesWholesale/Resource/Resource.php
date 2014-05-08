@@ -22,8 +22,7 @@ class Resource
         $this->options = $options;
     }
 
-    public function getHref()
-    {
+    public function getHref() {
         return $this->getHrefRel(self::SELF_PROP_NAME);
     }
 
@@ -41,8 +40,7 @@ class Resource
         return $this->getProperty(self::LINKS_PROP_NAME);
     }
 
-    public function getProperty($name)
-    {
+    public function getProperty($name) {
         return $this->readProperty($name);
     }
 
@@ -78,4 +76,5 @@ class Resource
             $this->materialized = false;
         }
     }
+
 }
