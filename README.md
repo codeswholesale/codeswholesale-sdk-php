@@ -91,12 +91,53 @@ For production release please remember to change endpoint from SANDBOX to LIVE.
 
     ```php
     $account = $client->getAccount();
+    $account->getFullName(); // name of account
+    $account->getEmail(); // email
+    $account->getTotalToUse(); // total money to use, balance + credit
+    $account->getCurrentBalance(); // current balance value
+    $account->getCurrentCredit(); // current credit value
     ```
     
 6.  **Create single code order**
 
     ```php
     $code = \CodesWholesale\Resource\Order::createOrder($product);
+    /**
+     * Code as a TEXT
+     */
+    if($code->isText()) {
+        /**
+         * If code is sent as TEXT the use case is very simple,
+         * just retrieve code value from response message and present it to your customer
+         */
+        echo $code->getCode(). " <br />";
+    }
+    /**
+     * Code as a IMAGE
+     */
+    if($code->isImage()) {
+        /**
+         * If code is sent as IMAGE, we provide for you an image writer.
+         * Image writer will decode base64 data and save it to given directory.
+         *
+         * Afterwards you can present the code to your customer from $fullPath,
+         * which is a direct path to your image.
+         *
+         * In single order image code is returned in the response message.
+         * In a batch order $code->getCode() will do additional server request for each image.
+         */
+        $fullPath = \CodesWholesale\Util\CodeImageWriter::write($code, "/the/path/to/somewhere/");
+        echo $fullPath;
+    }
+    
+    if($code->isPreOrder()) {
+        // nothing much to do with PreOrdered code - we are working on Post Back functionality,
+        // CW will send you a post back information
+        // once the code is added to your order, post back will be send directly to your website.
+        // For now you can send an notification email
+        echo "Pre-order";
+    }
+    
     ```
     
 7.  **Create order for multiple codes**
