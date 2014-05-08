@@ -101,7 +101,7 @@ For production release please remember to change endpoint from SANDBOX to LIVE.
     $codes = \CodesWholesale\Resource\Order::createBatchOrder($product, array('quantity' => 10));
     ```
     
-You can find more specific samples in examples directory of this repository.
+You can check "examples" directory for more samples and details.
 
 ## Copyright & Licensing
 
