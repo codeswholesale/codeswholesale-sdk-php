@@ -24,6 +24,12 @@ On your project root, install the the SDK with its dependencies:
 
     php composer.phar install
     
+### Via direct link:
+
+Download all dependencies from our website:
+
+    https://codeswholesale.com/codeswholesale-php-sdk-1.0.3.beta.zip
+    
 ## Create your CodesWholesale account
 
 If you have not already done so, register at
