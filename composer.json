@@ -25,7 +25,7 @@
     },
     "require": {
         "php": ">=5.3.0",
-        "fkooman/php-oauth-client": ">=0.3.3",
+        "fkooman/php-oauth-client": "0.3.3",
         "fkooman/guzzle-bearer-auth-plugin": ">=0.2.2"
     },
     "require-dev": {
