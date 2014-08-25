@@ -114,7 +114,7 @@ class CodesWholesaleTokenRequest {
                 }
 
                 $error = new \CodesWholesale\Resource\Error($errorResult);
-                throw new ResourceError($error);
+                throw new \CodesWholesale\Resource\ResourceError($error);
             }
 
             return new TokenResponse($responseData);
