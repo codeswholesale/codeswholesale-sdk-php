@@ -10,6 +10,8 @@ class Error extends Resource
     const MESSAGE     = "message";
     const DEV_MESSAGE = "developerMessage";
     const MORE_INFO   = "moreInfo";
+    const ERROR_DESC    = "error";
+    const ERROR_MESSAGE = "error_description";
 
     public function __construct($errorResult) {
         parent::__construct(null, $errorResult, array());
@@ -27,7 +29,7 @@ class Error extends Resource
 
     public function getMessage()
     {
-        return $this->getProperty(self::MESSAGE);
+        return $this->getProperty(self::MESSAGE) ? $this->getProperty(self::MESSAGE) : $this->getProperty(self::ERROR_MESSAGE);
     }
 
     public function getDeveloperMessage()

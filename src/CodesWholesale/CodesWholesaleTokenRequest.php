@@ -69,7 +69,8 @@ class CodesWholesaleTokenRequest {
             $request->addPostFields($p);
             $request->addHeader('Accept', 'application/json');
 
-            $responseData = $request->send()->json();
+            $response = $request->send();
+            $responseData = $response->json();
             // some servers do not provide token_type, so we allow for setting
             // a default
             // issue: https://github.com/fkooman/php-oauth-client/issues/13
@@ -96,6 +97,24 @@ class CodesWholesaleTokenRequest {
                 if (is_array($responseData) && isset($responseData['scope']) && '' === $responseData['scope']) {
                     $responseData['scope'] = $this->clientConfig->getDefaultServerScope();
                 }
+            }
+
+            if ($response->isError())
+            {
+                $errorResult = null;
+
+                if (!$responseData) {
+                    // @codeCoverageIgnoreStart
+                    $status = $response->getHttpStatus();
+                    $errorResult = new \stdClass();
+                    $errorResult->$status = $status;
+                    // @codeCoverageIgnoreEnd
+                } else {
+                    $errorResult = json_decode($response->getBody());
+                }
+
+                $error = new \CodesWholesale\Resource\Error($errorResult);
+                throw new ResourceError($error);
             }
 
             return new TokenResponse($responseData);
