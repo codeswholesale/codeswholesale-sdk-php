@@ -28,7 +28,7 @@ On your project root, install the the SDK with its dependencies:
 
 Download all dependencies from our website:
 
-    https://codeswholesale.com/go/codeswholesale-php-sdk-1-0-3-beta/
+    https://codeswholesale.com/go/codeswholesale-php-sdk-1-0-3-beta
     
 ## Create your CodesWholesale account
 
