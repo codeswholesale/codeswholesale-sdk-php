@@ -5,3 +5,7 @@
 /composer.lock
 /local-examples
 /prod-examples
+
+examples/x_buffer.txt
+
+examples/codes

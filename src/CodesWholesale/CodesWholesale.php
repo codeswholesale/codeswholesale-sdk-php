@@ -35,10 +35,15 @@ spl_autoload_register('CodesWholesale\CodesWholesale_autoload');
 class CodesWholesale
 {
     const ACCOUNT                       = "Account";
+
     const CODE                          = "Code";
+    const CODE_LIST                     = "CodeList";
+
     const ORDER                         = "Order";
+
     const PRODUCT                       = "Product";
     const PRODUCT_LIST                  = "ProductList";
+    const PRODUCT_ORDERED               = "ProductOrdered";
 
     const API_VERSION                   = 'v1';
 
