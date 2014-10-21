@@ -152,6 +152,21 @@ For production release please remember to change endpoint from SANDBOX to LIVE.
     $codes = \CodesWholesale\Resource\Order::createBatchOrder($product, array('quantity' => 10));
     ```
     
+8.  **Receive pre-ordered codes from CW's post back request**
+
+    To receive pre-ordered codes from CW at first point you must configure your post back URL that will be responsible for handling CW's requests. In order to do that, follow this steps:
+    
+    - Sign in to [CodesWholesale](https://app.codeswholesale.com/)
+    - Click you email address in top navigation
+    - Go to WebApi tab
+    - Configure and test your post back url
+    
+    If the URL is successfully configured, you should be able to handle CW's requests as follow:
+
+    ```php
+    
+    ```
+    
 You can check "examples" directory for more samples and details.
 
 ## Copyright & Licensing
