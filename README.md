@@ -164,7 +164,16 @@ For production release please remember to change endpoint from SANDBOX to LIVE.
     If the URL is successfully configured, you should be able to handle CW's requests as follow:
 
     ```php
-    
+    // method will parse request and extract parameters
+    // get order id, and id of ordered product from request params
+    $productOrdered = $client->receiveProductOrdered();
+    // ask for bought codes
+    $allCodesFromProduct = \CodesWholesale\Resource\Order::getCodes($productOrdered);
+
+    /**
+     * Go through bought codes and do your logic
+     */
+    foreach ($allCodesFromProduct as $code) {}
     ```
     
 You can check "examples" directory for more samples and details.
