@@ -110,21 +110,18 @@ try {
 
         // handle scenario when codes details where not found
         if ($e->getStatus() == 404 && $e->getErrorCode() == 60017) {
-            // error when image binary data cannot be found within additional request
-            // after order is made this shouldn't occurred
+            // error when codes where not found
             echo $e->getMessage();
         } else
 
             // handle scenario when bought product was not found in order
             if ($e->getStatus() == 404 && $e->getErrorCode() == 50022) {
-                // error can occurred when you present e.g. some old products that are now excluded from price list.
-                // redirect user to some error page
+                // error when we receive not real product id
             } else
 
                 // handle when order was not found
                 if ($e->getStatus() == 404 && $e->getErrorCode() == 30018) {
-                    // the input data was not validated on your side and passed to CWS
-                    // quantity can't be <= 0
+                    // error when we receive not real order id
                     echo $e->getMessage();
 
                 } else {
