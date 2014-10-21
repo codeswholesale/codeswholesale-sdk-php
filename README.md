@@ -158,7 +158,7 @@ For production release please remember to change endpoint from SANDBOX to LIVE.
     
     - Sign in to [CodesWholesale](https://app.codeswholesale.com/)
     - Click you email address in top navigation
-    - Go to WebApi tab
+    - Go to Web API tab
     - Configure and test your post back url
     
     If the URL is successfully configured, you should be able to handle CW's requests as follow:
@@ -175,6 +175,9 @@ For production release please remember to change endpoint from SANDBOX to LIVE.
      */
     foreach ($allCodesFromProduct as $code) {}
     ```
+    
+    If you send test request from Web API tab and your script is configured to work with sandbox it will download ten fake images.
+    
     
 You can check "examples" directory for more samples and details.
 
