@@ -4,6 +4,7 @@ namespace CodesWholesale;
 
 use CodesWholesale\DataStore\DefaultDataStore;
 use CodesWholesale\Http\HttpClientRequestExecutor;
+use CodesWholesale\Resource\Product;
 use CodesWholesale\Resource\ProductOrdered;
 use CodesWholesale\Resource\Resource;
 use CodesWholesale\Resource\ResourceError;
@@ -104,7 +105,8 @@ class Client extends Magic
     /**
      * Method will return product that was bought.
      *
-     * @return ProductOrdered
+     * @return object
+     * @throws \Exception
      */
     public function receiveProductOrdered()
     {
@@ -116,6 +118,15 @@ class Client extends Magic
         }
 
         return $this->dataStore->instantiate(CodesWholesale::PRODUCT_ORDERED, $properties);
+    }
+
+    /**
+     * @return Product
+     */
+    public function receiveProductAfterStockAndPriceUpdate() {
+        $json = file_get_contents('php://input');
+        $properties = json_decode($json);
+        return $this->dataStore->instantiate(CodesWholesale::PRODUCT, $properties);
     }
 
     /**
