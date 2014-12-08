@@ -123,10 +123,10 @@ class Client extends Magic
     /**
      * @return Product
      */
-    public function receiveProductAfterStockAndPriceUpdate() {
+    public function receiveUpdatedProductId() {
         $json = file_get_contents('php://input');
         $properties = json_decode($json);
-        return $this->dataStore->instantiate(CodesWholesale::PRODUCT, $properties);
+        return $properties->productId;
     }
 
     /**

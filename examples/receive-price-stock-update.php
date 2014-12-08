@@ -48,22 +48,22 @@ $client = $clientBuilder->build();
 
 // method will parse request and extract parameters
 // get information from request body
-$product = $client->receiveProductAfterStockAndPriceUpdate();
+$productId = $client->receiveUpdatedProductId();
 
 /**
- * Do whatever you want with these properties.
+ * Request for product and get new price and stock.
  *
- * E.g. Update your price in database or post it on facebook =).
+ * Later you can update your price in database or post it on facebook =).
  */
 
-
+$product = \CodesWholesale\Resource\Product::get($productId);
 
 // get new stock quantity - update your stock information
 echo "Stock quantity: ". $product->getStockQuantity();
 // get newest default price - update your price information
-echo " Default price: " . $product->getDefaultPrice();
+echo " Default price: ". $product->getDefaultPrice();
 // get newest lower price (since some time every one that buys using API - uses the lowest price)
-echo " Lowest price: " . $product->getLowestPrice();
+echo " Lowest price:  ". $product->getLowestPrice();
 
 if (SHOULD_FLUSH) {
     ob_end_flush();
