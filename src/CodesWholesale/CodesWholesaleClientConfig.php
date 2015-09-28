@@ -30,6 +30,11 @@ class CodesWholesaleClientConfig extends ClientConfig implements ClientConfigInt
      */
     private $storage;
 
+    /**
+     * @var
+     */
+    private $clientHeaders;
+
     public function __construct(array $data)
     {
         if (!isset($data)) {
@@ -44,6 +49,7 @@ class CodesWholesaleClientConfig extends ClientConfig implements ClientConfigInt
 
         $this->baseUrl = $data['cw.endpoint_uri'];
         $this->storage = $data['cw.token_storage'];
+        $this->clientHeaders = isset($data['cw.client.headers']) ? $data['cw.client.headers'] : array();
 
         $clientData = array(
             "client_id" => $data['cw.client_id'],
@@ -68,5 +74,12 @@ class CodesWholesaleClientConfig extends ClientConfig implements ClientConfigInt
      */
     public function getStorage() {
         return $this->storage;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getClientHeaders() {
+        return $this->clientHeaders;
     }
 }

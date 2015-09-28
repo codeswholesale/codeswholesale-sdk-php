@@ -12,9 +12,11 @@ class HttpClientRequestExecutor implements RequestExecutor
 {
     private $oauthApi;
     private $httpClient;
+    private $clientHeaders;
 
-    public function __construct(CodesWholesaleApi $oauthApi)
+    public function __construct(CodesWholesaleApi $oauthApi, array $clientHeaders)
     {
+        $this->clientHeaders = $clientHeaders;
         $this->oauthApi = $oauthApi;
         $this->httpClient = new \Guzzle\Http\Client();
         $this->httpClient->setConfig(array(\Guzzle\Http\Client::REQUEST_OPTIONS => array(
@@ -26,7 +28,8 @@ class HttpClientRequestExecutor implements RequestExecutor
 
     public function executeRequest(Request $request, $redirectsLimit = 10)
     {
-        $requestHeaders = $request->getHeaders();
+        $this->addClientHeaders($request);
+
         $accessToken = $this->oauthApi->getToken();
 
         if(false === $accessToken) {
@@ -68,6 +71,19 @@ class HttpClientRequestExecutor implements RequestExecutor
         foreach($queryString as $key => $value)
         {
             $request->getQuery()->set($key, $value);
+        }
+    }
+
+    /**
+     * @param Request $request
+     * @return mixed
+     */
+    public function addClientHeaders(Request $request)
+    {
+        if (isset($this->clientHeaders['User-Agent'])) {
+            $headers = $request->getHeaders();
+            $headers['User-Agent'] = $this->clientHeaders['User-Agent'];
+            $request->setHeaders($headers);
         }
     }
 

@@ -162,7 +162,7 @@ class DefaultDataStore implements InternalDataStore
     {
         $headers = $request->getHeaders();
         $headers['Accept'] = 'application/json';
-        $headers['User-Agent'] = 'CodesWholesale-PhpSDK/' .Version::SDK_VERSION;
+        $headers['User-Agent'] = 'CW Plugin version:' . Version::SDK_VERSION . '';
 
         if ($request->getBody())
         {

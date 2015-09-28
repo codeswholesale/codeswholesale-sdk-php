@@ -15,19 +15,25 @@ class ClientBuilder
     private $clientConfig;
     private $oauthApi;
 
-    public function __construct(array $params) {
-        $this->clientConfig =  new CodesWholesaleClientConfig($params);
+    public function __construct(array $params)
+    {
+        $this->clientConfig = new CodesWholesaleClientConfig($params);
         $this->init();
+    }
+
+    protected function init()
+    {
+        if (!$this->oauthApi) {
+            $this->oauthApi = new CodesWholesaleApi(self::CONFIGURATION_ID, $this->clientConfig, $this->clientConfig->getStorage(), new \Guzzle\Http\Client());
+        }
     }
 
     public function build()
     {
-       return new Client($this->oauthApi, ($this->clientConfig->getBaseUrl() . '/' . CodesWholesale::API_VERSION) );
-    }
+        $baseUrl = $this->clientConfig->getBaseUrl() . '/' . CodesWholesale::API_VERSION;
 
-    protected function init() {
-        if(!$this->oauthApi) {
-            $this->oauthApi = new CodesWholesaleApi(self::CONFIGURATION_ID, $this->clientConfig, $this->clientConfig->getStorage(), new \Guzzle\Http\Client());
-        }
+        return new Client($this->oauthApi,
+            $baseUrl,
+            $this->clientConfig->getClientHeaders());
     }
 }

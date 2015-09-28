@@ -2,6 +2,7 @@
 
 namespace CodesWholesale;
 
+use CodesWholesale\CodesWholesaleClientConfig;
 use fkooman\OAuth\Client\ClientConfigInterface;
 use fkooman\OAuth\Client\TokenRequest;
 use fkooman\OAuth\Client\TokenResponse;
@@ -68,6 +69,12 @@ class CodesWholesaleTokenRequest {
             $request = $this->c->post($this->clientConfig->getTokenEndpoint());
             $request->addPostFields($p);
             $request->addHeader('Accept', 'application/json');
+
+            $clientHeaders = $this->clientConfig->getClientHeaders();
+
+            if (isset($clientHeaders['User-Agent'])) {
+                $request->addHeader('User-Agent', $clientHeaders['User-Agent']);
+            }
 
             $response = $request->send();
             $responseData = $response->json();

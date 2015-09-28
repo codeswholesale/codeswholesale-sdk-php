@@ -32,10 +32,10 @@ class Client extends Magic
 
     private $dataStore;
 
-    public function __construct(CodesWholesaleApi $oauthApi, $baseUrl)
+    public function __construct(CodesWholesaleApi $oauthApi, $baseUrl, $clientHeaders)
     {
         parent::__construct();
-        $requestExecutor = new HttpClientRequestExecutor($oauthApi);
+        $requestExecutor = new HttpClientRequestExecutor($oauthApi, $clientHeaders);
         $this->dataStore = new DefaultDataStore($requestExecutor, $baseUrl);
 
         self::$instance = $this;
