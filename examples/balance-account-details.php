@@ -17,8 +17,9 @@ $params = array(
     'cw.endpoint_uri' => \CodesWholesale\CodesWholesale::SANDBOX_ENDPOINT,
     /**
      * Due to security reasons you should use SessionStorage only while testing.
-     * In order to go live you should change it do database storage.
+     * In order to go live you should change it do PDO storage.
      */
+
     'cw.token_storage' => new \fkooman\OAuth\Client\SessionStorage()
 );
 /**

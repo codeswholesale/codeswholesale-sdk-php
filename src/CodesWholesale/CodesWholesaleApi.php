@@ -10,10 +10,10 @@ namespace CodesWholesale;
 
 use \fkooman\OAuth\Client\Api;
 use \fkooman\OAuth\Client\Context;
-use \fkooman\OAuth\Client\Scope;
 use \fkooman\OAuth\Client\ClientConfigInterface;
 use \fkooman\OAuth\Client\StorageInterface;
 use \fkooman\OAuth\Client\AccessToken;
+use fkooman\OAuth\Common\Scope;
 
 class CodesWholesaleApi extends Api {
 
@@ -35,9 +35,10 @@ class CodesWholesaleApi extends Api {
         $this->clientConfigId = $clientConfigId;
     }
 
+
     public function getToken() {
 
-        $context = new Context($this->clientConfig->getClientId(), new Scope(array("read", "write")));
+        $context = new Context($this->clientConfig->getClientId(), array("read", "write"));
         $accessToken = parent::getAccessToken($context);
 
         if(false === $accessToken) {
