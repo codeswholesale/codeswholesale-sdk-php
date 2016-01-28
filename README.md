@@ -38,7 +38,7 @@ If you have not already done so, register at
 1. Create a [CodesWholesale](https://app.codeswholesale.com) account and
    create your API keys in WEB API tab, under your profile name link. Save your keys in safe place. Your API password is visible only once.
 
-## Getting Started
+### Getting Started
 
 1.  **Require the CodesWholesale PHP SDK** via the composer auto loader
 
