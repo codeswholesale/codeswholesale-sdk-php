@@ -19,7 +19,7 @@ namespace CodesWholesale;
 
 use \fkooman\OAuth\Client\ClientConfig;
 use \fkooman\OAuth\Client\ClientConfigInterface;
-use \fkooman\OAuth\Client\ClientConfigException;
+use \fkooman\OAuth\Client\Exception\ClientConfigException;
 use fkooman\OAuth\Client\StorageInterface;
 
 class CodesWholesaleClientConfig extends ClientConfig implements ClientConfigInterface
