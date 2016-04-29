@@ -1,5 +1,5 @@
 <?php
-
+use \CodesWholesale\Resource\ImageType;
 /**
  * Helper method to display product details.
  *
@@ -26,6 +26,10 @@ function displayProductDetails(\CodesWholesale\Resource\Product $product) {
         echo $region . ", ";
     }
 
+    echo "<br />";
+    echo 'Medium image url: ' .  $product->getImageUrl(ImageType::MEDIUM);
+    echo "<br />";
+    echo 'Small image url: ' .  $product->getImageUrl(ImageType::SMALL);
     echo "<br />";
 
     foreach($product->getPrices() as $price) {

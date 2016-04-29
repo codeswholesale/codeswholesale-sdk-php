@@ -7,13 +7,12 @@ namespace CodesWholesale\Util;
 use CodesWholesale\Resource\Code;
 
 class CodeImageWriter {
+
     /**
-     *
-     *
      * @param Code $code
-     * @param String $whereToSaveDirectory
-     * @param String $fileName
-     * @throws \InvalidArgumentException
+     * @param $whereToSaveDirectory
+     * @param null $fileName
+     * @return string
      */
     public static function write(Code $code, $whereToSaveDirectory, $fileName = null) {
 

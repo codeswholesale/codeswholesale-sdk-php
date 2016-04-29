@@ -11,24 +11,31 @@ namespace CodesWholesale\Resource;
 
 use CodesWholesale\CodesWholesale;
 use CodesWholesale\Client;
+use CodesWholesale\Exceptions\NoImagesFoundException;
 
-class Product extends Resource {
+class Product extends Resource
+{
 
-    const NAME               = "name";
-    const IDENTIFIER         = "identifier";
-    const PLATFORM           = "platform";
-    const REGIONS            = "regions";
-    const LANGUAGES          = "languages";
-    const PRICES             = "prices";
-    const BUY_HREF_REL_NAME  = "buy";
-    const PRODUCT_ID         = "productId";
-    const RELEASE_DATE       = "releaseDate";
-    const QUANTITY           = "quantity";
+    const NAME = "name";
+    const IDENTIFIER = "identifier";
+    const PLATFORM = "platform";
+    const REGIONS = "regions";
+    const LANGUAGES = "languages";
+    const PRICES = "prices";
+    const BUY_HREF_REL_NAME = "buy";
+    const PRODUCT_ID = "productId";
+    const RELEASE_DATE = "releaseDate";
+    const QUANTITY = "quantity";
+    const IMAGES = "images";
 
-    const PATH               = "products";
+    const PATH = "products";
 
     /**
-     *
+     * @var string
+     */
+    private $imageUrl;
+
+    /**
      * @param $href
      * @param array $options
      * @return \CodesWholesale\Resource\Product
@@ -38,45 +45,69 @@ class Product extends Resource {
         return Client::get($href, CodesWholesale::PRODUCT, self::PATH, $options);
     }
 
-    public function getProductId() {
+    public function getProductId()
+    {
         return $this->getProperty(self::PRODUCT_ID);
     }
 
-    public function getName() {
+    public function getName()
+    {
         return $this->getProperty(self::NAME);
     }
 
-    public function getIdentifier() {
+    public function getIdentifier()
+    {
         return $this->getProperty(self::IDENTIFIER);
     }
 
-    public function getPlatform() {
+    public function getPlatform()
+    {
         return $this->getProperty(self::PLATFORM);
     }
 
-    public function getRegions() {
+    public function getRegions()
+    {
         return $this->getProperty(self::REGIONS);
     }
 
-    public function getLanguages() {
+    public function getLanguages()
+    {
         return $this->getProperty(self::LANGUAGES);
     }
 
-    public function getReleaseDate() {
+    public function getReleaseDate()
+    {
         return $this->getProperty(self::RELEASE_DATE);
+    }
+
+    /**
+     * @param $format
+     * @return mixed
+     * @throws NoImagesFoundException
+     */
+    public function getImageUrl($format)
+    {
+        $images = $this->getProperty(self::IMAGES);
+        foreach ($images as $image) {
+            if ($image->format == $format)
+                return $image->image;
+        }
+        throw new NoImagesFoundException();
     }
 
     /**
      * @return array
      */
-    public function getPrices() {
+    public function getPrices()
+    {
         return $this->getProperty(self::PRICES);
     }
 
     /**
      * @return int
      */
-    public function getStockQuantity() {
+    public function getStockQuantity()
+    {
         return $this->getProperty(self::QUANTITY);
     }
 
@@ -85,10 +116,11 @@ class Product extends Resource {
      *
      * @return decimal
      */
-    public function getDefaultPrice() {
+    public function getDefaultPrice()
+    {
         $prices = $this->getPrices();
         foreach ($prices as $price) {
-            if($price->from == 1) {
+            if ($price->from == 1) {
                 return $price->value;
             }
         }
@@ -99,11 +131,12 @@ class Product extends Resource {
      *
      * @return decimal
      */
-    public function getLowestPrice() {
+    public function getLowestPrice()
+    {
         $prices = $this->getPrices();
         $lowest = $prices[0]->value;
         foreach ($prices as $price) {
-            if($price->value < $lowest) {
+            if ($price->value < $lowest) {
                 $lowest = $price->value;
             }
         }
@@ -113,7 +146,8 @@ class Product extends Resource {
     /**
      * @return string|uri
      */
-    public function getBuyHref() {
+    public function getBuyHref()
+    {
         return $this->getHrefRel(self::BUY_HREF_REL_NAME);
     }
 } 
