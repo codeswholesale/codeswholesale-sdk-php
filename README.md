@@ -83,6 +83,7 @@ For production release please remember to change endpoint from SANDBOX to LIVE.
     foreach($products as $product) {
         $product->getName(); // the name of product
         $product->getStockQuantity(); // current stock quantity
+        $product->getImageUrl(ImageType::SMALL) // product image url
     }
     ```
     
