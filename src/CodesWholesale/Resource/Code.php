@@ -40,6 +40,18 @@ class Code extends Resource
     {
         return $this->getProperty(self::FILE_NAME_PROP_NAME);
     }
+    
+    public function getOrderId()
+    {
+        if(preg_match('#orders\/([0-9a-zA-Z-]+)#', $this->getHref(), $matches))
+        {
+            return $matches[1];
+        }
+        else
+        {
+            return null;
+        }
+    }
 
     public function getCode()
     {
