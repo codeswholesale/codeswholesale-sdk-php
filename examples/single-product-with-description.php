@@ -9,12 +9,12 @@ $params = array(
      * API Keys
      * These are common api keys, you can use it to test integration.
      */
-    'cw.client_id' => '5e5ed8eb46d34d2135915d9483b3c373',
-    'cw.client_secret' => '$2a$10$bORAp8rYT2s4YS5wHXCV6erKIF.08gh9lic7mk.mtj2/22wBytD3i',
+    'cw.client_id' => 'ff72ce315d1259e822f47d87d02d261e',
+    'cw.client_secret' => '$2a$10$E2jVWDADFA5gh6zlRVcrlOOX01Q/HJoT6hXuDMJxek.YEo.lkO2T6',
     /**
      * CodesWholesale ENDPOINT
      */
-    'cw.endpoint_uri' => \CodesWholesale\CodesWholesale::LIVE_ENDPOINT,
+    'cw.endpoint_uri' => \CodesWholesale\CodesWholesale::SANDBOX_ENDPOINT,
     /**
      * Due to security reasons you should use SessionStorage only while testing.
      * In order to go live you should change it do database storage.
@@ -40,12 +40,12 @@ try{
     /**
      * Retrieve all products from price list
      */
-    //$products = $client->getProducts();
+    $products = $client->getProducts();
     /**
      * Chose an random product
      */
-    //$randomIndex = rand(0, count($products)-1);
-    //$randomProduct = $products->get("");
+    $randomIndex = rand(0, count($products)-1);
+    $randomProduct = $products->get($randomIndex);
     /**
      * Find a product by Href this is an id of product.
      *
@@ -55,9 +55,7 @@ try{
      * \CodesWholesale\Resource\Product::get($url);
      *
      */
-     $url = "https://api.codeswholesale.com/v1/products/804d6f17-a5ed-4851-84db-e9fc91da8501";
-     $product = \CodesWholesale\Resource\Product::get($url);
-    //$product = \CodesWholesale\Resource\Product::get($randomProduct->getHref());
+    $product = \CodesWholesale\Resource\Product::get($randomProduct->getHref());
     /**
      * Included from utils.php, displaying product details, just for testing purposes
      */
