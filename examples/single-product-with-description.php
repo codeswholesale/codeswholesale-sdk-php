@@ -36,7 +36,7 @@ $client = $clientBuilder->build();
  * $_SESSION["php-oauth-client"]= array();
  */
 
-try{
+try {
     /**
      * Retrieve all products from price list
      */
@@ -44,7 +44,7 @@ try{
     /**
      * Chose an random product
      */
-    $randomIndex = rand(0, count($products)-1);
+    $randomIndex = rand(0, count($products) - 1);
     $randomProduct = $products->get($randomIndex);
     /**
      * Find a product by Href this is an id of product.
@@ -62,7 +62,7 @@ try{
     displayProductDetailsWithDescription($product);
 } catch (\CodesWholesale\Resource\ResourceError $e) {
 
-    if($e->isInvalidToken()) {
+    if ($e->isInvalidToken()) {
         echo "if you are using SessionStorage refresh your session and try one more time.";
     }
 
@@ -72,7 +72,3 @@ try{
     echo $e->getDeveloperMessage();
     echo $e->getMessage();
 }
-
-
-
-
