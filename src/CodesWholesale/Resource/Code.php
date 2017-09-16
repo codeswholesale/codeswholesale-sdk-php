@@ -7,7 +7,6 @@ use CodesWholesale\CodesWholesale;
 
 class Code extends Resource
 {
-
     const CODE_TYPE_PROP_NAME = "codeType";
     const CODE_PROP_NAME = "code";
     const FILE_NAME_PROP_NAME = "fileName";
@@ -50,5 +49,4 @@ class Code extends Resource
         }
         return $this->getProperty(self::CODE_PROP_NAME);
     }
-
 }
