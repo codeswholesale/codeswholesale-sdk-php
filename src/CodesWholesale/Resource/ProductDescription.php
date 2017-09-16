@@ -4,11 +4,9 @@ namespace CodesWholesale\Resource;
 
 use CodesWholesale\Client;
 use CodesWholesale\CodesWholesale;
-use CodesWholesale\Resource\ProductDescriptionResource\ProductDescriptionFieldContainer;
 
 class ProductDescription extends Resource
 {
-
     const LOCALIZED_TITLES = "localizedTitles";
     const PEGI_RATING = "pegirating";
     const PLATFORM = "platform";

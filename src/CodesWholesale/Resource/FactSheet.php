@@ -1,13 +1,11 @@
 <?php
 
-namespace CodesWholesale\Resource\ProductDescriptionResource;
-
-use CodesWholesale\Resource\Resource;
+namespace CodesWholesale\Resource;
 
 class FactSheet extends Resource
 {
-    const TERRITORY    = "territory";
-    const DESCRIPTION  = "description";
+    const TERRITORY = "territory";
+    const DESCRIPTION = "description";
 
     /**
      * @return string

@@ -1,15 +1,12 @@
 <?php
 
-namespace CodesWholesale\Resource\ProductDescriptionResource;
-
-
-use CodesWholesale\Resource\Resource;
+namespace CodesWholesale\Resource;
 
 class Release extends Resource
 {
-    const RELEASE_STATUS  = "releaseStatus";
-    const RELEASE_DATE    = "releaseDate";
-    const TERRITORY       = "territory";
+    const RELEASE_STATUS = "releaseStatus";
+    const RELEASE_DATE = "releaseDate";
+    const TERRITORY = "territory";
 
     /**
      * @return string

@@ -1,14 +1,12 @@
 <?php
 
-namespace CodesWholesale\Resource\ProductDescriptionResource;
-
-use CodesWholesale\Resource\Resource;
+namespace CodesWholesale\Resource;
 
 class Photo extends Resource
 {
-    const URL        = "url";
-    const TERRITORY  = "territory";
-    const TYPE       = "type";
+    const URL = "url";
+    const TERRITORY = "territory";
+    const TYPE = "type";
 
 
     /**

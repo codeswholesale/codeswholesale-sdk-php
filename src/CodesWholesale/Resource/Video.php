@@ -1,17 +1,14 @@
 <?php
 
-namespace CodesWholesale\Resource\ProductDescriptionResource;
-
-
-use CodesWholesale\Resource\Resource;
+namespace CodesWholesale\Resource;
 
 class Video extends Resource
 {
-    const PREVIEW_FRAME_URL   = "previewFrameURL";
-    const AGE_WARNING         = "ageWarning";
-    const TITLE               = "title";
-    const RELEASE_DATE        = "releaseDate";
-    const URL                 = "url";
+    const PREVIEW_FRAME_URL = "previewFrameURL";
+    const AGE_WARNING = "ageWarning";
+    const TITLE = "title";
+    const RELEASE_DATE = "releaseDate";
+    const URL = "url";
 
     /**
      * @return string
