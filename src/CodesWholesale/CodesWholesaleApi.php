@@ -8,14 +8,8 @@
 
 namespace CodesWholesale;
 
-use \fkooman\OAuth\Client\Api;
-use \fkooman\OAuth\Client\Context;
-use \fkooman\OAuth\Client\ClientConfigInterface;
-use \fkooman\OAuth\Client\StorageInterface;
-use \fkooman\OAuth\Client\AccessToken;
-use fkooman\OAuth\Common\Scope;
 
-class CodesWholesaleApi extends Api {
+class CodesWholesaleApi {
 
     /**
      * @var \fkooman\OAuth\Client\ClientConfigInterface
@@ -25,7 +19,7 @@ class CodesWholesaleApi extends Api {
     protected $tokenStorage;
     protected $clientConfigId;
 
-    public function __construct($clientConfigId, ClientConfigInterface $clientConfig, StorageInterface $tokenStorage, \Guzzle\Http\Client $httpClient)
+    public function __construct($clientConfigId, ClientConfigInterface\ $clientConfig, StorageInterface $tokenStorage, \Guzzle\Http\Client $httpClient)
     {
         parent::__construct($clientConfigId, $clientConfig, $tokenStorage, $httpClient);
 

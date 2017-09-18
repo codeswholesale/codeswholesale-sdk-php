@@ -19,7 +19,7 @@ $params = array(
      * Due to security reasons you should use SessionStorage only while testing.
      * In order to go live you should change it do database storage.
      */
-    'cw.token_storage' => new \fkooman\OAuth\Client\SessionStorage()
+    'cw.token_storage' => new \fkooman\OAuth\Client\SessionTokenStorage()
 );
 /**
  * Session information is stored under
