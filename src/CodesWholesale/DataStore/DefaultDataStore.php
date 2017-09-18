@@ -31,11 +31,11 @@ class DefaultDataStore implements InternalDataStore
         return $this->resourceFactory->instantiate($className, $propertiesArr);
     }
 
-    public function instantiateByArray($className, array $properties = array())
+    public function instantiateByArrayOf($className, array $arrayOfObjects = array())
     {
         $parsedObjects = array();
-        foreach ($properties as $property) {
-            $parsedObjects[] = $this->instantiate($className, $property);
+        foreach ($arrayOfObjects as $objects) {
+            $parsedObjects[] = $this->instantiate($className, $objects);
         }
         return $parsedObjects;
     }
