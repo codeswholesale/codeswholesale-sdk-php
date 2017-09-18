@@ -42,6 +42,7 @@ class CodesWholesale
     const ORDER                         = "Order";
 
     const PRODUCT                       = "Product";
+    const PRODUCT_DESCRIPTION           = "ProductDescription";
     const PRODUCT_LIST                  = "ProductList";
     const PRODUCT_ORDERED               = "ProductOrdered";
 

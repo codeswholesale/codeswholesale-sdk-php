@@ -28,13 +28,22 @@ class DefaultDataStore implements InternalDataStore
     {
         $propertiesArr = array($properties, $options);
 
-       return $this->resourceFactory->instantiate($className, $propertiesArr);
+        return $this->resourceFactory->instantiate($className, $propertiesArr);
     }
+
+    public function instantiateByArrayOf($className, array $arrayOfObjects = array())
+    {
+        $parsedObjects = array();
+        foreach ($arrayOfObjects as $objects) {
+            $parsedObjects[] = $this->instantiate($className, $objects);
+        }
+        return $parsedObjects;
+    }
+
 
     public function getResource($href, $className, array $options = array())
     {
-        if ($this->needsToBeFullyQualified($href))
-        {
+        if ($this->needsToBeFullyQualified($href)) {
             $href = $this->qualify($href);
         }
 
@@ -50,8 +59,7 @@ class DefaultDataStore implements InternalDataStore
         $returnedResource = $this->saveResource($parentHref, $resource, $returnType, $queryString);
 
         $returnTypeClass = $this->resourceFactory->instantiate($returnType, array());
-        if ($resource instanceof $returnTypeClass)
-        {
+        if ($resource instanceof $returnTypeClass) {
             //ensure the caller's argument is updated with what is returned from the server:
             $resource->setProperties($this->toStdClass($returnedResource));
         }
@@ -63,13 +71,11 @@ class DefaultDataStore implements InternalDataStore
     {
         $href = $resource->getHref();
 
-        if (!strlen($href))
-        {
+        if (!strlen($href)) {
             throw new InvalidArgumentException('save may only be called on objects that have already been persisted (i.e. they have an existing href).');
         }
 
-        if ($this->needsToBeFullyQualified($href))
-        {
+        if ($this->needsToBeFullyQualified($href)) {
             $href = $this->qualify($href);
         }
 
@@ -98,23 +104,22 @@ class DefaultDataStore implements InternalDataStore
     {
         $slashAdded = '';
 
-        if (!(stripos($href, '/') == 0))
-        {
+        if (!(stripos($href, '/') == 0)) {
             $slashAdded = '/';
         }
 
-        return $this->baseUrl .$slashAdded .$href;
+        return $this->baseUrl . $slashAdded . $href;
     }
 
     private function executeRequest($httpMethod, $href, $body = '', array $query = array())
     {
         $request = new DefaultRequest(
-                       $httpMethod,
-                       $href,
-                       $query,
-                       array(),
-                       $body,
-                       strlen($body));
+            $httpMethod,
+            $href,
+            $query,
+            array(),
+            $body,
+            strlen($body));
 
         $this->applyDefaultRequestHeaders($request);
 
@@ -122,8 +127,7 @@ class DefaultDataStore implements InternalDataStore
 
         $result = $response->getBody() ? json_decode($response->getBody()) : '';
 
-        if ($response->isError())
-        {
+        if ($response->isError()) {
             $errorResult = $result;
 
             //if the response does not come with a body, we create the error with the http status
@@ -145,15 +149,14 @@ class DefaultDataStore implements InternalDataStore
 
     private function saveResource($href, Resource $resource, $returnType, array $query = array())
     {
-        if ($this->needsToBeFullyQualified($href))
-        {
+        if ($this->needsToBeFullyQualified($href)) {
             $href = $this->qualify($href);
         }
 
         $response = $this->executeRequest(Request::METHOD_POST,
-                                          $href,
-                                          json_encode($this->toStdClass($resource)),
-                                          $query);
+            $href,
+            json_encode($this->toStdClass($resource)),
+            $query);
 
         return $this->resourceFactory->instantiate($returnType, array($response, $query));
     }
@@ -164,8 +167,7 @@ class DefaultDataStore implements InternalDataStore
         $headers['Accept'] = 'application/json';
         $headers['User-Agent'] = 'CW Plugin version:' . Version::SDK_VERSION . '';
 
-        if ($request->getBody())
-        {
+        if ($request->getBody()) {
             $headers['Content-Type'] = 'application/json';
         }
 
@@ -178,12 +180,10 @@ class DefaultDataStore implements InternalDataStore
 
         $properties = new \stdClass();
 
-        foreach($propertyNames as $name)
-        {
+        foreach ($propertyNames as $name) {
             $property = $resource->getProperty($name);
 
-            if ($property instanceof \stdClass)
-            {
+            if ($property instanceof \stdClass) {
                 $property = $this->toSimpleReference($name, $property);
             }
 
@@ -197,8 +197,7 @@ class DefaultDataStore implements InternalDataStore
     {
         $hrefPropName = Resource::HREF_PROP_NAME;
 
-        if (!isset($properties->$hrefPropName))
-        {
+        if (!isset($properties->$hrefPropName)) {
             throw new \InvalidArgumentException("Nested resource '#{$propertyName}' must have an 'href' property.");
         }
 
@@ -211,7 +210,8 @@ class DefaultDataStore implements InternalDataStore
         return $toReturn;
     }
 
-    private function getQueryString(array $options) {
+    private function getQueryString(array $options)
+    {
 
         $query = array();
 
@@ -220,9 +220,9 @@ class DefaultDataStore implements InternalDataStore
         // to string.
         foreach ($options as $key => $opt) {
 
-           $query[$key] = !is_bool($opt)? //only support a boolean or an object that has a __toString implementation
-                          strval($opt) :
-                          var_export($opt, true);
+            $query[$key] = !is_bool($opt) ? //only support a boolean or an object that has a __toString implementation
+                strval($opt) :
+                var_export($opt, true);
 
         }
 

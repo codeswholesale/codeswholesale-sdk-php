@@ -9,8 +9,8 @@
 namespace CodesWholesale\Resource;
 
 
-use CodesWholesale\CodesWholesale;
 use CodesWholesale\Client;
+use CodesWholesale\CodesWholesale;
 use CodesWholesale\Exceptions\NoImagesFoundException;
 
 class Product extends Resource
@@ -23,11 +23,11 @@ class Product extends Resource
     const LANGUAGES = "languages";
     const PRICES = "prices";
     const BUY_HREF_REL_NAME = "buy";
+    const DESCRIPTION_HREF_REL_NAME = "description";
     const PRODUCT_ID = "productId";
     const RELEASE_DATE = "releaseDate";
     const QUANTITY = "quantity";
     const IMAGES = "images";
-
     const PATH = "products";
 
     /**
@@ -78,6 +78,19 @@ class Product extends Resource
     public function getReleaseDate()
     {
         return $this->getProperty(self::RELEASE_DATE);
+    }
+
+    /**
+     * @param string $locale
+     * @return ProductDescription
+     */
+    public function getProductDescription($locale = null)
+    {
+        $href = $this->getDescriptionHref();
+        if ($locale) {
+            $href .= "?locale=" . $locale;
+        }
+        return ProductDescription::get($href);
     }
 
     /**
@@ -149,5 +162,13 @@ class Product extends Resource
     public function getBuyHref()
     {
         return $this->getHrefRel(self::BUY_HREF_REL_NAME);
+    }
+
+    /**
+     * @return string|uri
+     */
+    public function getDescriptionHref()
+    {
+        return $this->getHrefRel(self::DESCRIPTION_HREF_REL_NAME);
     }
 } 
