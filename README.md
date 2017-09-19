@@ -92,9 +92,35 @@ For production release please remember to change endpoint from SANDBOX to LIVE.
     ```php
     $product = \CodesWholesale\Resource\Product::get($productHref);
     ```
+  
+5.  **Retrieve product description**
+
+    ```php
+    $product = \CodesWholesale\Resource\Product::get($productHref);
+    $productDescription = $product->getProductDescription();
+
+    $productDescription->getLocalizedTitles(); // 
+    $productDescription->getPegiRating(); // pegi rating
+    $productDescription->getPlatform(); // platform such as PC/Mac
+    $productDescription->getFactSheets(); // description in different langauges
+    $productDescription->getReleases(); // release dates
+    $productDescription->getEditions(); // editions
+    $productDescription->getDeveloperHomepage(); // game developer homepage
+    $productDescription->getKeywords(); // keywords
+    $productDescription->getGameLanguages(); // languages 
+    $productDescription->getOfficialTitle(); // official title
+    $productDescription->getDeveloperName(); // game developer name
+    $productDescription->getEanCodes(); // EAN codes
+    $productDescription->getLastUpdate(); // last game update
+    $productDescription->getCategory(); // category of game 
+    $productDescription->getPhotos(); // urls photo 
+    $productDescription->getExtensionPacks(); // extension packs
+    $productDescription->getVideos(); // urls video
+    $productDescription->getProductId(); // product id
+    ```
     
 
-5.  **Retrive account details, balance value and available credit**
+6.  **Retrieve account details, balance value and available credit**
 
     ```php
     $account = $client->getAccount();
@@ -105,7 +131,7 @@ For production release please remember to change endpoint from SANDBOX to LIVE.
     $account->getCurrentCredit(); // current credit value
     ```
     
-6.  **Create single code order**
+7.  **Create single code order**
 
     ```php
     $code = \CodesWholesale\Resource\Order::createOrder($product);
@@ -147,13 +173,13 @@ For production release please remember to change endpoint from SANDBOX to LIVE.
     
     ```
     
-7.  **Create order for multiple codes**
+8.  **Create order for multiple codes**
 
     ```php
     $codes = \CodesWholesale\Resource\Order::createBatchOrder($product, array('quantity' => 10));
     ```
     
-8.  **Receive pre-ordered codes from CW's post back request**
+9.  **Receive pre-ordered codes from CW's post back request**
 
     To receive pre-ordered codes from CW at first point you must configure your post back URL that will be responsible for handling CW's requests. In order to do that, follow this steps:
     
