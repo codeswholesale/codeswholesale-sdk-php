@@ -99,7 +99,7 @@ For production release please remember to change endpoint from SANDBOX to LIVE.
     $product = \CodesWholesale\Resource\Product::get($productHref);
     $productDescription = $product->getProductDescription();
 
-    $productDescription->getLocalizedTitles(); // 
+    $productDescription->getLocalizedTitles(); // localized titles
     $productDescription->getPegiRating(); // pegi rating
     $productDescription->getPlatform(); // platform such as PC/Mac
     $productDescription->getFactSheets(); // description in different langauges
