@@ -65,7 +65,7 @@ class ProductDescription extends Resource
      */
     public function getFactSheets()
     {
-        return $this->dataStore->instantiateByArray(
+        return $this->dataStore->instantiateByArrayOf(
             ProductDescriptionFieldContainer::FACT_SHEET,
             $this->getProperty(self::FACT_SHEETS)
         );
@@ -76,7 +76,7 @@ class ProductDescription extends Resource
      */
     public function getReleases()
     {
-        return $this->dataStore->instantiateByArray(
+        return $this->dataStore->instantiateByArrayOf(
             ProductDescriptionFieldContainer::RELEASE,
             $this->getProperty(self::RELEASES)
         );
@@ -159,7 +159,7 @@ class ProductDescription extends Resource
      */
     public function getPhotos()
     {
-        return $this->dataStore->instantiateByArray(
+        return $this->dataStore->instantiateByArrayOf(
             ProductDescriptionFieldContainer::PHOTO,
             $this->getProperty(self::PHOTOS)
         );
@@ -178,7 +178,7 @@ class ProductDescription extends Resource
      */
     public function getVideos()
     {
-        return $this->dataStore->instantiateByArray(
+        return $this->dataStore->instantiateByArrayOf(
             ProductDescriptionFieldContainer::VIDEO,
             $this->getProperty(self::VIDEOS)
         );
