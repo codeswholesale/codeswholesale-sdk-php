@@ -9,21 +9,16 @@
 namespace CodesWholesale\Storage;
 
 use Sainsburys\Guzzle\Oauth2\AccessToken;
-use Sainsburys\Guzzle\Oauth2\GrantType\RefreshToken;
-
 
 interface Storage
 {
-    public function storeAccessToken(AccessToken $accessToken);
+    public function storeAccessToken(AccessToken $accessToken, $clientConfigId);
 
     /**
+     * @param string $clientConfigId
      * @return AccessToken
      */
-    public function getAccessToken();
-    public function deleteAccessToken(AccessToken $accessToken);
-
-    public function storeRefreshToken(RefreshToken $refreshToken);
-    public function getRefreshToken();
-    public function deleteRefreshToken(RefreshToken $refreshToken);
+    public function getAccessToken($clientConfigId);
+    public function deleteAccessToken(AccessToken $accessToken, $clientConfigId);
 
 }
