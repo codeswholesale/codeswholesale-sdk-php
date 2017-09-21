@@ -54,10 +54,10 @@ class CodesWholesaleApi
         $handlerStack->push($middleware->onBefore());
         $handlerStack->push($middleware->onFailure(5));
 
-        if(false === $storage->getAccessToken()) {
-            $storage->storeAccessToken($middleware->getAccessToken());
+        if(false === $storage->getAccessToken($this->clientConfigId)) {
+            $storage->storeAccessToken($middleware->getAccessToken(), $this->clientConfigId);
         } else {
-            $middleware->setAccessToken($storage->getAccessToken());
+            $middleware->setAccessToken($storage->getAccessToken($this->clientConfigId));
         }
 
         $this->client = new Client([
