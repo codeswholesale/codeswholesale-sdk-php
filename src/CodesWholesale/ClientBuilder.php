@@ -27,7 +27,7 @@ class ClientBuilder
     protected function init()
     {
         if (!$this->oauthApi) {
-            $this->oauthApi = new CodesWholesaleApi(self::CONFIGURATION_ID, $this->clientConfig, $this->clientConfig->getStorage(), new \GuzzleHttp\Client());
+            $this->oauthApi = new CodesWholesaleApi(self::CONFIGURATION_ID, $this->clientConfig);
         }
     }
 

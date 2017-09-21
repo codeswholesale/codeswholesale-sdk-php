@@ -4,74 +4,41 @@ namespace CodesWholesale\Http;
 
 
 use CodesWholesale\CodesWholesaleApi;
-use Guzzle\Http\Message\RequestInterface;
-use fkooman\Guzzle\Plugin\BearerAuth\BearerAuth;
 use CodesWholesale\Util\OAuthError;
 
 class HttpClientRequestExecutor implements RequestExecutor
 {
-    private $oauthApi;
-    private $httpClient;
+    /**
+     * @var CodesWholesaleApi
+     */
+    private $cwClient;
     private $clientHeaders;
 
-    public function __construct(CodesWholesaleApi $oauthApi, array $clientHeaders)
+    public function __construct(CodesWholesaleApi $cwClient, array $clientHeaders)
     {
         $this->clientHeaders = $clientHeaders;
-        $this->oauthApi = $oauthApi;
-        $this->httpClient = new \Guzzle\Http\Client();
-        $this->httpClient->setConfig(array(\Guzzle\Http\Client::REQUEST_OPTIONS => array(
-               'allow_redirects' => false,
-               'exceptions' => false, // do not throw exceptions from the client
-               'verify' => false // do not verify SSL certificate
-         )));
+        $this->cwClient = $cwClient;
     }
 
     public function executeRequest(Request $request, $redirectsLimit = 10)
     {
         $this->addClientHeaders($request);
 
-        $accessToken = $this->oauthApi->getToken();
+        $accessToken = $this->cwClient->getToken();
 
-        if(false === $accessToken) {
+        if($accessToken === null) {
             throw new OAuthError("The access token that you've provided is not valid, check your credentials or endpoint.");
         }
 
-        $bearerAuth = new BearerAuth($accessToken->getAccessToken());
-        $this->httpClient->addSubscriber($bearerAuth);
+        $response = $this->cwClient->request($request->getMethod(), $request->getResourceUrl(), ['headers' => $request->getHeaders()]);
 
-        $httpRequest = $this->httpClient->
-                        createRequest(
-                            $method = $request->getMethod(),
-                            $uri = $request->getResourceUrl(),
-                            $headers = $request->getHeaders(),
-                            $body = $request->getBody());
-
-        $this->addQueryString($request->getQueryString(), $httpRequest);
-
-        $response = $httpRequest->send();
-
-        if ($response->isRedirect() && $redirectsLimit)
+        if ($response->getStatusCode() != 200 && $redirectsLimit)
         {
             $request->setResourceUrl($response->getHeader('location'));
             return $this->executeRequest($request, --$redirectsLimit);
-
         }
 
-        return new DefaultResponse($response->getStatusCode(),
-                                   $response->getContentType(),
-                                   $response->getBody(true),
-                                   $response->getContentLength());
-
-    }
-
-    private function addQueryString(array $queryString, RequestInterface $request)
-    {
-        ksort($queryString);
-
-        foreach($queryString as $key => $value)
-        {
-            $request->getQuery()->set($key, $value);
-        }
+        return new DefaultResponse($response->getStatusCode(), "", $response->getBody(), "");
     }
 
     /**
