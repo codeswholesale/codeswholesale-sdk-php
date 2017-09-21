@@ -19,7 +19,7 @@ $params = array(
      * Due to security reasons you should use SessionStorage only while testing.
      * In order to go live you should change it do database storage.
      */
-    'cw.token_storage' => 'session'
+    'cw.token_storage' => new \CodesWholesale\Storage\TokenSessionStorage()
 );
 /**
  * Session information is stored under
