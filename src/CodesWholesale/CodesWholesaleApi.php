@@ -54,7 +54,8 @@ class CodesWholesaleApi
         $handlerStack->push($middleware->onBefore());
         $handlerStack->push($middleware->onFailure(5));
 
-        if(false === $storage->getAccessToken($this->clientConfigId)) {
+        $accessToken = $storage->getAccessToken($this->clientConfigId);
+        if(false === $accessToken || $accessToken->isExpired()) {
             $storage->storeAccessToken($middleware->getAccessToken(), $this->clientConfigId);
         } else {
             $middleware->setAccessToken($storage->getAccessToken($this->clientConfigId));
