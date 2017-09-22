@@ -8,7 +8,6 @@
 
 namespace CodesWholesale;
 
-
 use GuzzleHttp\Client;
 use GuzzleHttp\HandlerStack;
 use Sainsburys\Guzzle\Oauth2\GrantType\ClientCredentials;
@@ -103,7 +102,7 @@ class CodesWholesaleApi
      * @return \Sainsburys\Guzzle\Oauth2\AccessToken
      */
     public function getToken() {
-        return $this->clientConfig->getStorage()->getAccessToken();
+        return $this->clientConfig->getStorage()->getAccessToken($this->clientConfigId);
     }
 
 }
