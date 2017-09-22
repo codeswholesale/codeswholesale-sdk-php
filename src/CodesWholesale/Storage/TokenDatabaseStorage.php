@@ -6,9 +6,8 @@
  * Time: 22:45
  */
 
-namespace CodesWholesale\CodesWholesale\Storage;
+namespace CodesWholesale\Storage;
 
-use CodesWholesale\Storage\Storage;
 use PDO;
 use Sainsburys\Guzzle\Oauth2\AccessToken;
 
@@ -79,42 +78,5 @@ class TokenDatabaseStorage implements Storage
         $stmt->execute();
 
         return 1 === $stmt->rowCount();
-    }
-
-    public static function createTableQueries($prefix)
-    {
-        $query = array();
-        $query[] = sprintf(
-            "CREATE TABLE IF NOT EXISTS %s (
-                client_config_id VARCHAR(255) NOT NULL,
-                user_id VARCHAR(255) NOT NULL,
-                scope VARCHAR(255) NOT NULL,
-                issue_time INTEGER NOT NULL,
-                access_token VARCHAR(255) NOT NULL,
-                token_type VARCHAR(255) NOT NULL,
-                expires_in INTEGER DEFAULT NULL,
-                UNIQUE (client_config_id , user_id , scope)
-            )",
-            $prefix . 'access_tokens'
-        );
-        return $query;
-    }
-    public function initDatabase()
-    {
-        $queries = self::createTableQueries($this->prefix);
-        foreach ($queries as $q) {
-            $this->db->query($q);
-        }
-
-        $tables = array('access_tokens');
-        foreach ($tables as $t) {
-            // make sure the tables are empty
-            $this->db->query(
-                sprintf(
-                    "DELETE FROM %s",
-                    $this->prefix . $t
-                )
-            );
-        }
     }
 }
