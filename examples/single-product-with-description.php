@@ -58,7 +58,7 @@ try{
      * \CodesWholesale\Resource\Product::get($url);
      *
      */
-    $product = \CodesWholesale\Resource\Product::get($randomProduct->getHref());
+    $product = \CodesWholesale\Resource\ProductDescription::get($randomProduct->getDescriptionHref());
     /**
      * Included from utils.php, displaying product details, just for testing purposes
      */
