@@ -5,8 +5,11 @@ namespace CodesWholesale;
 use CodesWholesale\Client\ProductImpl;
 use CodesWholesale\Client\AccountImpl;
 use \fkooman\OAuth\Client\Api;
+use fkooman\OAuth\Client\Http\CurlHttpClient;
+use fkooman\OAuth\Client\OAuthClient;
 use \fkooman\OAuth\Client\SessionStorage;
 use \fkooman\OAuth\Client\Scope;
+use fkooman\OAuth\Client\SessionTokenStorage;
 
 class ClientBuilder
 {
@@ -24,7 +27,7 @@ class ClientBuilder
     protected function init()
     {
         if (!$this->oauthApi) {
-            $this->oauthApi = new CodesWholesaleApi(self::CONFIGURATION_ID, $this->clientConfig, $this->clientConfig->getStorage(), new \Guzzle\Http\Client());
+            $this->oauthApi = new CodesWholesaleApi(self::CONFIGURATION_ID, $this->clientConfig);
         }
     }
 

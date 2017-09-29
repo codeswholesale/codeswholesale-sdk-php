@@ -9,6 +9,7 @@ use CodesWholesale\Resource\Error;
 use CodesWholesale\Resource\Resource;
 use CodesWholesale\Resource\ResourceError;
 use CodesWholesale\Util\Version;
+use InvalidArgumentException;
 
 class DefaultDataStore implements InternalDataStore
 {
@@ -198,7 +199,7 @@ class DefaultDataStore implements InternalDataStore
         $hrefPropName = Resource::HREF_PROP_NAME;
 
         if (!isset($properties->$hrefPropName)) {
-            throw new \InvalidArgumentException("Nested resource '#{$propertyName}' must have an 'href' property.");
+            throw new InvalidArgumentException("Nested resource '#{$propertyName}' must have an 'href' property.");
         }
 
         $href = $properties->$hrefPropName;

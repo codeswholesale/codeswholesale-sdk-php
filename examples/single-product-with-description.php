@@ -1,5 +1,4 @@
 <?php
-ini_set("display_errors", "on");
 session_start();
 
 require_once '../vendor/autoload.php';
@@ -19,8 +18,16 @@ $params = array(
     /**
      * Due to security reasons you should use SessionStorage only while testing.
      * In order to go live you should change it do database storage.
+     *
+     * If you want to use database storage use code below.
+     *
+     * new \CodesWholesale\Storage\TokenDatabaseStorage(
+     * new PDO('mysql:host=localhost;dbname=your_db_name', 'username', 'password'))
+     *
+     * Also remember to use SQL code included in import.sql file
+     *
      */
-    'cw.token_storage' => new \fkooman\OAuth\Client\SessionStorage()
+    'cw.token_storage' => new \CodesWholesale\Storage\TokenSessionStorage()
 );
 /**
  * Session information is stored under
@@ -30,12 +37,7 @@ $params = array(
  */
 $clientBuilder = new \CodesWholesale\ClientBuilder($params);
 $client = $clientBuilder->build();
-/**
- * If you would like to clean session storage you can use belows line,
- * sometimes you can expire this issue in you development.
- *
- * $_SESSION["php-oauth-client"]= array();
- */
+
 
 try{
     /**
@@ -56,7 +58,7 @@ try{
      * \CodesWholesale\Resource\Product::get($url);
      *
      */
-    $product = \CodesWholesale\Resource\Product::get($randomProduct->getHref());
+    $product = \CodesWholesale\Resource\ProductDescription::get($randomProduct->getDescriptionHref());
     /**
      * Included from utils.php, displaying product details, just for testing purposes
      */

@@ -96,8 +96,7 @@ For production release please remember to change endpoint from SANDBOX to LIVE.
 5.  **Retrieve product description**
 
     ```php
-    $product = \CodesWholesale\Resource\Product::get($productHref);
-    $productDescription = $product->getProductDescription();
+    $productDescription = \CodesWholesale\Resource\ProductDescription::get($product->getDescriptionHref());
 
     $productDescription->getLocalizedTitles(); // localized titles
     $productDescription->getPegiRating(); // pegi rating

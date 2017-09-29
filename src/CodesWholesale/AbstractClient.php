@@ -16,10 +16,10 @@ class AbstractClient {
 
     /**
      *
-     * @param \Guzzle\Http\Client $httpClient
+     * @param \GuzzleHttp\Client $httpClient
      * @param CodesWholesaleApi $oauthApi
      */
-    public function __construct(\Guzzle\Http\Client $httpClient, CodesWholesaleApi $oauthApi) {
+    public function __construct(\GuzzleHttp\Client $httpClient, CodesWholesaleApi $oauthApi) {
         $this->httpClient = $httpClient;
         $this->oauthApi = $oauthApi;
     }

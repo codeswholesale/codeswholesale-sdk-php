@@ -18,8 +18,16 @@ $params = array(
     /**
      * Due to security reasons you should use SessionStorage only while testing.
      * In order to go live you should change it do database storage.
+     *
+     * If you want to use database storage use code below.
+     *
+     * new \CodesWholesale\Storage\TokenDatabaseStorage(
+     * new PDO('mysql:host=localhost;dbname=your_db_name', 'username', 'password'))
+     *
+     * Also remember to use SQL code included in import.sql file
+     *
      */
-    'cw.token_storage' => new \fkooman\OAuth\Client\SessionStorage()
+    'cw.token_storage' => new \CodesWholesale\Storage\TokenSessionStorage()
 );
 /**
  * Session information is stored under

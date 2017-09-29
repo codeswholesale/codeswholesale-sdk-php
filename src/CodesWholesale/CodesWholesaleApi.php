@@ -8,69 +8,101 @@
 
 namespace CodesWholesale;
 
-use \fkooman\OAuth\Client\Api;
-use \fkooman\OAuth\Client\Context;
-use \fkooman\OAuth\Client\ClientConfigInterface;
-use \fkooman\OAuth\Client\StorageInterface;
-use \fkooman\OAuth\Client\AccessToken;
-use fkooman\OAuth\Common\Scope;
+use GuzzleHttp\Client;
+use GuzzleHttp\HandlerStack;
+use Sainsburys\Guzzle\Oauth2\GrantType\ClientCredentials;
+use Sainsburys\Guzzle\Oauth2\Middleware\OAuthMiddleware;
 
-class CodesWholesaleApi extends Api {
+class CodesWholesaleApi
+{
+    /**
+     * @var CodesWholesaleClientConfig
+     */
+    private $clientConfig;
 
     /**
-     * @var \fkooman\OAuth\Client\ClientConfigInterface
+     * @var string
      */
-    protected $clientConfig;
-    protected $httpClient;
-    protected $tokenStorage;
-    protected $clientConfigId;
+    private $clientConfigId;
 
-    public function __construct($clientConfigId, ClientConfigInterface $clientConfig, StorageInterface $tokenStorage, \Guzzle\Http\Client $httpClient)
+    /**
+     * @var Client
+     */
+    private $client;
+
+    /**
+     * CodesWholesaleApi constructor.
+     * @param $clientConfigId
+     * @param CodesWholesaleClientConfig $clientConfig
+     */
+    public function __construct($clientConfigId, CodesWholesaleClientConfig $clientConfig)
     {
-        parent::__construct($clientConfigId, $clientConfig, $tokenStorage, $httpClient);
-
         $this->clientConfig = $clientConfig;
-        $this->httpClient = $httpClient;
-        $this->tokenStorage = $tokenStorage;
         $this->clientConfigId = $clientConfigId;
+        $this->init();
     }
 
+    private function init()
+    {
+        $storage = $this->clientConfig->getStorage();
 
+        $oauthClient = new Client(['base_uri' => $this->clientConfig->getBaseUrl()]);
+        $grantType = new ClientCredentials($oauthClient, $this->clientConfig->getClientData());
+        $middleware = new OAuthMiddleware($oauthClient, $grantType);
+        $handlerStack = HandlerStack::create();
+        $handlerStack->push($middleware->onBefore());
+        $handlerStack->push($middleware->onFailure(5));
+
+        $accessToken = $storage->getAccessToken($this->clientConfigId);
+        if(false === $accessToken || $accessToken->isExpired()) {
+            $storage->storeAccessToken($middleware->getAccessToken(), $this->clientConfigId);
+        } else {
+            $middleware->setAccessToken($storage->getAccessToken($this->clientConfigId));
+        }
+
+        $this->client = new Client([
+            'handler' => $handlerStack,
+            'base_uri' => $this->clientConfig->getBaseUrl(),
+            'auth' => 'oauth2'
+        ]);
+    }
+
+    /**
+     * @param $method
+     * @param $uri
+     * @param array $options
+     * @return mixed|\Psr\Http\Message\ResponseInterface
+     */
+    public function request($method, $uri, array $options = [])
+    {
+        return $this->client->request($method, $uri, $options);
+    }
+
+    /**
+     * @param $uri
+     * @param array $options
+     * @return mixed|\Psr\Http\Message\ResponseInterface
+     */
+    public function get($uri, array $options = [])
+    {
+        return $this->request('GET', $uri, $options);
+    }
+
+    /**
+     * @param $uri
+     * @param array $options
+     * @return mixed|\Psr\Http\Message\ResponseInterface
+     */
+    public function post($uri, array $options = [])
+    {
+        return $this->request('POST', $uri, $options);
+    }
+
+    /**
+     * @return \Sainsburys\Guzzle\Oauth2\AccessToken
+     */
     public function getToken() {
-
-        $context = new Context($this->clientConfig->getClientId(), array("read", "write"));
-        $accessToken = parent::getAccessToken($context);
-
-        if(false === $accessToken) {
-            // request for access token using client_credentials when invalid or expired.
-            $tokenRequest = new CodesWholesaleTokenRequest($this->httpClient, $this->clientConfig);
-            $tokenResponse = $tokenRequest->withClientCredentials();
-
-            if (false === $tokenResponse) {
-                // unable to fetch with new access token
-                return false;
-            }
-
-            $accessToken = new AccessToken(
-                array(
-                    "client_config_id" => $this->clientConfigId,
-                    "user_id" => $context->getUserId(),
-                    "scope" => $context->getScope(),
-                    "access_token" => $tokenResponse->getAccessToken(),
-                    "token_type" => $tokenResponse->getTokenType(),
-                    "issue_time" => time(),
-                    "expires_in" => $tokenResponse->getExpiresIn()
-                )
-            );
-
-            $this->tokenStorage->storeAccessToken($accessToken);
-        }
-
-        if(false !== $accessToken) {
-            return $accessToken;
-        }
-
-        return false;
+        return $this->clientConfig->getStorage()->getAccessToken($this->clientConfigId);
     }
 
-} 
+}

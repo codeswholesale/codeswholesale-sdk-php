@@ -53,53 +53,13 @@ function displayProductDetails(\CodesWholesale\Resource\Product $product)
 /**
  * Helper method to display product details with description.
  *
- * @param \CodesWholesale\Resource\Product $product
+ * @param \CodesWholesale\Resource\ProductDescription
  */
-function displayProductDetailsWithDescription(\CodesWholesale\Resource\Product $product)
+function displayProductDetailsWithDescription(\CodesWholesale\Resource\ProductDescription $productDescription)
 {
-
-    echo "<b>" . $product->getProductId() . "</b> <br />";
-    echo $product->getName() . "(" . $product->getIdentifier() . ")" . "<br />";
-
-    if ($product->getReleaseDate()) {
-        echo "Release date: " . $product->getReleaseDate() . "<br />";
-    }
-
-    echo "Stock's quantity: " . $product->getStockQuantity() . "<br / >";
-
-    foreach ($product->getLanguages() as $lang) {
-        echo $lang . ", ";
-    }
-
-    echo " | ";
-
-    foreach ($product->getRegions() as $region) {
-        echo $region . ", ";
-    }
-
-    echo "<br />";
-    echo 'Medium image url: ' . $product->getImageUrl(ImageType::MEDIUM);
-    echo "<br />";
-    echo 'Small image url: ' . $product->getImageUrl(ImageType::SMALL);
-    echo "<br />";
-
-    foreach ($product->getPrices() as $price) {
-        echo $price->value . " from " . $price->from . " to " . ($price->to ? $price->to : "*") . " | ";
-    }
-
-    echo "Default price: " . $product->getDefaultPrice();
-    echo "<br />";
-
-    foreach ($product->getLinks() as $link) {
-        echo "link: " . $link->rel . "<br />";
-        echo "href: " . $link->href . "<br />";
-        echo "description: " . $link->href . "<br />";
-    }
-
     echo "<br />";
     echo "<b>Product Description</b>";
     echo "<hr>";
-    $productDescription = $product->getProductDescription();
 
     echo "<b>Localized Titles:</b>";
     foreach ($productDescription->getLocalizedTitles() as $localizedTitle) {
@@ -199,12 +159,6 @@ function displayProductDetailsWithDescription(\CodesWholesale\Resource\Product $
     echo "<br />";
     echo "ProductID: " . $productDescription->getProductId();
     echo "<br />";
-
-
-
-
-
-
 }
 
 /**

@@ -17,23 +17,32 @@
 
 namespace CodesWholesale;
 
-use \fkooman\OAuth\Client\ClientConfig;
-use \fkooman\OAuth\Client\ClientConfigInterface;
-use \fkooman\OAuth\Client\Exception\ClientConfigException;
-use fkooman\OAuth\Client\StorageInterface;
+use CodesWholesale\Exceptions\ClientConfigException;
+use CodesWholesale\Storage\Storage;
+use Sainsburys\Guzzle\Oauth2\GrantType\PasswordCredentials;
 
-class CodesWholesaleClientConfig extends ClientConfig implements ClientConfigInterface
+class CodesWholesaleClientConfig
 {
-    private $baseUrl;
     /**
-     * @var StorageInterface
+     * @var string
+     */
+    private $baseUrl;
+
+    /**
+     * @var array
+     */
+    private $clientHeaders;
+
+    /**
+     * @var array
+     */
+    private $clientData;
+
+    /**
+     * @var Storage
      */
     private $storage;
 
-    /**
-     * @var
-     */
-    private $clientHeaders;
 
     public function __construct(array $data)
     {
@@ -49,17 +58,14 @@ class CodesWholesaleClientConfig extends ClientConfig implements ClientConfigInt
 
         $this->baseUrl = $data['cw.endpoint_uri'];
         $this->storage = $data['cw.token_storage'];
-        $this->clientHeaders = isset($data['cw.client.headers']) ? $data['cw.client.headers'] : array();
-
-        $clientData = array(
-            "client_id" => $data['cw.client_id'],
-            "client_secret" => $data['cw.client_secret'],
-            "token_endpoint" => $data['cw.endpoint_uri'] . '/oauth/token',
-            "credentials_in_request_body" => true,
-            "authorize_endpoint" => $data['cw.endpoint_uri'] // not used with CW use case
+        $this->clientData = array(
+            PasswordCredentials::CONFIG_CLIENT_SECRET => $data['cw.client_secret'],
+            PasswordCredentials::CONFIG_CLIENT_ID => $data['cw.client_id'],
+            PasswordCredentials::CONFIG_TOKEN_URL => $data['cw.endpoint_uri'] . '/oauth/token',
+            'scope' => 'administration',
         );
 
-        parent::__construct($clientData);
+        $this->clientHeaders = isset($data['cw.client.headers']) ? $data['cw.client.headers'] : array();
     }
 
     /**
@@ -69,17 +75,25 @@ class CodesWholesaleClientConfig extends ClientConfig implements ClientConfigInt
         return $this->baseUrl;
     }
 
-    /**
-     * @return StorageInterface
-     */
-    public function getStorage() {
-        return $this->storage;
-    }
 
     /**
      * @return mixed
      */
     public function getClientHeaders() {
         return $this->clientHeaders;
+    }
+
+    /**
+     * @return Storage|mixed
+     */
+    public function getStorage() {
+        return $this->storage;
+    }
+
+    /**
+     * @return array
+     */
+    public function getClientData() {
+        return $this->clientData;
     }
 }
