@@ -30,7 +30,10 @@ class HttpClientRequestExecutor implements RequestExecutor
             throw new OAuthError("The access token that you've provided is not valid, check your credentials or endpoint.");
         }
 
-        $response = $this->cwClient->request($request->getMethod(), $request->getResourceUrl(), ['headers' => $request->getHeaders()]);
+        $response = $this->cwClient->request($request->getMethod(), $request->getResourceUrl(), [
+            'headers' => $request->getHeaders(),
+            'query' => $request->getQueryString()
+        ]);
 
         if ($response->getStatusCode() != 200 && $redirectsLimit)
         {
@@ -53,5 +56,4 @@ class HttpClientRequestExecutor implements RequestExecutor
             $request->setHeaders($headers);
         }
     }
-
 }
