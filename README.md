@@ -65,7 +65,7 @@ If you have not already done so, register at
         * Due to security reasons you should use SessionStorage only while testing.
         * In order to go live you should change it do database storage.
         */
-        'cw.token_storage' => new \fkooman\OAuth\Client\SessionStorage()
+        'cw.token_storage' => new \CodesWholesale\Storage\TokenSessionStorage()
     );
      
      
