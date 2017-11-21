@@ -54,10 +54,11 @@ class CodesWholesaleApi
         $handlerStack->push($middleware->onFailure(5));
 
         $accessToken = $storage->getAccessToken($this->clientConfigId);
-        if(false === $accessToken || $accessToken->isExpired()) {
+        if(false === $accessToken) {
             $storage->storeAccessToken($middleware->getAccessToken(), $this->clientConfigId);
-        } else {
-            $middleware->setAccessToken($storage->getAccessToken($this->clientConfigId));
+        } elseif($accessToken->isExpired()) {
+            $storage->deleteAccessToken($accessToken, $this->clientConfigId);
+            $storage->storeAccessToken($middleware->getAccessToken(), $this->clientConfigId);
         }
 
         $this->client = new Client([
