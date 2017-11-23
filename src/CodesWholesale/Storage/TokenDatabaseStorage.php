@@ -19,11 +19,15 @@ class TokenDatabaseStorage implements Storage
     /** @var string */
     private $prefix;
 
-    public function __construct(PDO $db, $prefix = "")
+    /** @var string */
+    private $expiration;
+
+    public function __construct(PDO $db, $prefix = '', $expiration='expires_in')
     {
         $this->db = $db;
         $this->db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         $this->prefix = $prefix;
+        $this->expiration = $expiration;
     }
 
     public function getAccessToken($clientConfigId)
@@ -40,7 +44,7 @@ class TokenDatabaseStorage implements Storage
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
         if (false !== $result) {
             return new AccessToken($result['access_token'], $result['token_type'], [
-                'expires_in' => $result['expires_in']
+                $this->expiration => $result[$this->expiration]
             ]);
         }
         return false;
@@ -50,15 +54,15 @@ class TokenDatabaseStorage implements Storage
     {
         $stmt = $this->db->prepare(
             sprintf(
-                "INSERT INTO %s (client_config_id, scope, access_token, token_type, expires_in) VALUES(:client_config_id, :scope, :access_token, :token_type, :expires_in)",
-                $this->prefix . 'access_tokens'
+                "INSERT INTO %s (client_config_id, scope, access_token, token_type, %s) VALUES(:client_config_id, :scope, :access_token, :token_type, :expiration)",
+                $this->prefix . 'access_tokens',  $this->expiration
             )
         );
         $stmt->bindValue(":client_config_id", $clientConfigId, PDO::PARAM_STR);
         $stmt->bindValue(":scope", $accessToken->getScope(), PDO::PARAM_STR);
         $stmt->bindValue(":access_token", $accessToken->getToken(), PDO::PARAM_STR);
         $stmt->bindValue(":token_type", $accessToken->getType(), PDO::PARAM_STR);
-        $stmt->bindValue(":expires_in", $accessToken->getExpires()->getTimestamp(), PDO::PARAM_INT);
+        $stmt->bindValue(":expiration", $accessToken->getExpires()->getTimestamp(), PDO::PARAM_INT);
 
         $stmt->execute();
 
