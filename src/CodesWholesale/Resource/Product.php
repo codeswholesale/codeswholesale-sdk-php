@@ -15,7 +15,6 @@ use CodesWholesale\Exceptions\NoImagesFoundException;
 
 class Product extends Resource
 {
-
     const NAME = "name";
     const IDENTIFIER = "identifier";
     const PLATFORM = "platform";
@@ -31,14 +30,9 @@ class Product extends Resource
     const PATH = "products";
 
     /**
-     * @var string
-     */
-    private $imageUrl;
-
-    /**
      * @param $href
      * @param array $options
-     * @return \CodesWholesale\Resource\Product
+     * @return Product|object
      */
     public static function get($href, array $options = array())
     {
@@ -94,6 +88,14 @@ class Product extends Resource
     }
 
     /**
+     * @return string|uri
+     */
+    public function getDescriptionHref()
+    {
+        return $this->getHrefRel(self::DESCRIPTION_HREF_REL_NAME);
+    }
+
+    /**
      * @param $format
      * @return mixed
      * @throws NoImagesFoundException
@@ -106,14 +108,6 @@ class Product extends Resource
                 return $image->image;
         }
         throw new NoImagesFoundException();
-    }
-
-    /**
-     * @return array
-     */
-    public function getPrices()
-    {
-        return $this->getProperty(self::PRICES);
     }
 
     /**
@@ -140,6 +134,14 @@ class Product extends Resource
     }
 
     /**
+     * @return array
+     */
+    public function getPrices()
+    {
+        return $this->getProperty(self::PRICES);
+    }
+
+    /**
      * Returns lowest price for product.
      *
      * @return decimal
@@ -162,13 +164,5 @@ class Product extends Resource
     public function getBuyHref()
     {
         return $this->getHrefRel(self::BUY_HREF_REL_NAME);
-    }
-
-    /**
-     * @return string|uri
-     */
-    public function getDescriptionHref()
-    {
-        return $this->getHrefRel(self::DESCRIPTION_HREF_REL_NAME);
     }
 } 

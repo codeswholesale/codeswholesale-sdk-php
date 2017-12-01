@@ -26,7 +26,7 @@ class HttpClientRequestExecutor implements RequestExecutor
 
         $accessToken = $this->cwClient->getToken();
 
-        if($accessToken === null) {
+        if ($accessToken === null) {
             throw new OAuthError("The access token that you've provided is not valid, check your credentials or endpoint.");
         }
 
@@ -35,8 +35,7 @@ class HttpClientRequestExecutor implements RequestExecutor
             'query' => $request->getQueryString()
         ]);
 
-        if ($response->getStatusCode() != 200 && $redirectsLimit)
-        {
+        if ($response->getStatusCode() != 200 && $redirectsLimit) {
             $request->setResourceUrl($response->getHeader('location'));
             return $this->executeRequest($request, --$redirectsLimit);
         }

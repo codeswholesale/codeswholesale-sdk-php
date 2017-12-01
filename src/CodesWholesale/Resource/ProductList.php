@@ -4,9 +4,11 @@ namespace CodesWholesale\Resource;
 
 use CodesWholesale\CodesWholesale;
 
-class ProductList extends AbstractCollectionResource {
+class ProductList extends AbstractCollectionResource
+{
 
-    function getItemClassName() {
+    function getItemClassName()
+    {
         return CodesWholesale::PRODUCT;
     }
 

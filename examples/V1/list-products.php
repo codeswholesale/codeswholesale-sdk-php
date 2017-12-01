@@ -1,8 +1,8 @@
 <?php
 session_start();
-
-require_once '../vendor/autoload.php';
-require_once 'utils.php';
+ini_set("display_errors", "on");
+require_once '../../vendor/autoload.php';
+require_once '../utils.php';
 
 $params = array(
     /**
@@ -43,34 +43,41 @@ $client = $clientBuilder->build();
  *
  * $_SESSION["php-oauth-client"]= array();
  */
+$_SESSION["php-oauth-client"] = array();
 
-try{
+try {
     /**
      * Retrieve all products from price list
      */
     $products = $client->getProducts();
+
     /**
-     * Chose an random product
+     * List products by filters
      */
-    $randomIndex = rand(0, count($products)-1);
-    $randomProduct = $products->get($randomIndex);
+//    $products = $client->getProducts([
+//        "inStockDaysAgo" => 100
+//    ]);
+
     /**
-     * Find a product by Href this is an id of product.
-     *
-     * Or directly by href url
-     *
-     * $url = "https://api.codeswholesale.com/v1/products/8cc3f405-8453-4031-be49-f826814faa0c";
-     * \CodesWholesale\Resource\Product::get($url);
-     *
+     * List products by region/language/platform filters
+     * You can separate filters using comma separator
      */
-    $product = \CodesWholesale\Resource\Product::get($randomProduct->getHref());
+//    $products = $client->getProducts([
+//        "language" => "Multilanguage",
+//        "platform" => "Steam",
+//        "region"   => "WORLDWIDE"
+//    ]);
+
     /**
-     * Included from utils.php, displaying product details, just for testing purposes
+     * Display each in foreach loop
      */
-    displayProductDetails($product);
+    foreach ($products as $product) {
+        displayProductDetails($product);
+    }
+
 } catch (\CodesWholesale\Resource\ResourceError $e) {
 
-    if($e->isInvalidToken()) {
+    if ($e->isInvalidToken()) {
         echo "if you are using SessionStorage refresh your session and try one more time.";
     }
 
@@ -79,8 +86,10 @@ try{
     echo $e->getMoreInfo();
     echo $e->getDeveloperMessage();
     echo $e->getMessage();
-}
 
+} catch (Exception $exception) {
+    echo $exception->getMessage();
+}
 
 
 

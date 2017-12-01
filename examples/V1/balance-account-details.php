@@ -1,8 +1,8 @@
 <?php
 session_start();
-
-require_once '../vendor/autoload.php';
-require_once 'utils.php';
+ini_set("display_errors", "on");
+require_once '../../vendor/autoload.php';
+require_once '../utils.php';
 
 $params = array(
     /**
@@ -43,32 +43,14 @@ $client = $clientBuilder->build();
  *
  * $_SESSION["php-oauth-client"]= array();
  */
-$_SESSION["php-oauth-client"]= array();
-
-try{
-    /**
-     * Retrieve all products from price list
-     */
-    $products = $client->getProducts();
-    /**
-     * Display each in foreach loop
-     */
-    foreach($products as $product) {
-        displayProductDetails($product);
-    }
-
-} catch (\CodesWholesale\Resource\ResourceError $e) {
-
-    if($e->isInvalidToken()) {
-        echo "if you are using SessionStorage refresh your session and try one more time.";
-    }
-
-    echo $e->getCode();
-    echo $e->getErrorCode();
-    echo $e->getMoreInfo();
-    echo $e->getDeveloperMessage();
-    echo $e->getMessage();
-}
+/**
+ * Retrieve account details
+ */
+$account = $client->getAccount();
+/**
+ * Included from utils.php, displaying account details, just for testing purposes
+ */
+displayAccountDetails($account);
 
 
 

@@ -3,8 +3,8 @@
 namespace CodesWholesale\Http;
 
 
-interface HttpMessage {
-
+interface HttpMessage
+{
     public function getHeaders();
 
     public function setHeaders(array $headers);

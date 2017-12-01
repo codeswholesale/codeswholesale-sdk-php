@@ -2,13 +2,10 @@
 
 namespace CodesWholesale\DataStore;
 
-
 class DefaultResourceFactory implements ResourceFactory
 {
-
-    private $dataStore;
-
     const RESOURCE_PATH = 'CodesWholesale\Resource\\';
+    private $dataStore;
 
     public function __construct(InternalDataStore $dataStore)
     {
@@ -26,13 +23,11 @@ class DefaultResourceFactory implements ResourceFactory
 
     private function qualifyClassName($className)
     {
-        if (strpos($className, self::RESOURCE_PATH) === false)
-        {
-            return self::RESOURCE_PATH .$className;
+        if (strpos($className, self::RESOURCE_PATH) === false) {
+            return self::RESOURCE_PATH . $className;
         }
 
         return $className;
-
     }
 
 }

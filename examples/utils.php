@@ -73,6 +73,9 @@ function displayProductDetailsWithDescription(\CodesWholesale\Resource\ProductDe
     echo "<b>Fact Sheets:</b>";
     echo "<br />";
     foreach ($productDescription->getFactSheets() as $factSheet) {
+        /**
+         * @var \CodesWholesale\Resource\FactSheet $factSheet
+         */
         echo "Territory: " . $factSheet->getTerritory();
         echo "<br />";
         echo "Description: " . $factSheet->getDescription();
@@ -82,6 +85,9 @@ function displayProductDetailsWithDescription(\CodesWholesale\Resource\ProductDe
     echo "<b>Releases:</b>";
     echo "<br />";
     foreach ($productDescription->getReleases() as $release) {
+        /**
+         * @var \CodesWholesale\Resource\Release $release
+         */
         echo "Release Status: " . $release->getStatus();
         echo "<br />";
         echo "Release Date: " . $release->getDate();
@@ -125,6 +131,9 @@ function displayProductDetailsWithDescription(\CodesWholesale\Resource\ProductDe
     echo "<b>Photos</b>";
     echo "<br />";
     foreach ($productDescription->getPhotos() as $photo) {
+        /**
+         * @var \CodesWholesale\Resource\Photo $photo
+         */
         echo "URL: " . $photo->getUrl();
         echo "<br />";
         echo "Type: " . $photo->getType();
@@ -144,6 +153,9 @@ function displayProductDetailsWithDescription(\CodesWholesale\Resource\ProductDe
     echo "<b>Videos</b>";
     echo "<br />";
     foreach ($productDescription->getVideos() as $video) {
+        /**
+         * @var \CodesWholesale\Resource\Video $video
+         */
         echo "Preview: " . $video->getPreviewFrameUrl();
         echo "<br />";
         echo "Age Warning: " . $video->getAgeWarning();
@@ -174,3 +186,11 @@ function displayAccountDetails(\CodesWholesale\Resource\Account $account)
     echo "Current account balance : " . number_format($account->getCurrentBalance(), 2) . "<br />";
     echo "Current account credit : " . number_format($account->getCurrentCredit(), 2) . "<br />";
 }
+
+function displayFilters($filters)
+{
+    foreach ($filters as $filter) {
+        echo $filter->getName() . "<br>";
+    }
+}
+

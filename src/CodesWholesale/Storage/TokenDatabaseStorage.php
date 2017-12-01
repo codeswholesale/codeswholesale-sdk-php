@@ -22,7 +22,7 @@ class TokenDatabaseStorage implements Storage
     /** @var string */
     private $expiration;
 
-    public function __construct(PDO $db, $prefix = '', $expiration='expires_in')
+    public function __construct(PDO $db, $prefix = '', $expiration = 'expires_in')
     {
         $this->db = $db;
         $this->db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
@@ -55,7 +55,7 @@ class TokenDatabaseStorage implements Storage
         $stmt = $this->db->prepare(
             sprintf(
                 "INSERT INTO %s (client_config_id, scope, access_token, token_type, %s) VALUES(:client_config_id, :scope, :access_token, :token_type, :expiration)",
-                $this->prefix . 'access_tokens',  $this->expiration
+                $this->prefix . 'access_tokens', $this->expiration
             )
         );
         $stmt->bindValue(":client_config_id", $clientConfigId, PDO::PARAM_STR);

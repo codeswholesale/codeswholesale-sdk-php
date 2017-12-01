@@ -49,21 +49,21 @@ class TokenSessionStorage implements Storage
 
     public function deleteAccessToken(AccessToken $accessToken, $clientConfigId)
     {
-        if (!isset($_SESSION['php-oauth-client']['access_token'])) {
-            return false;
-        }
-
-        foreach ($_SESSION['php-oauth-client']['access_token'] as $k => $t) {
-            $token = unserialize($t);
-            if ($accessToken->getToken() !== $token()) {
-                continue;
-            }
-            unset($_SESSION['php-oauth-client']['access_token'][$k]);
-
-            return true;
-        }
-
-        return false;
+//        if (!isset($_SESSION['php-oauth-client']['access_token'])) {
+//            return false;
+//        }
+//
+//        foreach ($_SESSION['php-oauth-client']['access_token'] as $k => $t) {
+//            $token = unserialize($t);
+//            if ($accessToken->getToken() !== $token()) {
+//                continue;
+//            }
+//            unset($_SESSION['php-oauth-client']['access_token'][$k]);
+//
+//            return true;
+//        }
+//
+//        return false;
     }
 
 }

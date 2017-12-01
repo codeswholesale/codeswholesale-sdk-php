@@ -19,6 +19,7 @@ interface Storage
      * @return AccessToken
      */
     public function getAccessToken($clientConfigId);
+
     public function deleteAccessToken(AccessToken $accessToken, $clientConfigId);
 
 }

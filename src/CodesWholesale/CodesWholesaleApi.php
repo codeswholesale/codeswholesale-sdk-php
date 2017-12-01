@@ -46,7 +46,11 @@ class CodesWholesaleApi
     {
         $storage = $this->clientConfig->getStorage();
 
-        $oauthClient = new Client(['base_uri' => $this->clientConfig->getBaseUrl()]);
+        $oauthClient = new Client([
+            'base_uri' => $this->clientConfig->getBaseUrl(),
+            'http_errors' => false
+        ]);
+
         $grantType = new ClientCredentials($oauthClient, $this->clientConfig->getClientData());
         $middleware = new OAuthMiddleware($oauthClient, $grantType);
         $handlerStack = HandlerStack::create();
@@ -54,9 +58,9 @@ class CodesWholesaleApi
         $handlerStack->push($middleware->onFailure(5));
 
         $accessToken = $storage->getAccessToken($this->clientConfigId);
-        if(false === $accessToken) {
+        if (false === $accessToken) {
             $storage->storeAccessToken($middleware->getAccessToken(), $this->clientConfigId);
-        } elseif($accessToken->isExpired()) {
+        } elseif ($accessToken->isExpired()) {
             $storage->deleteAccessToken($accessToken, $this->clientConfigId);
             $storage->storeAccessToken($middleware->getAccessToken(), $this->clientConfigId);
         }
@@ -66,6 +70,16 @@ class CodesWholesaleApi
             'base_uri' => $this->clientConfig->getBaseUrl(),
             'auth' => 'oauth2'
         ]);
+    }
+
+    /**
+     * @param $uri
+     * @param array $options
+     * @return mixed|\Psr\Http\Message\ResponseInterface
+     */
+    public function get($uri, array $options = [])
+    {
+        return $this->request('GET', $uri, $options);
     }
 
     /**
@@ -84,16 +98,6 @@ class CodesWholesaleApi
      * @param array $options
      * @return mixed|\Psr\Http\Message\ResponseInterface
      */
-    public function get($uri, array $options = [])
-    {
-        return $this->request('GET', $uri, $options);
-    }
-
-    /**
-     * @param $uri
-     * @param array $options
-     * @return mixed|\Psr\Http\Message\ResponseInterface
-     */
     public function post($uri, array $options = [])
     {
         return $this->request('POST', $uri, $options);
@@ -102,7 +106,8 @@ class CodesWholesaleApi
     /**
      * @return \Sainsburys\Guzzle\Oauth2\AccessToken
      */
-    public function getToken() {
+    public function getToken()
+    {
         return $this->clientConfig->getStorage()->getAccessToken($this->clientConfigId);
     }
 

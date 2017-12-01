@@ -17,7 +17,7 @@ class Order extends Resource
     /**
      *
      * @param Product $product
-     * @return Code
+     * @return Code|object
      */
     public static function createOrder(Product $product)
     {
@@ -28,7 +28,7 @@ class Order extends Resource
      *
      * @param Product $product
      * @param array $options
-     * @return CodeList
+     * @return CodeList|object
      */
     public static function createBatchOrder(Product $product, array $options = array())
     {
@@ -36,7 +36,9 @@ class Order extends Resource
     }
 
     /**
-     *
+     * @param ProductOrdered $productOrdered
+     * @param array $options
+     * @return CodeList|object
      */
     public static function getCodes(ProductOrdered $productOrdered, array $options = array())
     {

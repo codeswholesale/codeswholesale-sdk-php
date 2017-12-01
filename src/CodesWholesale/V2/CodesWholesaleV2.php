@@ -1,7 +1,6 @@
 <?php
 
-namespace CodesWholesale;
-
+namespace CodesWholesale\V2;
 /*
  * Copyright 2013 CodesWholesale, Inc.
  *
@@ -17,40 +16,38 @@ namespace CodesWholesale;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-// @codeCoverageIgnoreStart
-
 function CodesWholesale_autoload($className)
 {
-    if (substr($className, 0, 9) != 'CodesWholesale') {
+    if (substr($className, 0, 9) != 'CodesWholesaleV2') {
         return false;
     }
     $file = str_replace('\\', '/', $className);
     return include dirname(__FILE__) . "$file";
 }
 
-// @codeCoverageIgnoreEnd
-
 spl_autoload_register('CodesWholesale\CodesWholesale_autoload');
 
-class CodesWholesale
+class CodesWholesaleV2
 {
-    const ACCOUNT = "Account";
+    const API_VERSION = 'v2';
 
-    const CODE = "Code";
-    const CODE_LIST = "CodeList";
+    const PRODUCT_LIST_V2 = "V2\ProductListV2";
+    const PRODUCT_V2 = "V2\ProductV2";
 
-    const ORDER = "Order";
+    const CODE_LIST_V2 = "V2\CodeListV2";
+    const CODE_V2 = "V2\CodeV2";
 
-    const PRODUCT = "Product";
-    const PRODUCT_DESCRIPTION = "ProductDescription";
-    const PRODUCT_LIST = "ProductList";
-    const PRODUCT_ORDERED = "ProductOrdered";
+    const ORDER_V2 = "V2\OrderV2";
 
-    const EXCEPTION_RESOURCE = "ExceptionResource";
+    const REGION_LIST_V2 = "V2\RegionList";
+    const REGION_V2 = "V2\Region";
 
-    const API_VERSION = 'v1';
+    const PLATFORM_LIST_V2 = "V2\PlatformList";
+    const PLATFORM_V2 = "V2\Platform";
 
-    const SANDBOX_ENDPOINT = 'https://sandbox.codeswholesale.com';
-    const LIVE_ENDPOINT = 'https://api.codeswholesale.com';
+    const LANGUAGE_LIST_V2 = "V2\LanguageList";
+    const LANGUAGE_V2 = "V2\Language";
+
+    const ORDER_REQUEST = "V2\OrderRequest";
+    const PRODUCT_ENTRY_REQUEST = "V2\ProductEntryRequest";
 }

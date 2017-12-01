@@ -2,8 +2,8 @@
 
 session_start();
 
-require_once '../vendor/autoload.php';
-require_once 'utils.php';
+require_once '../../vendor/autoload.php';
+require_once '../utils.php';
 
 $params = array(
     /**

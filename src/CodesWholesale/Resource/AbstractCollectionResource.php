@@ -2,28 +2,19 @@
 
 namespace CodesWholesale\Resource;
 
-use CodesWholesale\CodesWholesale;
-
 abstract class AbstractCollectionResource extends Resource implements \IteratorAggregate, \Countable
 {
-    const ITEMS  = "items";
+    protected $collectionField = "items";
     private $values;
-
-    abstract function getItemClassName();
 
     /**
      * @param int $index
      * @return Product
      */
-    public function get($index) {
-        $items = $this->toResourceArray($this->getValues());
-        return $items[$index];
-    }
-
-    public function getCurrentPage()
+    public function get($index)
     {
         $items = $this->toResourceArray($this->getValues());
-        return new Page(0, count($items), $items);
+        return $items[$index];
     }
 
     private function toResourceArray(array $values)
@@ -32,8 +23,7 @@ abstract class AbstractCollectionResource extends Resource implements \IteratorA
         $resourceArray = array();
 
         $i = 0;
-        foreach($values as $value)
-        {
+        foreach ($values as $value) {
             $resource = $this->toResource($className, $value);
             $resourceArray[$i] = $resource;
             $i++;
@@ -42,9 +32,19 @@ abstract class AbstractCollectionResource extends Resource implements \IteratorA
         return $resourceArray;
     }
 
+    abstract function getItemClassName();
+
     protected function toResource($className, \stdClass $properties)
     {
         return $this->dataStore->instantiate($className, $properties);
+    }
+
+    private function getValues()
+    {
+        if (!$this->values) {
+            $this->values = $this->getProperty($this->collectionField);
+        }
+        return $this->values;
     }
 
     public function getIterator()
@@ -52,14 +52,14 @@ abstract class AbstractCollectionResource extends Resource implements \IteratorA
         return new \ArrayIterator($this->getCurrentPage()->getItems());
     }
 
-    public function count() {
-        return count($this->getValues());
+    public function getCurrentPage()
+    {
+        $items = $this->toResourceArray($this->getValues());
+        return new Page(0, count($items), $items);
     }
 
-    private function getValues() {
-        if(!$this->values) {
-            $this->values = $this->getProperty(self::ITEMS);
-        }
-        return $this->values;
+    public function count()
+    {
+        return count($this->getValues());
     }
 }
