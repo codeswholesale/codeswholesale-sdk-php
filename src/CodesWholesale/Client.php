@@ -101,10 +101,10 @@ class Client extends Magic
     /**
      * @param $href
      * @param Resource $resource
-     * @param Resource|object $returnType
+     * @param $returnType
      * @return Resource|object
      */
-    public static function createOrder($href, Resource $resource, Resource $returnType)
+    public static function createOrder($href, Resource $resource, $returnType)
     {
         return self::getInstance()->dataStore->create($href, $resource, $returnType, []);
     }

@@ -32,7 +32,8 @@ class HttpClientRequestExecutor implements RequestExecutor
 
         $response = $this->cwClient->request($request->getMethod(), $request->getResourceUrl(), [
             'headers' => $request->getHeaders(),
-            'query' => $request->getQueryString()
+            'query' => $request->getQueryString(),
+            'body' => $request->getBody()
         ]);
 
         if ($response->getStatusCode() != 200 && $redirectsLimit) {

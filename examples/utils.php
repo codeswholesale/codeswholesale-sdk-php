@@ -194,3 +194,44 @@ function displayFilters($filters)
     }
 }
 
+function displayCreatedOrder(\CodesWholesale\Resource\V2\OrderV2 $createdOrder)
+{
+    echo "<hr>";
+    echo "<b>Order Details</b>";
+    echo "<hr>";
+    echo "Order ID: " . $createdOrder->getOrderId() . " <br>";
+    echo "Client Order ID: " . $createdOrder->getClientOrderId() . " <br>";
+    echo "Total Price: " . $createdOrder->getTotalPrice() . " <br>";
+    echo "<br>";
+    echo "<hr>";
+    echo "<b>Ordered Codes</b>";
+    echo "<hr>";
+    foreach ($createdOrder->getProducts() as $product) {
+        /**
+         * @var \CodesWholesale\Resource\V2\ProductV2 $product
+         */
+        echo "Product ID: " . $product->getProductId() . " <br>";
+        echo "Product Price: " . $product->getUnitPrice() . " <br>";
+
+        foreach ($product->getCodes() as $code) {
+            echo "Code ID: " . $code->getCodeId() . "<br>";
+            /**
+             * @var \CodesWholesale\Resource\V2\CodeV2 $code
+             */
+            if ($code->isPreOrder()) {
+                echo "<b>Code has been pre-ordered!</b>" . " <br>";
+            }
+
+            if ($code->isText()) {
+                echo "Text code to use: <b>" . $code->getCode() . "</b><br>";
+            }
+
+            if ($code->isImage()) {
+                $fullPath = \CodesWholesale\Util\CodeImageWriter::write($code, "./my-codes");
+                echo "Product has been saved in <b>" . $fullPath . "</b><br>";
+            }
+        }
+        echo "<br>";
+    }
+}
+

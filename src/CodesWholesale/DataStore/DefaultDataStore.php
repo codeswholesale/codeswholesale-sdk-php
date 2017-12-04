@@ -37,10 +37,9 @@ class DefaultDataStore implements InternalDataStore
         return $parsedObjects;
     }
 
-    public function instantiate($className, \stdClass $properties = null, array $options = array())
+    public function instantiate($className, \stdClass $properties = null, array $options = [])
     {
-        $propertiesArr = array($properties, $options);
-
+        $propertiesArr = [$properties, $options];
         return $this->resourceFactory->instantiate($className, $propertiesArr);
     }
 
@@ -146,26 +145,21 @@ class DefaultDataStore implements InternalDataStore
          * @var Resource $returnedResource
          */
         $returnedResource = $this->saveResource($parentHref, $resource, $returnType, $queryString);
-        $returnTypeClass = $this->resourceFactory->instantiate($returnType, array());
+        $returnTypeClass = $this->resourceFactory->instantiate($returnType, []);
         if ($resource instanceof $returnTypeClass) {
-            //ensure the caller's argument is updated with what is returned from the server:
             $resource->setProperties($this->toStdClass($returnedResource));
         }
         return $returnedResource;
     }
 
-    private function saveResource($href, Resource $resource, $returnType, array $query = array())
+    private function saveResource($href, Resource $resource, $returnType, array $query = [])
     {
         if ($this->needsToBeFullyQualified($href)) {
             $href = $this->qualify($href);
         }
-
-        $response = $this->executeRequest(Request::METHOD_POST,
-            $href,
-            json_encode($this->toStdClass($resource)),
-            $query);
-
-        return $this->resourceFactory->instantiate($returnType, array($response, $query));
+        $body = json_encode($this->toStdClass($resource));
+        $response = $this->executeRequest(Request::METHOD_POST, $href, $body, $query);
+        return $this->resourceFactory->instantiate($returnType, [$response, $query]);
     }
 
     private function toStdClass(Resource $resource)
@@ -177,23 +171,21 @@ class DefaultDataStore implements InternalDataStore
             $property = $resource->getProperty($name);
 
             if ($property instanceof \stdClass) {
-                $property = $this->toSimpleReference($name, $property);
+                $property = $this->toSimpleReferences($property);
             }
             $properties->$name = $property;
         }
         return $properties;
     }
 
-    private function toSimpleReference($propertyName, \stdClass $properties)
+    private function toSimpleReferences(\stdClass $properties)
     {
-        $hrefPropName = Resource::HREF_PROP_NAME;
-        if (!isset($properties->$hrefPropName)) {
-            throw new InvalidArgumentException("Nested resource '#{$propertyName}' must have an 'href' property.");
+        $products = (array) $properties;
+        $simpleReferences = [];
+        foreach ($products as $product) {
+            $simpleReferences[] = (object) $product->getProperties();
         }
-        $href = $properties->$hrefPropName;
-        $toReturn = new \stdClass();
-        $toReturn->$hrefPropName = $href;
-        return $toReturn;
+        return $simpleReferences;
     }
 
     public function save(Resource $resource, $returnType = null)

@@ -75,6 +75,9 @@ class Resource
         }
     }
 
+    /**
+     * @return array
+     */
     public function getPropertyNames()
     {
         return array_keys((array)$this->properties);

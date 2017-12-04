@@ -3,21 +3,17 @@
 
 namespace CodesWholesale\Util;
 
-
-use CodesWholesale\Resource\Code;
-
 class CodeImageWriter
 {
 
     /**
-     * @param Code $code
+     * @param $code
      * @param $whereToSaveDirectory
      * @param null $fileName
      * @return string
      */
-    public static function write(Code $code, $whereToSaveDirectory, $fileName = null)
+    public static function write($code, $whereToSaveDirectory, $fileName = null)
     {
-
         if (!$code->isImage()) {
             throw new \InvalidArgumentException("Given code is not image code type.");
         }
