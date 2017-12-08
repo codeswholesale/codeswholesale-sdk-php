@@ -1,10 +1,13 @@
 <?php
-session_start();
-ini_set("display_errors", "on");
-require_once '../../vendor/autoload.php';
-require_once '../utils.php';
 
-$params = array(
+use CodesWholesale\ClientBuilder;
+
+session_start();
+
+require_once '../vendor/autoload.php';
+require_once 'utils.php';
+
+$params = [
     /**
      * API Keys
      * These are common api keys, you can use it to test integration.
@@ -28,29 +31,11 @@ $params = array(
      *
      */
     'cw.token_storage' => new \CodesWholesale\Storage\TokenSessionStorage()
-);
-/**
- * Session information is stored under
- * $_SESSION["php-oauth-client"] where we keep all connection tokens.
- *
- * Create client builder.
- */
-$clientBuilder = new \CodesWholesale\ClientBuilder($params);
+];
+
+$clientBuilder = new ClientBuilder($params);
 $client = $clientBuilder->build();
-/**
- * If you would like to clean session storage you can use belows line,
- * sometimes you can expire this issue in you development.
- *
- * $_SESSION["php-oauth-client"]= array();
- */
-/**
- * Retrieve account details
- */
-$account = $client->getAccount();
-/**
- * Included from utils.php, displaying account details, just for testing purposes
- */
-displayAccountDetails($account);
 
+$platforms = $client->getPlatforms();
 
-
+displayFilters($platforms);

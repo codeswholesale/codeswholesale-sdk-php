@@ -45,11 +45,7 @@ class CodesWholesaleApi
     private function init()
     {
         $storage = $this->clientConfig->getStorage();
-
-        $oauthClient = new Client([
-            'base_uri' => $this->clientConfig->getBaseUrl(),
-            'http_errors' => false
-        ]);
+        $oauthClient = new Client(['base_uri' => $this->clientConfig->getBaseUrl()]);
 
         $grantType = new ClientCredentials($oauthClient, $this->clientConfig->getClientData());
         $middleware = new OAuthMiddleware($oauthClient, $grantType);

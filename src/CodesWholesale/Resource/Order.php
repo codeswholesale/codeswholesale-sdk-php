@@ -1,48 +1,97 @@
 <?php
 /**
  * Created by PhpStorm.
- * User: adamw_000
- * Date: 25.04.14
- * Time: 11:33
+ * User: maciejklowan
+ * Date: 29/11/2017
+ * Time: 11:55
  */
 
 namespace CodesWholesale\Resource;
 
-
 use CodesWholesale\Client;
 use CodesWholesale\CodesWholesale;
+use function CodesWholesale\toObject;
 
 class Order extends Resource
 {
+    const ORDER_ID = "orderId";
+    const CLIENT_ORDER_ID = "clientOrderId";
+    const TOTAL_PRICE = "totalPrice";
+    const PRODUCTS = "products";
+
+    const ORDER_ENDPOINT_V2 = "/orders";
+
     /**
-     *
-     * @param Product $product
-     * @return Code|object
+     * @param array $products
+     * @param $externalOrderId
+     * @param bool $allowPreOrder
+     * @return Order|object
      */
-    public static function createOrder(Product $product)
+    public static function createOrder(array $products, $externalOrderId = null, $allowPreOrder = true)
     {
-        return Client::getInstance()->create($product->getBuyHref(), new Code(), array());
+        $productEntries = [];
+        foreach ($products as $product) {
+            $productEntries[] = Client::instantiate(CodesWholesale::PRODUCT_ENTRY_REQUEST, $product);
+        }
+        $orderRequestV2 = Client::instantiate(CodesWholesale::ORDER_REQUEST, toObject([
+            OrderRequest::PRODUCTS => $productEntries,
+            OrderRequest::CLIENT_ORDER_ID => $externalOrderId,
+            OrderRequest::ALLOW_PRE_ORDER => $allowPreOrder,
+        ]));
+        return Client::getInstance()
+            ->createOrder(self::ORDER_ENDPOINT_V2, $orderRequestV2, CodesWholesale::ORDER);
     }
 
     /**
-     *
-     * @param Product $product
-     * @param array $options
-     * @return CodeList|object
+     * @param string $orderId
+     * @return object|Order
      */
-    public static function createBatchOrder(Product $product, array $options = array())
+    public static function getOrder($orderId)
     {
-        return Client::getInstance()->create($product->getBuyHref(), new CodeList(), $options);
+        return Client::get(self::ORDER_ENDPOINT_V2 . "/" . $orderId, CodesWholesale::ORDER);
     }
 
     /**
-     * @param ProductOrdered $productOrdered
-     * @param array $options
-     * @return CodeList|object
+     * @param string $orderId
+     * @return object
      */
-    public static function getCodes(ProductOrdered $productOrdered, array $options = array())
+    public static function getInvoice($orderId)
     {
-        $url = '/orders/' . $productOrdered->getOrderId() . '/productsOrdered/' . $productOrdered->getProductOrderedId() . '/codes';
-        return Client::getInstance()->get($url, CodesWholesale::CODE_LIST, $options);
+        return Client::get(self::ORDER_ENDPOINT_V2 . "/$orderId/invoice", CodesWholesale::ORDER);
     }
-} 
+
+    /**
+     * @return string
+     */
+    public function getOrderId()
+    {
+        return $this->getProperty(self::ORDER_ID);
+    }
+
+    /**
+     * @return string
+     */
+    public function getClientOrderId()
+    {
+        return $this->getProperty(self::CLIENT_ORDER_ID);
+    }
+
+    /**
+     * @return float
+     */
+    public function getTotalPrice()
+    {
+        return $this->getProperty(self::TOTAL_PRICE);
+    }
+
+    /**
+     * @return ProductResponse[]
+     */
+    public function getProducts()
+    {
+        return $this->dataStore->instantiateByArrayOf(
+            CodesWholesale::PRODUCT_RESPONSE,
+            $this->getProperty(self::PRODUCTS)
+        );
+    }
+}

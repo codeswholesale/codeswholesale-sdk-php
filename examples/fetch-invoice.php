@@ -1,51 +1,60 @@
 <?php
+
+use CodesWholesale\ClientBuilder;
+use CodesWholesale\Resource\Invoice;
+use CodesWholesale\Resource\Order;
+use CodesWholesale\Resource\ResourceError;
+use CodesWholesale\Util\Base64Writer;
+
 session_start();
-require_once '../../vendor/autoload.php';
-require_once '../utils.php';
+require_once '../vendor/autoload.php';
+require_once 'utils.php';
 
 $params = [
+    /**
+     * API Keys
+     * These are common api keys, you can use it to test integration.
+     */
     'cw.client_id' => 'ff72ce315d1259e822f47d87d02d261e',
     'cw.client_secret' => '$2a$10$E2jVWDADFA5gh6zlRVcrlOOX01Q/HJoT6hXuDMJxek.YEo.lkO2T6',
+    /**
+     * CodesWholesale ENDPOINT
+     */
     'cw.endpoint_uri' => \CodesWholesale\CodesWholesale::SANDBOX_ENDPOINT,
+    /**
+     * Due to security reasons you should use SessionStorage only while testing.
+     * In order to go live you should change it do database storage.
+     *
+     * If you want to use database storage use code below.
+     *
+     * new \CodesWholesale\Storage\TokenDatabaseStorage(
+     * new PDO('mysql:host=localhost;dbname=your_db_name', 'username', 'password'))
+     *
+     * Also remember to use SQL code included in import.sql file
+     *
+     */
     'cw.token_storage' => new \CodesWholesale\Storage\TokenSessionStorage()
 ];
 
-$clientBuilder = new \CodesWholesale\ClientBuilder($params);
+$clientBuilder = new ClientBuilder($params);
 $client = $clientBuilder->build();
 
 try {
-    $_SESSION["php-oauth-client"] = array();
+    $_SESSION["php-oauth-client"] = [];
 
-    $products = $client->getProducts();
-
-    $randomIndex = rand(0, count($products) - 1);
-    $randomProduct = $products->get($randomIndex);
-
-    // $url = "https://sandbox.codeswholesale.com/v1/products/33e3e81d-2b78-475a-8886-9848116f5133"; // - pre order product
-    // $url = "https://sandbox.codeswholesale.com/v1/products/04aeaf1e-f7b5-4ba9-ba19-91003a04db0a"; // - not enough balance
-    // $url = "https://sandbox.codeswholesale.com/v1/products/6313677f-5219-47e4-a067-7401f55c5a3a"; // - image code
-    $url = "https://sandbox.codeswholesale.com/v1/products/ffe2274d-5469-4b0f-b57b-f8d21b09c24c";    // - code text
-    $product = \CodesWholesale\Resource\Product::get($url);
-
-    $createdOrder = \CodesWholesale\Resource\V2\OrderV2::createOrder(
+    $createdOrder = Order::createOrder(
         [
             [
                 "productId" => "ffe2274d-5469-4b0f-b57b-f8d21b09c24c",
-                "quantity" => "2",
-            ],
-            [
-                "productId" => "6313677f-5219-47e4-a067-7401f55c5a3a",
-                "quantity" => "2",
-            ],
-            [
-                "productId" => "33e3e81d-2b78-475a-8886-9848116f5133",
                 "quantity" => "1",
             ]
         ], null);
 
-    displayCreatedOrder($createdOrder);
+    $orderInvoice = Invoice::get($createdOrder->getOrderId());
+    $invoicePath = Base64Writer::writeInvoice($orderInvoice, "./invoices");
+    echo "Invoice has been saved in: " . $invoicePath;
 
-} catch (\CodesWholesale\Resource\ResourceError $e) {
+} catch (ResourceError $e) {
 
     if ($e->isInvalidToken()) {
         echo "if you are using SessionStorage refresh your session and try one more time.";
@@ -73,3 +82,4 @@ try {
 } catch (Exception $exception) {
     echo $exception->getMessage();
 }
+

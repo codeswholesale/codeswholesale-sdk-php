@@ -84,14 +84,12 @@ class DefaultDataStore implements InternalDataStore
 
     private function getQueryString(array $options)
     {
-        $query = array();
-        // All of the supported options are query strings right now,
-        // so we just return the same array with the values converted
-        // to string.
+        $query = [];
         foreach ($options as $key => $opt) {
-            $query[$key] = !is_bool($opt) ? //only support a boolean or an object that has a __toString implementation
-                strval($opt) :
-                var_export($opt, true);
+            if (is_array($opt)) {
+                $opt = implode(",", $opt);
+            }
+            $query[$key] = !is_bool($opt) ? strval($opt) : var_export($opt, true);
         }
         return $query;
     }
@@ -180,10 +178,10 @@ class DefaultDataStore implements InternalDataStore
 
     private function toSimpleReferences(\stdClass $properties)
     {
-        $products = (array) $properties;
+        $products = (array)$properties;
         $simpleReferences = [];
         foreach ($products as $product) {
-            $simpleReferences[] = (object) $product->getProperties();
+            $simpleReferences[] = (object)$product->getProperties();
         }
         return $simpleReferences;
     }

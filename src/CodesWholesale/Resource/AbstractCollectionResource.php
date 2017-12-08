@@ -9,7 +9,7 @@ abstract class AbstractCollectionResource extends Resource implements \IteratorA
 
     /**
      * @param int $index
-     * @return Product
+     * @return ProductResponse
      */
     public function get($index)
     {

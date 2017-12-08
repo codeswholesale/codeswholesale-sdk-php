@@ -1,10 +1,10 @@
 <?php
 session_start();
 
-require_once '../../vendor/autoload.php';
-require_once '../utils.php';
+require_once '../vendor/autoload.php';
+require_once 'utils.php';
 
-$params = array(
+$params = [
     /**
      * API Keys
      * These are common api keys, you can use it to test integration.
@@ -28,7 +28,7 @@ $params = array(
      *
      */
     'cw.token_storage' => new \CodesWholesale\Storage\TokenSessionStorage()
-);
+];
 /**
  * Session information is stored under
  * $_SESSION["php-oauth-client"] where we keep all connection tokens.
@@ -43,44 +43,14 @@ $client = $clientBuilder->build();
  *
  * $_SESSION["php-oauth-client"]= array();
  */
-
-try{
-    /**
-     * Retrieve all products from price list
-     */
-    $products = $client->getProducts();
-    /**
-     * Chose an random product
-     */
-    $randomIndex = rand(0, count($products)-1);
-    $randomProduct = $products->get($randomIndex);
-    /**
-     * Find a product by Href this is an id of product.
-     *
-     * Or directly by href url
-     *
-     * $url = "https://api.codeswholesale.com/v1/products/8cc3f405-8453-4031-be49-f826814faa0c";
-     * \CodesWholesale\Resource\Product::get($url);
-     *
-     */
-    $product = \CodesWholesale\Resource\Product::get($randomProduct->getHref());
-    /**
-     * Included from utils.php, displaying product details, just for testing purposes
-     */
-    displayProductDetails($product);
-} catch (\CodesWholesale\Resource\ResourceError $e) {
-
-    if($e->isInvalidToken()) {
-        echo "if you are using SessionStorage refresh your session and try one more time.";
-    }
-
-    echo $e->getCode();
-    echo $e->getErrorCode();
-    echo $e->getMoreInfo();
-    echo $e->getDeveloperMessage();
-    echo $e->getMessage();
-}
-
+/**
+ * Retrieve account details
+ */
+$account = $client->getAccount();
+/**
+ * Included from utils.php, displaying account details, just for testing purposes
+ */
+displayAccountDetails($account);
 
 
 

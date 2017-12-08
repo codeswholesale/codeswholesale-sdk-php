@@ -6,15 +6,13 @@
  * Time: 13:11
  */
 
-namespace CodesWholesale\Resource\V2;
-
-use CodesWholesale\Resource\Resource;
+namespace CodesWholesale\Resource;
 
 class Platform extends Resource
 {
     const NAME = "name";
 
-    public function getName(): string
+    public function getName()
     {
         return $this->getProperty(self::NAME);
     }

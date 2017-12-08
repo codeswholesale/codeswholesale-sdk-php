@@ -1,18 +1,16 @@
 <?php
 /**
  * Created by PhpStorm.
- * User: maciejklowan
- * Date: 29/11/2017
- * Time: 17:09
+ * User: adamw_000
+ * Date: 25.04.14
+ * Time: 11:33
  */
 
-namespace CodesWholesale\Resource\V2;
+namespace CodesWholesale\Resource;
 
+use CodesWholesale\CodesWholesale;
 
-use CodesWholesale\Resource\Resource;
-use CodesWholesale\V2\CodesWholesaleV2;
-
-class ProductV2 extends Resource
+class ProductResponse extends Resource
 {
     const PRODUCT_ID = "productId";
     const UNIT_PRICE = "unitPrice";
@@ -35,12 +33,12 @@ class ProductV2 extends Resource
     }
 
     /**
-     * @return CodeV2[]
+     * @return Code[]
      */
     public function getCodes()
     {
         return $this->dataStore->instantiateByArrayOf(
-            CodesWholesaleV2::CODE_V2,
+            CodesWholesale::CODE,
             $this->getProperty(self::CODES)
         );
     }

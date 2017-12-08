@@ -5,14 +5,13 @@ namespace CodesWholesale;
 use CodesWholesale\DataStore\DefaultDataStore;
 use CodesWholesale\Http\HttpClientRequestExecutor;
 use CodesWholesale\Resource\Account;
-use CodesWholesale\Resource\Product;
+use CodesWholesale\Resource\LanguageList;
 use CodesWholesale\Resource\ProductList;
 use CodesWholesale\Resource\ProductOrdered;
+use CodesWholesale\Resource\ProductResponse;
+use CodesWholesale\Resource\RegionList;
 use CodesWholesale\Resource\Resource;
-use CodesWholesale\Resource\V2\LanguageList;
-use CodesWholesale\Resource\V2\RegionList;
 use CodesWholesale\Util\Magic;
-use CodesWholesale\V2\CodesWholesaleV2;
 
 function toObject($properties)
 {
@@ -45,11 +44,11 @@ class Client extends Magic
     /**
      * @param $href
      * @param $className
-     * @param null $path
+     * @param string $path
      * @param array $options
      * @return object
      */
-    public static function get($href, $className, $path = null, array $options = [])
+    public static function get($href, $className, $path = CodesWholesale::API_VERSION_V2, array $options = [])
     {
         $resultingHref = $href;
         if ($path and stripos($href, $path) === false) {
@@ -95,7 +94,8 @@ class Client extends Magic
      */
     public static function create($parentHref, Resource $resource, array $options = [])
     {
-        return self::getInstance()->dataStore->create($parentHref, $resource, get_class($resource), $options);
+        return self::getInstance()->dataStore
+            ->create(CodesWholesale::API_VERSION_V2 . $parentHref, $resource, get_class($resource), $options);
     }
 
     /**
@@ -106,7 +106,8 @@ class Client extends Magic
      */
     public static function createOrder($href, Resource $resource, $returnType)
     {
-        return self::getInstance()->dataStore->create($href, $resource, $returnType, []);
+        return self::getInstance()->dataStore
+            ->create( CodesWholesale::API_VERSION_V2 . $href, $resource, $returnType, []);
     }
 
     /**
@@ -116,7 +117,7 @@ class Client extends Magic
     public function getAccount(array $options = [])
     {
         return $this->dataStore->getResource(
-            CodesWholesale::API_VERSION . '/accounts/current',
+            CodesWholesale::API_VERSION_V2 . '/accounts/current',
             CodesWholesale::ACCOUNT, $options
         );
     }
@@ -136,7 +137,7 @@ class Client extends Magic
     public function getProducts(array $options = [])
     {
         return $this->dataStore->getResource(
-            CodesWholesale::API_VERSION . '/products',
+            CodesWholesale::API_VERSION_V2 . '/products',
             CodesWholesale::PRODUCT_LIST,
             $options
         );
@@ -145,13 +146,13 @@ class Client extends Magic
     /**
      * @version 2
      * @param array $options
-     * @return \CodesWholesale\Resource\V2\RegionList|object
+     * @return \CodesWholesale\Resource\RegionList|object
      */
     public function getRegions(array $options = [])
     {
         return $this->dataStore->getResource(
-            CodesWholesaleV2::API_VERSION . '/regions',
-            CodesWholesaleV2::REGION_LIST_V2, $options
+            CodesWholesale::API_VERSION_V2 . '/regions',
+            CodesWholesale::REGION_LIST, $options
         );
     }
 
@@ -163,8 +164,8 @@ class Client extends Magic
     public function getPlatforms(array $options = [])
     {
         return $this->dataStore->getResource(
-            CodesWholesaleV2::API_VERSION . '/platforms',
-            CodesWholesaleV2::PLATFORM_LIST_V2, $options
+            CodesWholesale::API_VERSION_V2 . '/platforms',
+            CodesWholesale::PLATFORM_LIST, $options
         );
     }
 
@@ -176,8 +177,8 @@ class Client extends Magic
     public function getLanguages(array $options = [])
     {
         return $this->dataStore->getResource(
-            CodesWholesaleV2::API_VERSION . '/languages',
-            CodesWholesaleV2::LANGUAGE_LIST_V2, $options
+            CodesWholesale::API_VERSION_V2 . '/languages',
+            CodesWholesale::LANGUAGE_LIST, $options
         );
     }
 
@@ -201,7 +202,7 @@ class Client extends Magic
     }
 
     /**
-     * @return Product
+     * @return ProductResponse
      */
     public function receiveUpdatedProductId()
     {

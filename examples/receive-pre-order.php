@@ -2,10 +2,10 @@
 
 session_start();
 
-require_once '../../vendor/autoload.php';
-require_once '../utils.php';
+require_once '../vendor/autoload.php';
+require_once 'utils.php';
 
-$params = array(
+$params = [
     /**
      * API Keys
      * These are common api keys, you can use it to test integration.
@@ -29,7 +29,7 @@ $params = array(
      *
      */
     'cw.token_storage' => new \CodesWholesale\Storage\TokenSessionStorage()
-);
+];
 /**
  * Session information is stored under
  * $_SESSION["php-oauth-client"] where we keep all connection tokens.
@@ -104,7 +104,7 @@ try {
              *
              * So, $code->getCode() will make additional request to get binary data.
              */
-            $fullPath = \CodesWholesale\Util\CodeImageWriter::write($code, "./codes");
+            $fullPath = \CodesWholesale\Util\Base64Writer::writeImageCode($code, "./codes");
             echo $fullPath . "<br />";
         }
 

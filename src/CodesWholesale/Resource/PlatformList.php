@@ -6,10 +6,9 @@
  * Time: 13:11
  */
 
-namespace CodesWholesale\Resource\V2;
+namespace CodesWholesale\Resource;
 
-use CodesWholesale\Resource\AbstractCollectionResource;
-use CodesWholesale\V2\CodesWholesaleV2;
+use CodesWholesale\CodesWholesale;
 
 class PlatformList extends AbstractCollectionResource
 {
@@ -17,6 +16,6 @@ class PlatformList extends AbstractCollectionResource
 
     function getItemClassName()
     {
-        return CodesWholesaleV2::PLATFORM_V2;
+        return CodesWholesale::PLATFORM;
     }
 }

@@ -1,13 +1,12 @@
 <?php
 /**
  * Created by PhpStorm.
- * User: adamw_000
- * Date: 25.04.14
- * Time: 11:33
+ * User: maciejklowan
+ * Date: 08/12/2017
+ * Time: 11:53
  */
 
 namespace CodesWholesale\Resource;
-
 
 use CodesWholesale\Client;
 use CodesWholesale\CodesWholesale;
@@ -27,16 +26,14 @@ class Product extends Resource
     const RELEASE_DATE = "releaseDate";
     const QUANTITY = "quantity";
     const IMAGES = "images";
-    const PATH = "products";
 
     /**
      * @param $href
-     * @param array $options
      * @return Product|object
      */
-    public static function get($href, array $options = array())
+    public static function get($href)
     {
-        return Client::get($href, CodesWholesale::PRODUCT, self::PATH, $options);
+        return Client::get($href, CodesWholesale::PRODUCT, null);
     }
 
     public function getProductId()
@@ -88,14 +85,6 @@ class Product extends Resource
     }
 
     /**
-     * @return string|uri
-     */
-    public function getDescriptionHref()
-    {
-        return $this->getHrefRel(self::DESCRIPTION_HREF_REL_NAME);
-    }
-
-    /**
      * @param $format
      * @return mixed
      * @throws NoImagesFoundException
@@ -108,6 +97,14 @@ class Product extends Resource
                 return $image->image;
         }
         throw new NoImagesFoundException();
+    }
+
+    /**
+     * @return array
+     */
+    public function getPrices()
+    {
+        return $this->getProperty(self::PRICES);
     }
 
     /**
@@ -134,14 +131,6 @@ class Product extends Resource
     }
 
     /**
-     * @return array
-     */
-    public function getPrices()
-    {
-        return $this->getProperty(self::PRICES);
-    }
-
-    /**
      * Returns lowest price for product.
      *
      * @return decimal
@@ -165,4 +154,12 @@ class Product extends Resource
     {
         return $this->getHrefRel(self::BUY_HREF_REL_NAME);
     }
-} 
+
+    /**
+     * @return string|uri
+     */
+    public function getDescriptionHref()
+    {
+        return $this->getHrefRel(self::DESCRIPTION_HREF_REL_NAME);
+    }
+}

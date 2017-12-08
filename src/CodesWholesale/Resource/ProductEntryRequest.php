@@ -6,10 +6,7 @@
  * Time: 16:32
  */
 
-namespace CodesWholesale\Resource\V2;
-
-
-use CodesWholesale\Resource\Resource;
+namespace CodesWholesale\Resource;
 
 class ProductEntryRequest extends Resource
 {

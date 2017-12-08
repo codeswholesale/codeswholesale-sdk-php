@@ -194,7 +194,7 @@ function displayFilters($filters)
     }
 }
 
-function displayCreatedOrder(\CodesWholesale\Resource\V2\OrderV2 $createdOrder)
+function displayOrder(\CodesWholesale\Resource\Order $createdOrder)
 {
     echo "<hr>";
     echo "<b>Order Details</b>";
@@ -208,7 +208,7 @@ function displayCreatedOrder(\CodesWholesale\Resource\V2\OrderV2 $createdOrder)
     echo "<hr>";
     foreach ($createdOrder->getProducts() as $product) {
         /**
-         * @var \CodesWholesale\Resource\V2\ProductV2 $product
+         * @var \CodesWholesale\Resource\ProductResponse $product
          */
         echo "Product ID: " . $product->getProductId() . " <br>";
         echo "Product Price: " . $product->getUnitPrice() . " <br>";
@@ -216,7 +216,7 @@ function displayCreatedOrder(\CodesWholesale\Resource\V2\OrderV2 $createdOrder)
         foreach ($product->getCodes() as $code) {
             echo "Code ID: " . $code->getCodeId() . "<br>";
             /**
-             * @var \CodesWholesale\Resource\V2\CodeV2 $code
+             * @var \CodesWholesale\Resource\Code $code
              */
             if ($code->isPreOrder()) {
                 echo "<b>Code has been pre-ordered!</b>" . " <br>";
@@ -227,11 +227,33 @@ function displayCreatedOrder(\CodesWholesale\Resource\V2\OrderV2 $createdOrder)
             }
 
             if ($code->isImage()) {
-                $fullPath = \CodesWholesale\Util\CodeImageWriter::write($code, "./my-codes");
+                $fullPath = \CodesWholesale\Util\Base64Writer::writeImageCode($code, "./my-codes");
                 echo "Product has been saved in <b>" . $fullPath . "</b><br>";
             }
         }
         echo "<br>";
+    }
+}
+
+function displayCodes(array $codes)
+{
+    foreach ($codes as $code) {
+        echo "Code ID: " . $code->getCodeId() . "<br>";
+        /**
+         * @var \CodesWholesale\Resource\Code $code
+         */
+        if ($code->isPreOrder()) {
+            echo "<b>Code has been pre-ordered!</b>" . " <br>";
+        }
+
+        if ($code->isText()) {
+            echo "Text code to use: <b>" . $code->getCode() . "</b><br>";
+        }
+
+        if ($code->isImage()) {
+            $fullPath = \CodesWholesale\Util\Base64Writer::writeImageCode($code, "./my-codes");
+            echo "Product has been saved in <b>" . $fullPath . "</b><br>";
+        }
     }
 }
 

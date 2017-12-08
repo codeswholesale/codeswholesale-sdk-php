@@ -1,10 +1,11 @@
 <?php
+
 session_start();
+ini_set("display_errors", "on");
+require_once '../vendor/autoload.php';
+require_once 'utils.php';
 
-require_once '../../vendor/autoload.php';
-require_once '../utils.php';
-
-$params = array(
+$params = [
     /**
      * API Keys
      * These are common api keys, you can use it to test integration.
@@ -28,7 +29,7 @@ $params = array(
      *
      */
     'cw.token_storage' => new \CodesWholesale\Storage\TokenSessionStorage()
-);
+];
 /**
  * Session information is stored under
  * $_SESSION["php-oauth-client"] where we keep all connection tokens.
@@ -37,7 +38,12 @@ $params = array(
  */
 $clientBuilder = new \CodesWholesale\ClientBuilder($params);
 $client = $clientBuilder->build();
-
+/**
+ * If you would like to clean session storage you can use belows line,
+ * sometimes you can expire this issue in you development.
+ *
+ * $_SESSION["php-oauth-client"]= array();
+ */
 
 try{
     /**
@@ -58,11 +64,11 @@ try{
      * \CodesWholesale\Resource\Product::get($url);
      *
      */
-    $product = \CodesWholesale\Resource\ProductDescription::get($randomProduct->getDescriptionHref());
+    $product = \CodesWholesale\Resource\Product::get($randomProduct->getHref());
     /**
      * Included from utils.php, displaying product details, just for testing purposes
      */
-    displayProductDetailsWithDescription($product);
+    displayProductDetails($product);
 } catch (\CodesWholesale\Resource\ResourceError $e) {
 
     if($e->isInvalidToken()) {

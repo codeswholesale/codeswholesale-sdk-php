@@ -6,10 +6,9 @@
  * Time: 12:44
  */
 
-namespace CodesWholesale\Resource\V2;
+namespace CodesWholesale\Resource;
 
-use CodesWholesale\Resource\AbstractCollectionResource;
-use CodesWholesale\V2\CodesWholesaleV2;
+use CodesWholesale\CodesWholesale;
 
 class RegionList extends AbstractCollectionResource
 {
@@ -17,6 +16,6 @@ class RegionList extends AbstractCollectionResource
 
     function getItemClassName()
     {
-        return CodesWholesaleV2::REGION_V2;
+        return CodesWholesale::REGION;
     }
 }

@@ -6,9 +6,7 @@
  * Time: 15:46
  */
 
-namespace CodesWholesale\Resource\V2;
-
-use CodesWholesale\Resource\Resource;
+namespace CodesWholesale\Resource;
 
 class OrderRequest extends Resource
 {

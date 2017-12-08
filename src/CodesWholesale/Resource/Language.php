@@ -3,18 +3,16 @@
  * Created by PhpStorm.
  * User: maciejklowan
  * Date: 29/11/2017
- * Time: 13:00
+ * Time: 13:31
  */
 
-namespace CodesWholesale\Resource\V2;
+namespace CodesWholesale\Resource;
 
-use CodesWholesale\Resource\Resource;
-
-class Region extends Resource
+class Language extends Resource
 {
     const NAME = "name";
 
-    public function getName(): string
+    public function getName()
     {
         return $this->getProperty(self::NAME);
     }

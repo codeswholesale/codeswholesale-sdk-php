@@ -35,22 +35,37 @@ spl_autoload_register('CodesWholesale\CodesWholesale_autoload');
 
 class CodesWholesale
 {
-    const ACCOUNT = "Account";
+    const ACCOUNT               = "Account";
 
-    const CODE = "Code";
-    const CODE_LIST = "CodeList";
+    const CODE                  = "Code";
+    const CODE_LIST             = "CodeList";
 
-    const ORDER = "Order";
+    const ORDER                 = "Order";
 
-    const PRODUCT = "Product";
-    const PRODUCT_DESCRIPTION = "ProductDescription";
-    const PRODUCT_LIST = "ProductList";
-    const PRODUCT_ORDERED = "ProductOrdered";
+    const PRODUCT               = "Product";
+    const PRODUCT_RESPONSE      = "ProductResponse";
+    const PRODUCT_DESCRIPTION   = "ProductDescription";
+    const PRODUCT_LIST          = "ProductList";
+    const PRODUCT_ORDERED       = "ProductOrdered";
 
-    const EXCEPTION_RESOURCE = "ExceptionResource";
+    const REGION_LIST           = "RegionList";
+    const REGION                = "Region";
 
-    const API_VERSION = 'v1';
+    const PLATFORM_LIST         = "PlatformList";
+    const PLATFORM              = "Platform";
 
-    const SANDBOX_ENDPOINT = 'https://sandbox.codeswholesale.com';
-    const LIVE_ENDPOINT = 'https://api.codeswholesale.com';
+    const LANGUAGE_LIST         = "LanguageList";
+    const LANGUAGE              = "Language";
+
+    const ORDER_REQUEST         = "OrderRequest";
+    const PRODUCT_ENTRY_REQUEST = "ProductEntryRequest";
+
+    const INVOICE               = "Invoice";
+
+    const EXCEPTION_RESOURCE    = "ExceptionResource";
+
+    const API_VERSION_V2        = 'v2';
+
+    const SANDBOX_ENDPOINT      = 'https://sandbox.codeswholesale.com';
+    const LIVE_ENDPOINT         = 'https://api.codeswholesale.com';
 }
