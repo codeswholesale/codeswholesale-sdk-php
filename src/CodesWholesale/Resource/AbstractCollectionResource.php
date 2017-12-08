@@ -17,6 +17,11 @@ abstract class AbstractCollectionResource extends Resource implements \IteratorA
         return $items[$index];
     }
 
+    public function size()
+    {
+        return sizeof($this->toResourceArray($this->getValues()));
+    }
+
     private function toResourceArray(array $values)
     {
         $className = $this->getItemClassName();
