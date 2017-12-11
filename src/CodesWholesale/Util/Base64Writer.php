@@ -31,11 +31,12 @@ class Base64Writer
     public static function writeInvoice(Invoice $invoiceV2, $whereToSaveDirectory)
     {
         $fullPath = self::prepareDirectory($whereToSaveDirectory, $invoiceV2->getInvoiceNumber());
-        $result = file_put_contents($fullPath . ".pdf", base64_decode($invoiceV2->getBody()));
+        $dirWithExtension = $fullPath . ".pdf";
+        $result = file_put_contents($dirWithExtension, base64_decode($invoiceV2->getBody()));
         if (!$result) {
             throw new Exception("Not able to write an invoice!");
         }
-        return $fullPath;
+        return $dirWithExtension;
     }
 
     private static function prepareDirectory($whereToSaveDirectory, $fileName)
