@@ -64,6 +64,9 @@ class CodesWholesale
 
     const EXCEPTION_RESOURCE    = "ExceptionResource";
 
+    const SECURITY              = "Security";
+    const SECURITY_REQUEST      = "SecurityRequest";
+
     const API_VERSION_V2        = 'v2';
 
     const SANDBOX_ENDPOINT      = 'https://sandbox.codeswholesale.com';

@@ -88,14 +88,16 @@ class Client extends Magic
 
     /**
      * @param $parentHref
-     * @param Resource|object $resource
+     * @param Resource $resource
+     * @param null $returnType
      * @param array $options
-     * @return Resource|object
+     * @return Resource
      */
-    public static function create($parentHref, Resource $resource, array $options = [])
+    public static function create($parentHref, Resource $resource, $returnType = null, array $options = [])
     {
         return self::getInstance()->dataStore
-            ->create(CodesWholesale::API_VERSION_V2 . $parentHref, $resource, get_class($resource), $options);
+            ->create(CodesWholesale::API_VERSION_V2 . $parentHref, $resource,
+                $returnType == null ? null : $returnType, $options);
     }
 
     /**

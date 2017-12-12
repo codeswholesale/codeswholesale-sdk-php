@@ -1,6 +1,7 @@
 <?php
 
 use CodesWholesale\Resource\ImageType;
+use CodesWholesale\Resource\Security;
 
 /**
  * Helper method to display product details.
@@ -255,5 +256,19 @@ function displayCodes(array $codes)
             echo "Product has been saved in <b>" . $fullPath . "</b><br>";
         }
     }
+}
+
+function displaySecurityCheck(Security $security)
+{
+    $ipBlacklisted = $security->isIpBlacklisted() ? "true" : "false";
+    $torIp = $security->isTorIp() ? "true" : "false";
+    $domainBlackListed = $security->isDomainBlacklisted() ? "true" : "false";
+    $subdomain = $security->isSubDomain() ? "true" : "false";
+
+    echo "Order Risk Score: " . $security->getRiskScore() .  " <br>";
+    echo "Blacklisted IP? " . $ipBlacklisted . " <br>";
+    echo "IP from TOR? " . $torIp . " <br>";
+    echo "Blacklisted domain? " . $domainBlackListed . " <br>";
+    echo "Subdomain? " . $subdomain . " <br>";
 }
 
