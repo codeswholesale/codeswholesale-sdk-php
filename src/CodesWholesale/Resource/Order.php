@@ -18,6 +18,8 @@ class Order extends Resource
     const CLIENT_ORDER_ID = "clientOrderId";
     const TOTAL_PRICE = "totalPrice";
     const PRODUCTS = "products";
+    const STATUS = "status";
+    const CREATED_ON = "createdOn";
 
     const ORDER_ENDPOINT_V2 = "/orders";
 
@@ -60,6 +62,16 @@ class Order extends Resource
         return Client::get(self::ORDER_ENDPOINT_V2 . "/$orderId/invoice", CodesWholesale::ORDER);
     }
 
+    public static function getHistory($from = null, $to = null)
+    {
+        $options = [];
+        if ($from != null & $to != null) {
+            $options = ["startFrom" => $from, "endOn" => $to];
+        }
+        return Client::get(self::ORDER_ENDPOINT_V2 . "/history", CodesWholesale::ORDER_LIST,
+            CodesWholesale::API_VERSION_V2, $options);
+    }
+
     /**
      * @return string
      */
@@ -93,5 +105,21 @@ class Order extends Resource
             CodesWholesale::PRODUCT_RESPONSE,
             $this->getProperty(self::PRODUCTS)
         );
+    }
+
+    /**
+     * @return string
+     */
+    public function getStatus()
+    {
+        return $this->getProperty(self::STATUS);
+    }
+
+    /**
+     * @return string
+     */
+    public function getCreatedOn()
+    {
+        return $this->getProperty(self::CREATED_ON);
     }
 }

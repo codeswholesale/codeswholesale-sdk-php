@@ -272,3 +272,18 @@ function displaySecurityCheck(Security $security)
     echo "Subdomain? " . $subdomain . " <br>";
 }
 
+function displayOrderHistory(\CodesWholesale\Resource\OrderList $orderList) {
+
+    foreach ($orderList as $order) {
+        /**
+         * @var \CodesWholesale\Resource\Order $order
+         */
+        echo "Order ID: " . $order->getOrderId() . " <br>";
+        echo "Client Order ID: " . $order->getClientOrderId() . " <br>";
+        echo "Total Price: " . $order->getTotalPrice() . " <br>";
+        echo "Status: " . $order->getStatus() . " <br>";
+        echo "Created on: " . $order->getCreatedOn() . " <br>";
+        echo "<hr>";
+    }
+
+}
