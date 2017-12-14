@@ -59,7 +59,7 @@ class Order extends Resource
      */
     public static function getInvoice($orderId)
     {
-        return Client::get(self::ORDER_ENDPOINT_V2 . "/$orderId/invoice", CodesWholesale::ORDER);
+        return Client::get(self::ORDER_ENDPOINT_V2 . "/$orderId/invoice", CodesWholesale::INVOICE);
     }
 
     public static function getHistory($from = null, $to = null)
