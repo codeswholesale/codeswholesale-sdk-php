@@ -68,7 +68,7 @@ class Order extends Resource
         if ($from != null & $to != null) {
             $options = ["startFrom" => $from, "endOn" => $to];
         }
-        return Client::get(self::ORDER_ENDPOINT_V2 . "/history", CodesWholesale::ORDER_LIST,
+        return Client::get(self::ORDER_ENDPOINT_V2, CodesWholesale::ORDER_LIST,
             CodesWholesale::API_VERSION_V2, $options);
     }
 
