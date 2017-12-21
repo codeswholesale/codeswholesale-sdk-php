@@ -25,7 +25,7 @@ class Base64Writer
         if (!$result) {
             throw new Exception("Not able to write image code!");
         }
-        return $whereToSaveDirectory;
+        return $fullPath;
     }
 
     public static function writeInvoice(Invoice $invoiceV2, $whereToSaveDirectory)
