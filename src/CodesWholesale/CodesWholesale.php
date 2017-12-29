@@ -68,6 +68,11 @@ class CodesWholesale
     const SECURITY              = "Security";
     const SECURITY_REQUEST      = "SecurityRequest";
 
+    const POSTBACK              = "Postback";
+    const STOCK_AND_PRICE       = "StockAndPriceChange";
+    const NOTIFICATION          = "Notification";
+
+
     const API_VERSION_V2        = 'v2';
 
     const SANDBOX_ENDPOINT      = 'https://sandbox.codeswholesale.com';

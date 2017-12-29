@@ -6,9 +6,8 @@ use CodesWholesale\DataStore\DefaultDataStore;
 use CodesWholesale\Http\HttpClientRequestExecutor;
 use CodesWholesale\Resource\Account;
 use CodesWholesale\Resource\LanguageList;
+use CodesWholesale\Resource\Postback;
 use CodesWholesale\Resource\ProductList;
-use CodesWholesale\Resource\ProductOrdered;
-use CodesWholesale\Resource\ProductResponse;
 use CodesWholesale\Resource\RegionList;
 use CodesWholesale\Resource\Resource;
 use CodesWholesale\Util\Magic;
@@ -23,6 +22,31 @@ function toObject($properties)
 
 class Client extends Magic
 {
+    /**
+     * @var callable
+     */
+    private $hiddenProductCallback;
+
+    /**
+     * @var callable
+     */
+    private $newProductCallback;
+
+    /**
+     * @var callable
+     */
+    private $updateProductCallback;
+
+    /**
+     * @var callable
+     */
+    private $stockAndPriceCallback;
+
+    /**
+     * @var callable
+     */
+    private $pareOrderAssignmentCallback;
+
     /**
      * @var Client
      */
@@ -109,7 +133,7 @@ class Client extends Magic
     public static function createOrder($href, Resource $resource, $returnType)
     {
         return self::getInstance()->dataStore
-            ->create( CodesWholesale::API_VERSION_V2 . $href, $resource, $returnType, []);
+            ->create(CodesWholesale::API_VERSION_V2 . $href, $resource, $returnType, []);
     }
 
     /**
@@ -184,32 +208,67 @@ class Client extends Magic
         );
     }
 
-    /**
-     * Method will return product that was bought.
-     *
-     * @return ProductOrdered|object
-     * @throws \Exception
-     */
-    public function receiveProductOrdered()
-    {
-        $json = file_get_contents('php://input');
-        $properties = json_decode($json);
 
-        if (empty($properties->orderId) || empty($properties->productOrderedId)) {
-            throw new \Exception (
-                "Post back information is wrong, orderId or productOrderedId wasn't attached to request body"
-            );
-        }
-        return $this->dataStore->instantiate(CodesWholesale::PRODUCT_ORDERED, $properties);
+    public function registerHidingProductHandler(callable $callback)
+    {
+        $this->hiddenProductCallback = $callback;
     }
 
-    /**
-     * @return ProductResponse
-     */
-    public function receiveUpdatedProductId()
+    public function registerUpdateProductHandler(callable $callback)
+    {
+        $this->updateProductCallback = $callback;
+    }
+
+    public function registerNewProductHandler(callable $callback)
+    {
+        $this->newProductCallback = $callback;
+    }
+
+    public function registerStockAndPriceChangeHandler(callable $callback)
+    {
+        $this->stockAndPriceCallback = $callback;
+    }
+
+    public function registerPreOrderAssignedHandler(callable $callback)
+    {
+        $this->pareOrderAssignmentCallback = $callback;
+    }
+
+    public function handle($signature)
     {
         $json = file_get_contents('php://input');
-        $properties = json_decode($json);
-        return $properties->productId;
+        /**
+         * @var Postback $postback
+         */
+        $postback = $this->dataStore->instantiate(CodesWholesale::POSTBACK, json_decode($json));
+
+        $changingOptions = [
+            "STOCK" => [
+                "class_name" => CodesWholesale::STOCK_AND_PRICE,
+                "callback" => $this->stockAndPriceCallback,
+            ],
+            "PREORDER" => [
+                "class_name" => CodesWholesale::NOTIFICATION,
+                "callback" => $this->pareOrderAssignmentCallback,
+            ],
+            "NEW_PRODUCT" => [
+                "class_name" => CodesWholesale::NOTIFICATION,
+                "callback" => $this->newProductCallback,
+            ],
+            "PRODUCT_UPDATED" => [
+                "class_name" => CodesWholesale::NOTIFICATION,
+                "callback" => $this->updateProductCallback,
+            ],
+            "PRODUCT_HIDDEN" => [
+                "class_name" => CodesWholesale::NOTIFICATION,
+                "callback" => $this->hiddenProductCallback,
+            ]
+        ];
+
+        if (isset($changingOptions[$postback->getType()]) && $signature === $postback->getAuthHash()) {
+            $changingOption = $changingOptions[$postback->getType()];
+            $instantiatedClass = $this->dataStore->instantiate($changingOption["class_name"], json_decode($json));
+            $changingOption["callback"]($instantiatedClass);
+        }
     }
 }
