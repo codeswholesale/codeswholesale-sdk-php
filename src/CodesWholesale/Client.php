@@ -237,6 +237,11 @@ class Client extends Magic
     public function handle($signature)
     {
         $json = file_get_contents('php://input');
+
+        if(empty($json) || $json === null) {
+            return;
+        }
+
         /**
          * @var Postback $postback
          */

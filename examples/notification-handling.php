@@ -3,6 +3,7 @@
 use CodesWholesale\Resource\AssignedPreOrder;
 use CodesWholesale\Resource\Notification;
 use CodesWholesale\Resource\Price;
+use CodesWholesale\Resource\ProductNotification;
 use CodesWholesale\Resource\StockAndPriceChange;
 use CodesWholesale\Storage\TokenSessionStorage;
 
@@ -52,7 +53,6 @@ $client->registerHidingProductHandler(function (Notification $notification) {
      * using provided productId
      */
     echo $notification->getProductId();
-
 });
 
 $client->registerPreOrderAssignedHandler(function (AssignedPreOrder $notification) {
@@ -64,7 +64,15 @@ $client->registerPreOrderAssignedHandler(function (AssignedPreOrder $notificatio
     echo $notification->getCodeId();
 });
 
-$client->registerUpdateProductHandler(function (Notification $notification) {
+$client->registerUpdateProductHandler(function (ProductNotification $notification) {
+    /**
+     * Here you can request product which was updated.
+     * It can be image, name or other product params.
+     */
+    echo $notification->getProductId();
+});
+
+$client->registerNewProductHandler(function(ProductNotification $notification) {
     /**
      * Here you can request product which was updated.
      * It can be image, name or other product params.
