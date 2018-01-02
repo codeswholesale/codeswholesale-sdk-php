@@ -59,6 +59,8 @@ $client->registerPreOrderAssignedHandler(function (AssignedPreOrder $notificatio
     /**
      * Here you can request for ordered product using productId
      */
+    echo $notification->getProductId();
+    echo $notification->getOrderId();
     echo $notification->getCodeId();
 });
 
