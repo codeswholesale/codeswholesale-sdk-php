@@ -8,10 +8,12 @@
 
 namespace CodesWholesale\Resource;
 
+use CodesWholesale\CodesWholesale;
+
 class StockAndPriceChange extends Resource
 {
     const PRODUCT_ID = "productId";
-    const PRICE = "price";
+    const PRICES = "prices";
     const QUANTITY = "quantity";
 
     /**
@@ -23,11 +25,14 @@ class StockAndPriceChange extends Resource
     }
 
     /**
-     * @return float
+     * @return Price[]
      */
-    public function getPrice()
+    public function getPrices()
     {
-        return $this->getProperty(self::PRICE);
+        return $this->dataStore->instantiateByArrayOf(
+            CodesWholesale::PRICE,
+            self::PRICES
+        );
     }
 
     /**

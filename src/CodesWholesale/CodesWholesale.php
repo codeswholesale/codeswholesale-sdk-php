@@ -68,6 +68,7 @@ class CodesWholesale
     const SECURITY              = "Security";
     const SECURITY_REQUEST      = "SecurityRequest";
 
+    const PRICE                 = "Price";
     const POSTBACK              = "Postback";
     const STOCK_AND_PRICE       = "StockAndPriceChange";
     const NOTIFICATION          = "Notification";
