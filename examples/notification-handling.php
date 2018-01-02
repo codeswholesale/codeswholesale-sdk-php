@@ -1,5 +1,6 @@
 <?php
 
+use CodesWholesale\Resource\AssignedPreOrder;
 use CodesWholesale\Resource\Notification;
 use CodesWholesale\Resource\Price;
 use CodesWholesale\Resource\StockAndPriceChange;
@@ -54,11 +55,11 @@ $client->registerHidingProductHandler(function (Notification $notification) {
 
 });
 
-$client->registerPreOrderAssignedHandler(function (Notification $notification) {
+$client->registerPreOrderAssignedHandler(function (AssignedPreOrder $notification) {
     /**
      * Here you can request for ordered product using productId
      */
-    echo $notification->getProductId();
+    echo $notification->getCodeId();
 });
 
 $client->registerUpdateProductHandler(function (Notification $notification) {
