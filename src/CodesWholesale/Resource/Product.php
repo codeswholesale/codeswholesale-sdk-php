@@ -27,13 +27,15 @@ class Product extends Resource
     const QUANTITY = "quantity";
     const IMAGES = "images";
 
+    const PATH = "v2/products";
+
     /**
      * @param $href
      * @return Product|object
      */
     public static function get($href)
     {
-        return Client::get($href, CodesWholesale::PRODUCT, null);
+        return Client::get($href, CodesWholesale::PRODUCT, self::PATH);
     }
 
     public function getProductId()
