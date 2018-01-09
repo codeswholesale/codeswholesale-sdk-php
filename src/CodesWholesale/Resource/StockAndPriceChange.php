@@ -31,7 +31,7 @@ class StockAndPriceChange extends Resource
     {
         return $this->dataStore->instantiateByArrayOf(
             CodesWholesale::PRICE,
-            self::PRICES
+            $this->getProperty(self::PRICES)
         );
     }
 

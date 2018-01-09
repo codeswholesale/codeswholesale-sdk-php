@@ -238,7 +238,7 @@ class Client extends Magic
     {
         $json = file_get_contents('php://input');
 
-        if(empty($json) || $json === null) {
+        if (empty($json) || $json === null) {
             return;
         }
 
@@ -272,8 +272,15 @@ class Client extends Magic
 
         if (isset($changingOptions[$postback->getType()]) && $signature === $postback->getAuthHash()) {
             $changingOption = $changingOptions[$postback->getType()];
-            $instantiatedClass = $this->dataStore->instantiate($changingOption["class_name"], json_decode($json));
-            $changingOption["callback"]($instantiatedClass);
+            if ($postback->getType() === "STOCK") {
+                $instance = [];
+                foreach (json_decode($json)->products as $product) {
+                    $instance[] = $this->dataStore->instantiate($changingOption["class_name"], $product);
+                }
+            } else {
+                $instance = $this->dataStore->instantiate($changingOption["class_name"], json_decode($json));
+            }
+            $changingOption["callback"]($instance);
         }
     }
 }
