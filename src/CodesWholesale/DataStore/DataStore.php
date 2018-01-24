@@ -10,5 +10,4 @@ interface DataStore
     public function instantiateByArrayOf($className, array $arrayOfObjects = array());
 
     public function getResource($href, $className, array $options = array());
-
 }

@@ -2,11 +2,12 @@
 
 namespace CodesWholesale\Http;
 
-interface Request extends HttpMessage {
+interface Request extends HttpMessage
+{
 
 
-    const METHOD_GET    = 'GET';
-    const METHOD_POST   = 'POST';
+    const METHOD_GET = 'GET';
+    const METHOD_POST = 'POST';
     const METHOD_DELETE = 'DELETE';
 
     public function getMethod();

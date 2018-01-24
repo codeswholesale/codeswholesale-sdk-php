@@ -71,7 +71,8 @@ class CodesWholesaleClientConfig
     /**
      * @return string
      */
-    public function getBaseUrl() {
+    public function getBaseUrl()
+    {
         return $this->baseUrl;
     }
 
@@ -79,21 +80,24 @@ class CodesWholesaleClientConfig
     /**
      * @return mixed
      */
-    public function getClientHeaders() {
+    public function getClientHeaders()
+    {
         return $this->clientHeaders;
     }
 
     /**
      * @return Storage|mixed
      */
-    public function getStorage() {
+    public function getStorage()
+    {
         return $this->storage;
     }
 
     /**
      * @return array
      */
-    public function getClientData() {
+    public function getClientData()
+    {
         return $this->clientData;
     }
 }

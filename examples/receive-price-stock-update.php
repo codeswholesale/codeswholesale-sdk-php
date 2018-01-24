@@ -5,7 +5,7 @@ session_start();
 require_once '../vendor/autoload.php';
 require_once 'utils.php';
 
-$params = array(
+$params = [
     /**
      * API Keys
      * These are common api keys, you can use it to test integration.
@@ -29,7 +29,7 @@ $params = array(
      *
      */
     'cw.token_storage' => new \CodesWholesale\Storage\TokenSessionStorage()
-);
+];
 /**
  * Session information is stored under
  * $_SESSION["php-oauth-client"] where we keep all connection tokens.
@@ -64,7 +64,7 @@ $productId = $client->receiveUpdatedProductId();
  * Later you can update your price in database or post it on facebook =).
  */
 
-$product = \CodesWholesale\Resource\Product::get($productId);
+$product = \CodesWholesale\Resource\ProductResponse::get($productId);
 
 // get new stock quantity - update your stock information
 echo "Stock quantity: ". $product->getStockQuantity();

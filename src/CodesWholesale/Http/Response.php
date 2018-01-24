@@ -6,12 +6,12 @@ namespace CodesWholesale\Http;
 interface Response extends HttpMessage
 {
 
-    public function  getHttpStatus();
+    public function getHttpStatus();
 
-    public function  isError();
+    public function isError();
 
-    public function  isServerError();
+    public function isServerError();
 
-    public function  isClientError();
+    public function isClientError();
 
 }

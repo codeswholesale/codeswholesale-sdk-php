@@ -19,35 +19,63 @@ namespace CodesWholesale;
  */
 
 // @codeCoverageIgnoreStart
-use CodesWholesale\Client;
 
-function CodesWholesale_autoload($className) {
+function CodesWholesale_autoload($className)
+{
     if (substr($className, 0, 9) != 'CodesWholesale') {
         return false;
     }
     $file = str_replace('\\', '/', $className);
     return include dirname(__FILE__) . "$file";
 }
+
 // @codeCoverageIgnoreEnd
 
 spl_autoload_register('CodesWholesale\CodesWholesale_autoload');
 
 class CodesWholesale
 {
-    const ACCOUNT                       = "Account";
+    const ACCOUNT               = "Account";
 
-    const CODE                          = "Code";
-    const CODE_LIST                     = "CodeList";
+    const CODE                  = "Code";
+    const CODE_LIST             = "CodeList";
 
-    const ORDER                         = "Order";
+    const ORDER                 = "Order";
+    const ORDER_LIST            = "OrderList";
 
-    const PRODUCT                       = "Product";
-    const PRODUCT_DESCRIPTION           = "ProductDescription";
-    const PRODUCT_LIST                  = "ProductList";
-    const PRODUCT_ORDERED               = "ProductOrdered";
+    const PRODUCT               = "Product";
+    const PRODUCT_RESPONSE      = "ProductResponse";
+    const PRODUCT_DESCRIPTION   = "ProductDescription";
+    const PRODUCT_LIST          = "ProductList";
+    const PRODUCT_ORDERED       = "ProductOrdered";
 
-    const API_VERSION                   = 'v1';
+    const REGION_LIST           = "RegionList";
+    const REGION                = "Region";
 
-    const SANDBOX_ENDPOINT              = 'https://sandbox.codeswholesale.com';
-    const LIVE_ENDPOINT                 = 'https://api.codeswholesale.com';
+    const PLATFORM_LIST         = "PlatformList";
+    const PLATFORM              = "Platform";
+
+    const LANGUAGE_LIST         = "LanguageList";
+    const LANGUAGE              = "Language";
+
+    const ORDER_REQUEST         = "OrderRequest";
+    const PRODUCT_ENTRY_REQUEST = "ProductEntryRequest";
+
+    const INVOICE               = "Invoice";
+
+    const EXCEPTION_RESOURCE    = "ExceptionResource";
+
+    const SECURITY              = "Security";
+    const SECURITY_REQUEST      = "SecurityRequest";
+
+    const PRICE                 = "Price";
+    const POSTBACK              = "Postback";
+    const STOCK_AND_PRICE       = "StockAndPriceChange";
+    const NOTIFICATION          = "Notification";
+
+
+    const API_VERSION_V2        = 'v2';
+
+    const SANDBOX_ENDPOINT      = 'https://sandbox.codeswholesale.com';
+    const LIVE_ENDPOINT         = 'https://api.codeswholesale.com';
 }

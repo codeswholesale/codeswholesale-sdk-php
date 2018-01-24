@@ -4,7 +4,7 @@ session_start();
 require_once '../vendor/autoload.php';
 require_once 'utils.php';
 
-$params = array(
+$params = [
     /**
      * API Keys
      * These are common api keys, you can use it to test integration.
@@ -28,7 +28,7 @@ $params = array(
      *
      */
     'cw.token_storage' => new \CodesWholesale\Storage\TokenSessionStorage()
-);
+];
 /**
  * Session information is stored under
  * $_SESSION["php-oauth-client"] where we keep all connection tokens.
@@ -48,6 +48,9 @@ try{
      * Chose an random product
      */
     $randomIndex = rand(0, count($products)-1);
+    /**
+     * @var \CodesWholesale\Resource\Product $randomProduct
+     */
     $randomProduct = $products->get($randomIndex);
     /**
      * Find a product by Href this is an id of product.

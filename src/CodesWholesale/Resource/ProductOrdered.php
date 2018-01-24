@@ -11,7 +11,6 @@ namespace CodesWholesale\Resource;
 
 class ProductOrdered extends Resource
 {
-
     const ORDER_ID = "orderId";
     const PRODUCT_ORDERED_ID = "productOrderedId";
 

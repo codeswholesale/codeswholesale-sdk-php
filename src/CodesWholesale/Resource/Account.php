@@ -9,33 +9,39 @@
 namespace CodesWholesale\Resource;
 
 
-class Account extends Resource {
+class Account extends Resource
+{
 
-    const TOTAL_TO_USE             = "totalToUse";
-    const CURRENT_BALANCE          = "currentBalance";
-    const CURRENT_CREDIT           = "currentCredit";
-    const FULL_NAME                = "fullName";
-    const EMAIL                    = "email";
+    const TOTAL_TO_USE = "totalToUse";
+    const CURRENT_BALANCE = "currentBalance";
+    const CURRENT_CREDIT = "currentCredit";
+    const FULL_NAME = "fullName";
+    const EMAIL = "email";
 
-    const PATH                     = "accounts";
+    const PATH = "accounts";
 
-    public function getFullName() {
+    public function getFullName()
+    {
         return $this->getProperty(self::FULL_NAME);
     }
 
-    public function getEmail() {
+    public function getEmail()
+    {
         return $this->getProperty(self::EMAIL);
     }
 
-    public function getTotalToUse() {
+    public function getTotalToUse()
+    {
         return $this->getProperty(self::TOTAL_TO_USE);
     }
 
-    public function getCurrentBalance() {
+    public function getCurrentBalance()
+    {
         return $this->getProperty(self::CURRENT_BALANCE);
     }
 
-    public function getCurrentCredit() {
+    public function getCurrentCredit()
+    {
         return $this->getProperty(self::CURRENT_CREDIT);
     }
 } 

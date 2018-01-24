@@ -1,10 +1,11 @@
 <?php
-session_start();
 
+session_start();
+ini_set("display_errors", "on");
 require_once '../vendor/autoload.php';
 require_once 'utils.php';
 
-$params = array(
+$params = [
     /**
      * API Keys
      * These are common api keys, you can use it to test integration.
@@ -28,7 +29,7 @@ $params = array(
      *
      */
     'cw.token_storage' => new \CodesWholesale\Storage\TokenSessionStorage()
-);
+];
 /**
  * Session information is stored under
  * $_SESSION["php-oauth-client"] where we keep all connection tokens.
@@ -63,7 +64,7 @@ try{
      * \CodesWholesale\Resource\Product::get($url);
      *
      */
-    $product = \CodesWholesale\Resource\Product::get($randomProduct->getHref());
+    $product = \CodesWholesale\Resource\Product::get($randomProduct->getProductId());
     /**
      * Included from utils.php, displaying product details, just for testing purposes
      */

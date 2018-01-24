@@ -15,7 +15,6 @@ class TokenSessionStorage implements Storage
     public function __construct()
     {
         if ("" === session_id()) {
-            // no session currently exists, start a new one
             session_start();
         }
     }
@@ -55,7 +54,7 @@ class TokenSessionStorage implements Storage
 
         foreach ($_SESSION['php-oauth-client']['access_token'] as $k => $t) {
             $token = unserialize($t);
-            if ($accessToken->getToken() !== $token()) {
+            if ($accessToken->getToken() !== $token->getToken()) {
                 continue;
             }
             unset($_SESSION['php-oauth-client']['access_token'][$k]);

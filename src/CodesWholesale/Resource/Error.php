@@ -5,15 +5,16 @@ namespace CodesWholesale\Resource;
 
 class Error extends Resource
 {
-    const STATUS      = "status";
-    const CODE        = "code";
-    const MESSAGE     = "message";
+    const STATUS = "status";
+    const CODE = "code";
+    const MESSAGE = "message";
     const DEV_MESSAGE = "developerMessage";
-    const MORE_INFO   = "moreInfo";
-    const ERROR_DESC    = "error";
+    const MORE_INFO = "moreInfo";
+    const ERROR_DESC = "error";
     const ERROR_MESSAGE = "error_description";
 
-    public function __construct($errorResult) {
+    public function __construct($errorResult)
+    {
         parent::__construct(null, $errorResult, array());
     }
 

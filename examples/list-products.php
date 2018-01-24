@@ -1,10 +1,14 @@
 <?php
-session_start();
 
+use CodesWholesale\ClientBuilder;
+use CodesWholesale\CodesWholesale;
+use CodesWholesale\Storage\TokenSessionStorage;
+
+session_start();
 require_once '../vendor/autoload.php';
 require_once 'utils.php';
 
-$params = array(
+$params = [
     /**
      * API Keys
      * These are common api keys, you can use it to test integration.
@@ -14,7 +18,7 @@ $params = array(
     /**
      * CodesWholesale ENDPOINT
      */
-    'cw.endpoint_uri' => \CodesWholesale\CodesWholesale::SANDBOX_ENDPOINT,
+    'cw.endpoint_uri' => CodesWholesale::SANDBOX_ENDPOINT,
     /**
      * Due to security reasons you should use SessionStorage only while testing.
      * In order to go live you should change it do database storage.
@@ -27,15 +31,15 @@ $params = array(
      * Also remember to use SQL code included in import.sql file
      *
      */
-    'cw.token_storage' => new \CodesWholesale\Storage\TokenSessionStorage()
-);
+    'cw.token_storage' => new TokenSessionStorage()
+];
 /**
  * Session information is stored under
  * $_SESSION["php-oauth-client"] where we keep all connection tokens.
  *
  * Create client builder.
  */
-$clientBuilder = new \CodesWholesale\ClientBuilder($params);
+$clientBuilder = new ClientBuilder($params);
 $client = $clientBuilder->build();
 /**
  * If you would like to clean session storage you can use belows line,
@@ -43,23 +47,48 @@ $client = $clientBuilder->build();
  *
  * $_SESSION["php-oauth-client"]= array();
  */
-$_SESSION["php-oauth-client"]= array();
+$_SESSION["php-oauth-client"] = array();
 
-try{
+try {
     /**
      * Retrieve all products from price list
      */
     $products = $client->getProducts();
+
+    /**
+     * List products by filters
+     */
+//    $products = $client->getProducts([
+//        "inStockDaysAgo" => 100
+//    ]);
+
+    /**
+     * List products by region/language/platform filters
+     * You can separate filters using comma separator
+     */
+//    $products = $client->getProducts([
+//        "language" => [
+//            "Multilanguage",
+//            "fr"
+//        ],
+//        "platform" => [
+//            "Steam"
+//        ],
+//        "region" => [
+//            "WORLDWIDE"
+//        ]
+//    ]);
+
     /**
      * Display each in foreach loop
      */
-    foreach($products as $product) {
+    foreach ($products as $product) {
         displayProductDetails($product);
     }
 
 } catch (\CodesWholesale\Resource\ResourceError $e) {
 
-    if($e->isInvalidToken()) {
+    if ($e->isInvalidToken()) {
         echo "if you are using SessionStorage refresh your session and try one more time.";
     }
 
@@ -68,6 +97,9 @@ try{
     echo $e->getMoreInfo();
     echo $e->getDeveloperMessage();
     echo $e->getMessage();
+
+} catch (Exception $exception) {
+    echo $exception->getMessage();
 }
 
 

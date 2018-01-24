@@ -1,13 +1,12 @@
 <?php
 /**
  * Created by PhpStorm.
- * User: adamw_000
- * Date: 25.04.14
- * Time: 11:33
+ * User: maciejklowan
+ * Date: 08/12/2017
+ * Time: 11:53
  */
 
 namespace CodesWholesale\Resource;
-
 
 use CodesWholesale\Client;
 use CodesWholesale\CodesWholesale;
@@ -15,7 +14,6 @@ use CodesWholesale\Exceptions\NoImagesFoundException;
 
 class Product extends Resource
 {
-
     const NAME = "name";
     const IDENTIFIER = "identifier";
     const PLATFORM = "platform";
@@ -28,21 +26,16 @@ class Product extends Resource
     const RELEASE_DATE = "releaseDate";
     const QUANTITY = "quantity";
     const IMAGES = "images";
-    const PATH = "products";
 
-    /**
-     * @var string
-     */
-    private $imageUrl;
+    const PATH = "v2/products";
 
     /**
      * @param $href
-     * @param array $options
-     * @return \CodesWholesale\Resource\Product
+     * @return Product|object
      */
-    public static function get($href, array $options = array())
+    public static function get($href)
     {
-        return Client::get($href, CodesWholesale::PRODUCT, self::PATH, $options);
+        return Client::get($href, CodesWholesale::PRODUCT, self::PATH);
     }
 
     public function getProductId()
@@ -171,4 +164,4 @@ class Product extends Resource
     {
         return $this->getHrefRel(self::DESCRIPTION_HREF_REL_NAME);
     }
-} 
+}

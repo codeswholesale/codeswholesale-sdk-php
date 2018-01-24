@@ -26,17 +26,17 @@ class HttpClientRequestExecutor implements RequestExecutor
 
         $accessToken = $this->cwClient->getToken();
 
-        if($accessToken === null) {
+        if ($accessToken === null) {
             throw new OAuthError("The access token that you've provided is not valid, check your credentials or endpoint.");
         }
 
         $response = $this->cwClient->request($request->getMethod(), $request->getResourceUrl(), [
             'headers' => $request->getHeaders(),
-            'query' => $request->getQueryString()
+            'query' => $request->getQueryString(),
+            'body' => $request->getBody()
         ]);
 
-        if ($response->getStatusCode() != 200 && $redirectsLimit)
-        {
+        if ($response->getStatusCode() != 200 && $redirectsLimit) {
             $request->setResourceUrl($response->getHeader('location'));
             return $this->executeRequest($request, --$redirectsLimit);
         }

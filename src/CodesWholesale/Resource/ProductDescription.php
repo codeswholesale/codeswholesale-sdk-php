@@ -29,7 +29,7 @@ class ProductDescription extends Resource
     /**
      * @param $href
      * @param array $options
-     * @return ProductDescription
+     * @return ProductDescription|object
      */
     public static function get($href, array $options = array())
     {

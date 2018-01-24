@@ -3,7 +3,8 @@
 namespace CodesWholesale\Http;
 
 
-class DefaultResponse extends AbstractHttpMessage implements Response {
+class DefaultResponse extends AbstractHttpMessage implements Response
+{
 
     private $httpStatus;
     private $headers;
@@ -40,11 +41,6 @@ class DefaultResponse extends AbstractHttpMessage implements Response {
         return $this->headers;
     }
 
-    public function getHttpStatus()
-    {
-        return $this->httpStatus;
-    }
-
     public function setHeaders(array $headers)
     {
         $this->headers = $headers;
@@ -55,10 +51,15 @@ class DefaultResponse extends AbstractHttpMessage implements Response {
         return $this->isServerError() || $this->isClientError();
     }
 
-    public function  isServerError()
+    public function isServerError()
     {
         $status = $this->getHttpStatus();
         return ($status >= 500 && $status < 600);
+    }
+
+    public function getHttpStatus()
+    {
+        return $this->httpStatus;
     }
 
     public function isClientError()

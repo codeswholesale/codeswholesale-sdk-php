@@ -1,6 +1,7 @@
 <?php
 
 use CodesWholesale\Resource\ImageType;
+use CodesWholesale\Resource\Security;
 
 /**
  * Helper method to display product details.
@@ -73,6 +74,9 @@ function displayProductDetailsWithDescription(\CodesWholesale\Resource\ProductDe
     echo "<b>Fact Sheets:</b>";
     echo "<br />";
     foreach ($productDescription->getFactSheets() as $factSheet) {
+        /**
+         * @var \CodesWholesale\Resource\FactSheet $factSheet
+         */
         echo "Territory: " . $factSheet->getTerritory();
         echo "<br />";
         echo "Description: " . $factSheet->getDescription();
@@ -82,6 +86,9 @@ function displayProductDetailsWithDescription(\CodesWholesale\Resource\ProductDe
     echo "<b>Releases:</b>";
     echo "<br />";
     foreach ($productDescription->getReleases() as $release) {
+        /**
+         * @var \CodesWholesale\Resource\Release $release
+         */
         echo "Release Status: " . $release->getStatus();
         echo "<br />";
         echo "Release Date: " . $release->getDate();
@@ -125,6 +132,9 @@ function displayProductDetailsWithDescription(\CodesWholesale\Resource\ProductDe
     echo "<b>Photos</b>";
     echo "<br />";
     foreach ($productDescription->getPhotos() as $photo) {
+        /**
+         * @var \CodesWholesale\Resource\Photo $photo
+         */
         echo "URL: " . $photo->getUrl();
         echo "<br />";
         echo "Type: " . $photo->getType();
@@ -144,6 +154,9 @@ function displayProductDetailsWithDescription(\CodesWholesale\Resource\ProductDe
     echo "<b>Videos</b>";
     echo "<br />";
     foreach ($productDescription->getVideos() as $video) {
+        /**
+         * @var \CodesWholesale\Resource\Video $video
+         */
         echo "Preview: " . $video->getPreviewFrameUrl();
         echo "<br />";
         echo "Age Warning: " . $video->getAgeWarning();
@@ -173,4 +186,104 @@ function displayAccountDetails(\CodesWholesale\Resource\Account $account)
     echo "Total money to use (balance + credit) : " . number_format($account->getTotalToUse(), 2) . "<br />";
     echo "Current account balance : " . number_format($account->getCurrentBalance(), 2) . "<br />";
     echo "Current account credit : " . number_format($account->getCurrentCredit(), 2) . "<br />";
+}
+
+function displayFilters($filters)
+{
+    foreach ($filters as $filter) {
+        echo $filter->getName() . "<br>";
+    }
+}
+
+function displayOrder(\CodesWholesale\Resource\Order $createdOrder)
+{
+    echo "<hr>";
+    echo "<b>Order Details</b>";
+    echo "<hr>";
+    echo "Order ID: " . $createdOrder->getOrderId() . " <br>";
+    echo "Client Order ID: " . $createdOrder->getClientOrderId() . " <br>";
+    echo "Total Price: " . $createdOrder->getTotalPrice() . " <br>";
+    echo "<br>";
+    echo "<hr>";
+    echo "<b>Ordered Codes</b>";
+    echo "<hr>";
+    foreach ($createdOrder->getProducts() as $product) {
+        /**
+         * @var \CodesWholesale\Resource\ProductResponse $product
+         */
+        echo "Product ID: " . $product->getProductId() . " <br>";
+        echo "Product Price: " . $product->getUnitPrice() . " <br>";
+
+        foreach ($product->getCodes() as $code) {
+            echo "Code ID: " . $code->getCodeId() . "<br>";
+            /**
+             * @var \CodesWholesale\Resource\Code $code
+             */
+            if ($code->isPreOrder()) {
+                echo "<b>Code has been pre-ordered!</b>" . " <br>";
+            }
+
+            if ($code->isText()) {
+                echo "Text code to use: <b>" . $code->getCode() . "</b><br>";
+            }
+
+            if ($code->isImage()) {
+                $fullPath = \CodesWholesale\Util\Base64Writer::writeImageCode($code, "./my-codes");
+                echo "Product has been saved in <b>" . $fullPath . "</b><br>";
+            }
+        }
+        echo "<br>";
+    }
+}
+
+function displayCodes(array $codes)
+{
+    foreach ($codes as $code) {
+        echo "Code ID: " . $code->getCodeId() . "<br>";
+        /**
+         * @var \CodesWholesale\Resource\Code $code
+         */
+        if ($code->isPreOrder()) {
+            echo "<b>Code has been pre-ordered!</b>" . " <br>";
+        }
+
+        if ($code->isText()) {
+            echo "Text code to use: <b>" . $code->getCode() . "</b><br>";
+        }
+
+        if ($code->isImage()) {
+            $fullPath = \CodesWholesale\Util\Base64Writer::writeImageCode($code, "./my-codes");
+            echo "Product has been saved in <b>" . $fullPath . "</b><br>";
+        }
+    }
+}
+
+function displaySecurityCheck(Security $security)
+{
+    $ipBlacklisted = $security->isIpBlacklisted() ? "true" : "false";
+    $torIp = $security->isTorIp() ? "true" : "false";
+    $domainBlackListed = $security->isDomainBlacklisted() ? "true" : "false";
+    $subdomain = $security->isSubDomain() ? "true" : "false";
+
+    echo "Order Risk Score: " . $security->getRiskScore() .  " <br>";
+    echo "Blacklisted IP? " . $ipBlacklisted . " <br>";
+    echo "IP from TOR? " . $torIp . " <br>";
+    echo "Blacklisted domain? " . $domainBlackListed . " <br>";
+    echo "Subdomain? " . $subdomain . " <br>";
+}
+
+function displayOrderHistory(\CodesWholesale\Resource\OrderList $orderList) {
+
+    foreach ($orderList as $order) {
+        /**
+         * @var \CodesWholesale\Resource\Order $order
+         */
+        echo "Order ID: " . $order->getOrderId() . " <br>";
+        echo "Client Order ID: " . $order->getClientOrderId() . " <br>";
+        echo "Total Price: " . $order->getTotalPrice() . " <br>";
+        echo "Status: " . $order->getStatus() . " <br>";
+        echo "Created on: " . $order->getCreatedOn() . " <br>";
+        echo "<hr>";
+    }
+
 }
