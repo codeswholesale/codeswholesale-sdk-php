@@ -1,5 +1,5 @@
 # CodesWholesale PHP SDK
-CodesWholesale is the first easy, secure API of game keys wholesaler. This is the PHP SDK to ease integration of its features with any PHP language based application.
+CodesWholesale.com is an API-driven wholesale platform for digital game distribution. This is the CodesWholesale SDK for PHP that will enable developers to easily integrate API with any PHP-based application.
 
 ## Installation
 You can install **codeswholesale-sdk-php** via Composer or by downloading the source.
@@ -8,7 +8,7 @@ You can install **codeswholesale-sdk-php** via Composer or by downloading the so
 
 **codeswholesale-sdk-php** is available on Packagist as the [codeswholesale/sdk](https://packagist.org/packages/codeswholesale/sdk) package.
 
-On your project root, install Composer
+Install Composer on your project root
 
     curl -sS https://getcomposer.org/installer | php
 	
@@ -20,13 +20,13 @@ Configure the **codeswholesale/sdk** dependency in your 'composer.json' file:
         "codeswholesale/sdk": "2.0"
     }
 
-On your project root, install the the SDK with its dependencies:
+Install the latest SDK with its dependencies on your project root
 
     php composer.phar install
     
 ## Create your CodesWholesale account
 
-If you have not already done so, register at
+If you don’t have an account yet, sign up at
 [CodesWholesale](https://app.codeswholesale.com) and set up your API credentials:
 
 1. Create a [CodesWholesale](https://app.codeswholesale.com) account and
@@ -47,7 +47,7 @@ If you have not already done so, register at
     $params = [
        /**
         * API Keys
-        * These are common api keys, you can use it to test integration.
+        * These are test api keys that can be used for testing your integration:
         */
         'cw.client_id' => 'ff72ce315d1259e822f47d87d02d261e',
         'cw.client_secret' => '$2a$10$E2jVWDADFA5gh6zlRVcrlOOX01Q/HJoT6hXuDMJxek.YEo.lkO2T6',
@@ -56,8 +56,8 @@ If you have not already done so, register at
          */
         'cw.endpoint_uri' => \CodesWholesale\CodesWholesale::SANDBOX_ENDPOINT,
         /**
-        * Due to security reasons you should use SessionStorage only while testing.
-        * In order to go live you should change it do database storage.
+         * Due to security reasons, you should use SessionStorage only while testing.
+         * In order to go live, you should change it to database storage.
         */
         'cw.token_storage' => new \CodesWholesale\Storage\TokenSessionStorage()
     ];
@@ -67,9 +67,9 @@ If you have not already done so, register at
     $client = $clientBuilder->build();
     
     ```
-For production release please remember to change endpoint from SANDBOX to LIVE.
+For production release, please remember to switch from SANDBOX endpoint to LIVE endpoint.
 
-3.  **List all available platforms, regions, languages on CodesWholesale platform**
+3.  **List all available platforms, regions, languages on the CodesWholesale platform**
 
     ```php
     $platforms = $client->getPlatforms()
@@ -77,7 +77,7 @@ For production release please remember to change endpoint from SANDBOX to LIVE.
     $languages = $client->getLanguages();
     ```
 
-4.  **List all products from price list**
+4.  **List all products from the price list**
 
     ```php
     $products = $client->getProducts();
@@ -111,7 +111,7 @@ For production release please remember to change endpoint from SANDBOX to LIVE.
     }
     ```    
 
-6.  **List all products from price list from last 60 days**
+6.  **List all products from price list from the last 60 days**
 
     ```php
     $products = $client->getProducts([
@@ -133,7 +133,7 @@ For production release please remember to change endpoint from SANDBOX to LIVE.
     ```    
 
 
-8.  **Check your customer before completing order**
+8.  **Screen your customer before completing order**
 
     ```php
     $securityInformation = Security::check(
@@ -241,16 +241,15 @@ For production release please remember to change endpoint from SANDBOX to LIVE.
     }
     ```
       
-14.  **Receive notifications about product changes from CW's post back request**
+14.  **Receive notifications about product changes via Codeswholesale postback request**
 
-    To receive notifications from CW at first point you must configure your post back URL that will be responsible for handling CW's requests. In order to do that, follow this steps:
+     To receive notifications from CodesWholesale, first you have to configure your postback URL that will be responsible for handling CodesWholesale requests. In order to do that, follow these steps:
     
     - Sign in to [CodesWholesale](https://app.codeswholesale.com/)
-    - Click you email address in top navigation
-    - Go to Web API tab
+    - Go to API tab
     - Configure and test your post back url
     
-    If the URL is successfully configured, you should be able to handle CW's requests as follow:
+    If the URL has been successfully configured, you should be able to handle CodesWholesale requests as follow
 
     ```php
     $client->registerStockAndPriceChangeHandler(function (array $stockAndPriceChanges) {
@@ -295,7 +294,7 @@ For production release please remember to change endpoint from SANDBOX to LIVE.
     $client->registerUpdateProductHandler(function (Notification $notification) {
         /**
          * Here you can request product which was updated.
-         * It can be image, name or other product params.
+         * It can be image, name or other product parameter.
          */
         echo $notification->getProductId();
     });
@@ -303,15 +302,15 @@ For production release please remember to change endpoint from SANDBOX to LIVE.
     $client->registerNewProductHandler(function(Notification $notification) {
         /**
          * Here you can request product which was updated.
-         * It can be image, name or other product params.
+         * It can be image, name or other product parameter.
          */
         echo $notification->getProductId();
     });
     
     $client->handle(SIGNATURE);
     ```
-    
-    If you send test request from Web API tab and your script is configured to work with sandbox it will download ten fake images.
+ If you send test request from the API tab and your script is configured to work with sandbox environment, it will download ten fake images.
+
     
     
 You can check "examples" directory for more samples and details.
