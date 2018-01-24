@@ -72,6 +72,7 @@ class CodesWholesale
     const POSTBACK              = "Postback";
     const STOCK_AND_PRICE       = "StockAndPriceChange";
     const NOTIFICATION          = "Notification";
+    const ASSIGNED_PRE_ORDER     = "AssignedPreOrder";
 
 
     const API_VERSION_V2        = 'v2';

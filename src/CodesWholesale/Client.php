@@ -71,6 +71,7 @@ class Client extends Magic
      * @param string $path
      * @param array $options
      * @return object
+     * @throws \Exception
      */
     public static function get($href, $className, $path = CodesWholesale::API_VERSION_V2, array $options = [])
     {
@@ -139,6 +140,7 @@ class Client extends Magic
     /**
      * @param array $options
      * @return Account|object
+     * @throws \Exception
      */
     public function getAccount(array $options = [])
     {
@@ -159,6 +161,7 @@ class Client extends Magic
      *
      * @param array $options
      * @return ProductList|object
+     * @throws \Exception
      */
     public function getProducts(array $options = [])
     {
@@ -170,9 +173,9 @@ class Client extends Magic
     }
 
     /**
-     * @version 2
      * @param array $options
-     * @return \CodesWholesale\Resource\RegionList|object
+     * @return object
+     * @throws \Exception
      */
     public function getRegions(array $options = [])
     {
@@ -183,9 +186,9 @@ class Client extends Magic
     }
 
     /**
-     * @version 2
      * @param array $options
-     * @return RegionList|object
+     * @return object
+     * @throws \Exception
      */
     public function getPlatforms(array $options = [])
     {
@@ -196,9 +199,9 @@ class Client extends Magic
     }
 
     /**
-     * @version 2
      * @param array $options
-     * @return LanguageList|object
+     * @return object
+     * @throws \Exception
      */
     public function getLanguages(array $options = [])
     {
@@ -253,7 +256,7 @@ class Client extends Magic
                 "callback" => $this->stockAndPriceCallback,
             ],
             "PREORDER" => [
-                "class_name" => CodesWholesale::NOTIFICATION,
+                "class_name" => CodesWholesale::ASSIGNED_PRE_ORDER,
                 "callback" => $this->pareOrderAssignmentCallback,
             ],
             "NEW_PRODUCT" => [

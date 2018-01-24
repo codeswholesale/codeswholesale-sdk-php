@@ -17,23 +17,17 @@ Or download it from official page: https://getcomposer.org/download/
 Configure the **codeswholesale/sdk** dependency in your 'composer.json' file:
 
     "require": {
-        "codeswholesale/sdk": "1.0.*@beta"
+        "codeswholesale/sdk": "2.0"
     }
 
 On your project root, install the the SDK with its dependencies:
 
     php composer.phar install
     
-### Via direct link:
-
-Download all dependencies from our website:
-
-    https://codeswholesale.com/go/codeswholesale-php-sdk-1-0-3-beta
-    
 ## Create your CodesWholesale account
 
 If you have not already done so, register at
-[CodesWolesale](https://app.codeswholesale.com) and set up your API credentials:
+[CodesWholesale](https://app.codeswholesale.com) and set up your API credentials:
 
 1. Create a [CodesWholesale](https://app.codeswholesale.com) account and
    create your API keys in WEB API tab, under your profile name link. Save your keys in safe place. Your API password is visible only once.
@@ -50,7 +44,7 @@ If you have not already done so, register at
 
     ```php
     
-    $params = array(
+    $params = [
        /**
         * API Keys
         * These are common api keys, you can use it to test integration.
@@ -66,7 +60,7 @@ If you have not already done so, register at
         * In order to go live you should change it do database storage.
         */
         'cw.token_storage' => new \CodesWholesale\Storage\TokenSessionStorage()
-    );
+    ];
      
      
     $clientBuilder = new \CodesWholesale\ClientBuilder($params);
@@ -75,8 +69,15 @@ If you have not already done so, register at
     ```
 For production release please remember to change endpoint from SANDBOX to LIVE.
 
+3.  **List all available platforms, regions, languages on CodesWholesale platform**
 
-3.  **List all products from price list**
+    ```php
+    $platforms = $client->getPlatforms()
+    $regions   = $client->getRegions();
+    $languages = $client->getLanguages();
+    ```
+
+4.  **List all products from price list**
 
     ```php
     $products = $client->getProducts();
@@ -86,14 +87,89 @@ For production release please remember to change endpoint from SANDBOX to LIVE.
         $product->getImageUrl(ImageType::SMALL) // product image url
     }
     ```
+
+5.  **List all products from price list by language/platform/region**
+
+    ```php
+     $products = $client->getProducts([
+           "language" => [
+               "Multilanguage",
+               "fr"
+            ],
+            "platform" => [
+                "Steam"
+            ],
+            "region" => [
+                "WORLDWIDE"
+            ]
+        ]);
+        
+    foreach($products as $product) {
+        $product->getName(); // the name of product
+        $product->getStockQuantity(); // current stock quantity
+        $product->getImageUrl(ImageType::SMALL) // product image url
+    }
+    ```    
+
+6.  **List all products from price list from last 60 days**
+
+    ```php
+    $products = $client->getProducts([
+        "inStockDaysAgo" => 60
+    ]);
+        
+    foreach($products as $product) {
+        $product->getName(); // the name of product
+        $product->getStockQuantity(); // current stock quantity
+        $product->getImageUrl(ImageType::SMALL) // product image url
+    }
+    ```    
+
+7.  **Fetch invoice for your order**
+
+    ```php
+    $orderInvoice = Invoice::get($createdOrder->getOrderId());
+    $invoicePath = Base64Writer::writeInvoice($orderInvoice, "./invoices");
+    ```    
+
+
+8.  **Check your customer before completing order**
+
+    ```php
+    $securityInformation = Security::check(
+        "devteam@codeswholesale.com",
+        "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_4) AppleWebKit/600.7.12 (KHTML, like Gecko) Version/8.0.7 Safari/600.7.12",
+        "devteam-payment@codeswholesale.com",
+        "81.90.190.200"
+    );
     
-4.  **Single product details**
+    $ipBlacklisted = $security->isIpBlacklisted();
+    $torIp = $security->isTorIp();
+    $domainBlackListed = $security->isDomainBlacklisted();
+    $subdomain = $security->isSubDomain();
+    ```
+  
+9.  **Check your order history**
+
+    ```php
+    $orders = Order::getHistory("2017-12-11", "2017-12-12");
+    
+    foreach ($orderList as $order) { 
+        $order->getOrderId();
+        $order->getClientOrderId();
+        $order->getTotalPrice() ;
+        $order->getStatus();
+        $order->getCreatedOn();
+    }
+    ```
+    
+10.  **Single product details**
 
     ```php
     $product = \CodesWholesale\Resource\Product::get($productHref);
     ```
   
-5.  **Retrieve product description**
+11.  **Retrieve product description**
 
     ```php
     $productDescription = \CodesWholesale\Resource\ProductDescription::get($product->getDescriptionHref());
@@ -119,7 +195,7 @@ For production release please remember to change endpoint from SANDBOX to LIVE.
     ```
     
 
-6.  **Retrieve account details, balance value and available credit**
+12.  **Retrieve account details, balance value and available credit**
 
     ```php
     $account = $client->getAccount();
@@ -130,57 +206,44 @@ For production release please remember to change endpoint from SANDBOX to LIVE.
     $account->getCurrentCredit(); // current credit value
     ```
     
-7.  **Create single code order**
+13.  **Create order**
 
     ```php
-    $code = \CodesWholesale\Resource\Order::createOrder($product);
-    /**
-     * Code as a TEXT
-     */
-    if($code->isText()) {
-        /**
-         * If code is sent as TEXT the use case is very simple,
-         * just retrieve code value from response message and present it to your customer
-         */
-        echo $code->getCode(). " <br />";
-    }
-    /**
-     * Code as a IMAGE
-     */
-    if($code->isImage()) {
-        /**
-         * If code is sent as IMAGE, we provide for you an image writer.
-         * Image writer will decode base64 data and save it to given directory.
-         *
-         * Afterwards you can present the code to your customer from $fullPath,
-         * which is a direct path to your image.
-         *
-         * In single order image code is returned in the response message.
-         * In a batch order $code->getCode() will do additional server request for each image.
-         */
-        $fullPath = \CodesWholesale\Util\CodeImageWriter::write($code, "/the/path/to/somewhere/");
-        echo $fullPath;
-    }
+    $createdOrder = Order::createOrder(
+            [
+                [
+                    "productId" => "6313677f-5219-47e4-a067-7401f55c5a3a",
+                    "quantity" => "2",
+                ],
+            ], null);
+            
+    foreach ($createdOrder->getProducts() as $product) {
+           
+         $product->getProductId();
+         $product->getUnitPrice();
     
-    if($code->isPreOrder()) {
-        // nothing much to do with PreOrdered code - we are working on Post Back functionality,
-        // CW will send you a post back information
-        // once the code is added to your order, post back will be send directly to your website.
-        // For now you can send an notification email
-        echo "Pre-order";
-    }
+         foreach ($product->getCodes() as $code) {
+              $code->getCodeId();
+                
+              if ($code->isPreOrder()) {
+                  echo "<b>Code has been pre-ordered!</b>" . " <br>";
+              }
     
+              if ($code->isText()) {
+                  echo "Text code to use: <b>" . $code->getCode() . "</b><br>";
+              }
+    
+              if ($code->isImage()) {
+                  $fullPath = \CodesWholesale\Util\Base64Writer::writeImageCode($code, "./my-codes");
+                  echo "Product has been saved in <b>" . $fullPath . "</b><br>";
+              }
+         }
+    }
     ```
-    
-8.  **Create order for multiple codes**
+      
+14.  **Receive notifications about product changes from CW's post back request**
 
-    ```php
-    $codes = \CodesWholesale\Resource\Order::createBatchOrder($product, array('quantity' => 10));
-    ```
-    
-9.  **Receive pre-ordered codes from CW's post back request**
-
-    To receive pre-ordered codes from CW at first point you must configure your post back URL that will be responsible for handling CW's requests. In order to do that, follow this steps:
+    To receive notifications from CW at first point you must configure your post back URL that will be responsible for handling CW's requests. In order to do that, follow this steps:
     
     - Sign in to [CodesWholesale](https://app.codeswholesale.com/)
     - Click you email address in top navigation
@@ -190,16 +253,62 @@ For production release please remember to change endpoint from SANDBOX to LIVE.
     If the URL is successfully configured, you should be able to handle CW's requests as follow:
 
     ```php
-    // method will parse request and extract parameters
-    // get order id, and id of ordered product from request params
-    $productOrdered = $client->receiveProductOrdered();
-    // ask for bought codes
-    $allCodesFromProduct = \CodesWholesale\Resource\Order::getCodes($productOrdered);
-
-    /**
-     * Go through bought codes and do your logic
-     */
-    foreach ($allCodesFromProduct as $code) {}
+    $client->registerStockAndPriceChangeHandler(function (array $stockAndPriceChanges) {
+        foreach ($stockAndPriceChanges as $stockAndPriceChange) {
+            /**
+             * Here you can save changes to your database
+             *
+             * @var StockAndPriceChange $stockAndPriceChange
+             */
+            echo $stockAndPriceChange->getProductId();
+            echo $stockAndPriceChange->getQuantity();
+    
+            $prices = $stockAndPriceChange->getPrices();
+    
+            foreach ($prices as $price) {
+                /**
+                 * @var Price $price
+                 */
+                echo $price->getRange();
+                echo $price->getValue();
+            }
+    
+            echo "<hr>";
+        }
+    });
+    
+    $client->registerHidingProductHandler(function (Notification $notification) {
+        /**
+         * Here you can request for product which was hidden or just hide it
+         * using provided productId
+         */
+        echo $notification->getProductId();
+    });
+    
+    $client->registerPreOrderAssignedHandler(function (AssignedPreOrder $notification) {
+        /**
+         * Here you can request for ordered product using productId
+         */
+        echo $notification->getOrderId();
+    });
+    
+    $client->registerUpdateProductHandler(function (Notification $notification) {
+        /**
+         * Here you can request product which was updated.
+         * It can be image, name or other product params.
+         */
+        echo $notification->getProductId();
+    });
+    
+    $client->registerNewProductHandler(function(Notification $notification) {
+        /**
+         * Here you can request product which was updated.
+         * It can be image, name or other product params.
+         */
+        echo $notification->getProductId();
+    });
+    
+    $client->handle(SIGNATURE);
     ```
     
     If you send test request from Web API tab and your script is configured to work with sandbox it will download ten fake images.
