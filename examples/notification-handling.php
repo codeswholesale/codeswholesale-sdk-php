@@ -13,12 +13,11 @@ session_start();
 require_once '../vendor/autoload.php';
 require_once 'utils.php';
 
-const SIGNATURE = "test_signature";
-
 $params = [
-    'cw.client_id' => 'ff72ce315d1259e822f47d87d02d261e',
+    'cw.client_id'     => 'ff72ce315d1259e822f47d87d02d261e',
     'cw.client_secret' => '$2a$10$E2jVWDADFA5gh6zlRVcrlOOX01Q/HJoT6hXuDMJxek.YEo.lkO2T6',
-    'cw.endpoint_uri' => CodesWholesale::SANDBOX_ENDPOINT,
+    'cw.signature'     => 'b4cded07-e13e-4021-8b9f-a3cee994109b',
+    'cw.endpoint_uri'  => CodesWholesale::SANDBOX_ENDPOINT,
     'cw.token_storage' => new TokenSessionStorage()
 ];
 $clientBuilder = new ClientBuilder($params);
@@ -28,7 +27,6 @@ $client->registerStockAndPriceChangeHandler(function (array $stockAndPriceChange
     foreach ($stockAndPriceChanges as $stockAndPriceChange) {
         /**
          * Here you can save changes to your database
-         *
          * @var StockAndPriceChange $stockAndPriceChange
          */
         echo $stockAndPriceChange->getProductId();
@@ -79,5 +77,5 @@ $client->registerNewProductHandler(function(Notification $notification) {
     echo $notification->getProductId();
 });
 
-$client->handle(SIGNATURE);
+$client->handle();
 
