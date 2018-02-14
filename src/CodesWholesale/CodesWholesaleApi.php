@@ -107,4 +107,13 @@ class CodesWholesaleApi
         return $this->clientConfig->getStorage()->getAccessToken($this->clientConfigId);
     }
 
+    /**
+     * @return CodesWholesaleClientConfig
+     */
+    public function getClientConfig()
+    {
+        return $this->clientConfig;
+    }
+
+
 }

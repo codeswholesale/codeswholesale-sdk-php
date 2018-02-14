@@ -24,6 +24,6 @@ class ClientBuilder
 
     public function build()
     {
-        return new Client($this->oauthApi, $this->clientConfig->getBaseUrl(), $this->clientConfig->getClientHeaders());
+        return new Client($this->oauthApi);
     }
 }
