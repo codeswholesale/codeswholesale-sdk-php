@@ -43,6 +43,15 @@ class CodesWholesaleClientConfig
      */
     private $storage;
 
+    /**
+     * @var string
+     */
+    private $signature;
+
+    /**
+     * @var string
+     */
+    private $clientId;
 
     public function __construct(array $data)
     {
@@ -56,6 +65,10 @@ class CodesWholesaleClientConfig
             }
         }
 
+        if (isset($data['cw.signature'])) {
+            $this->signature = $data['cw.signature'];
+        }
+        $this->clientId = $data['cw.client_id'];
         $this->baseUrl = $data['cw.endpoint_uri'];
         $this->storage = $data['cw.token_storage'];
         $this->clientData = array(
@@ -100,4 +113,21 @@ class CodesWholesaleClientConfig
     {
         return $this->clientData;
     }
+
+    /**
+     * @return mixed|string
+     */
+    public function getClientId()
+    {
+        return $this->clientId;
+    }
+
+    /**
+     * @return mixed|string
+     */
+    public function getSignature()
+    {
+        return $this->signature;
+    }
+
 }

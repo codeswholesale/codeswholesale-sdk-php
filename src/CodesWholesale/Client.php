@@ -5,11 +5,10 @@ namespace CodesWholesale;
 use CodesWholesale\DataStore\DefaultDataStore;
 use CodesWholesale\Http\HttpClientRequestExecutor;
 use CodesWholesale\Resource\Account;
-use CodesWholesale\Resource\LanguageList;
 use CodesWholesale\Resource\Postback;
 use CodesWholesale\Resource\ProductList;
-use CodesWholesale\Resource\RegionList;
 use CodesWholesale\Resource\Resource;
+use CodesWholesale\Util\HashingUtil;
 use CodesWholesale\Util\Magic;
 
 function toObject($properties)
@@ -22,6 +21,11 @@ function toObject($properties)
 
 class Client extends Magic
 {
+    /**
+     * @var Client
+     */
+    private static $instance;
+
     /**
      * @var callable
      */
@@ -48,20 +52,21 @@ class Client extends Magic
     private $pareOrderAssignmentCallback;
 
     /**
-     * @var Client
-     */
-    private static $instance;
-
-    /**
      * @var DefaultDataStore $dataStore
      */
     private $dataStore;
 
-    public function __construct(CodesWholesaleApi $oauthApi, $baseUrl, $clientHeaders)
+    /**
+     * @var CodesWholesaleClientConfig
+     */
+    private $clientConfig;
+
+    public function __construct(CodesWholesaleApi $oauthApi)
     {
         parent::__construct();
-        $requestExecutor = new HttpClientRequestExecutor($oauthApi, $clientHeaders);
-        $this->dataStore = new DefaultDataStore($requestExecutor, $baseUrl);
+        $this->clientConfig = $oauthApi->getClientConfig();
+        $requestExecutor = new HttpClientRequestExecutor($oauthApi, $oauthApi->getClientConfig()->getClientHeaders());
+        $this->dataStore = new DefaultDataStore($requestExecutor, $oauthApi->getClientConfig()->getBaseUrl());
         self::$instance = $this;
     }
 
@@ -211,7 +216,6 @@ class Client extends Magic
         );
     }
 
-
     public function registerHidingProductHandler(callable $callback)
     {
         $this->hiddenProductCallback = $callback;
@@ -237,7 +241,7 @@ class Client extends Magic
         $this->pareOrderAssignmentCallback = $callback;
     }
 
-    public function handle($signature)
+    public function handle()
     {
         $json = file_get_contents('php://input');
 
@@ -273,7 +277,9 @@ class Client extends Magic
             ]
         ];
 
-        if (isset($changingOptions[$postback->getType()]) && $signature === $postback->getAuthHash()) {
+        $authHash = HashingUtil::hash($this->clientConfig->getClientId(), $this->clientConfig->getSignature());
+
+        if (isset($changingOptions[$postback->getType()]) && $authHash === $postback->getAuthHash()) {
             $changingOption = $changingOptions[$postback->getType()];
             if ($postback->getType() === "STOCK") {
                 $instance = [];
