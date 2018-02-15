@@ -17,7 +17,7 @@ Or download it from official page: https://getcomposer.org/download/
 Configure the **codeswholesale/sdk** dependency in your 'composer.json' file:
 
     "require": {
-        "codeswholesale/sdk": "2.0"
+        "codeswholesale/sdk": "2.1"
     }
 
 Install the latest SDK with its dependencies on your project root
