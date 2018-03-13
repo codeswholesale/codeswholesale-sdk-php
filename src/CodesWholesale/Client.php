@@ -49,7 +49,7 @@ class Client extends Magic
     /**
      * @var callable
      */
-    private $pareOrderAssignmentCallback;
+    private $preOrderAssignmentCallback;
 
     /**
      * @var DefaultDataStore $dataStore
@@ -238,7 +238,7 @@ class Client extends Magic
 
     public function registerPreOrderAssignedHandler(callable $callback)
     {
-        $this->pareOrderAssignmentCallback = $callback;
+        $this->preOrderAssignmentCallback = $callback;
     }
 
     public function handle()
@@ -261,7 +261,7 @@ class Client extends Magic
             ],
             "PREORDER" => [
                 "class_name" => CodesWholesale::ASSIGNED_PRE_ORDER,
-                "callback" => $this->pareOrderAssignmentCallback,
+                "callback" => $this->preOrderAssignmentCallback,
             ],
             "NEW_PRODUCT" => [
                 "class_name" => CodesWholesale::NOTIFICATION,
