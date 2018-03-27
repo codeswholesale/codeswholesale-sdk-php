@@ -11,6 +11,7 @@
     "cd-keys"
   ],
   "homepage": "https://github.com/codeswholesale/codeswholesale-sdk-php",
+  "license": "GPL-3.0-only",
   "authors": [
     {
       "name": "CodesWholesale.com",
