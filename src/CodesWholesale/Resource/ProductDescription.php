@@ -156,7 +156,7 @@ class ProductDescription extends Resource
     public function getCategories()
     {
         $categories = $this->getProperty(self::CATEGORY);
-        return explode(",", $categories);
+        return explode(",", trim($categories));
     }
 
     /**
