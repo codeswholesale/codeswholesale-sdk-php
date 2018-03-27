@@ -12,6 +12,9 @@ class Language extends Resource
 {
     const NAME = "name";
 
+    /**
+     * @return string
+     */
     public function getName()
     {
         return $this->getProperty(self::NAME);

@@ -32,50 +32,73 @@ class Product extends Resource
     /**
      * @param $href
      * @return Product|object
+     * @throws \Exception
      */
     public static function get($href)
     {
         return Client::get($href, CodesWholesale::PRODUCT, self::PATH);
     }
 
+    /**
+     * @return string
+     */
     public function getProductId()
     {
         return $this->getProperty(self::PRODUCT_ID);
     }
 
+    /**
+     * @return string
+     */
     public function getName()
     {
         return $this->getProperty(self::NAME);
     }
 
+    /**
+     * @return string
+     */
     public function getIdentifier()
     {
         return $this->getProperty(self::IDENTIFIER);
     }
 
+    /**
+     * @return string
+     */
     public function getPlatform()
     {
         return $this->getProperty(self::PLATFORM);
     }
 
+    /**
+     * @return string
+     */
     public function getRegions()
     {
         return $this->getProperty(self::REGIONS);
     }
 
+    /**
+     * @return string
+     */
     public function getLanguages()
     {
         return $this->getProperty(self::LANGUAGES);
     }
 
+    /**
+     * @return string
+     */
     public function getReleaseDate()
     {
         return $this->getProperty(self::RELEASE_DATE);
     }
 
     /**
-     * @param string $locale
-     * @return ProductDescription
+     * @param null $locale
+     * @return ProductDescription|object
+     * @throws \Exception
      */
     public function getProductDescription($locale = null)
     {
@@ -120,7 +143,7 @@ class Product extends Resource
     /**
      * Returns first price range's price. The one from price list.
      *
-     * @return decimal
+     * @return float
      */
     public function getDefaultPrice()
     {
@@ -135,7 +158,7 @@ class Product extends Resource
     /**
      * Returns lowest price for product.
      *
-     * @return decimal
+     * @return float
      */
     public function getLowestPrice()
     {
@@ -150,7 +173,7 @@ class Product extends Resource
     }
 
     /**
-     * @return string|uri
+     * @return string
      */
     public function getBuyHref()
     {
@@ -158,7 +181,7 @@ class Product extends Resource
     }
 
     /**
-     * @return string|uri
+     * @return string
      */
     public function getDescriptionHref()
     {

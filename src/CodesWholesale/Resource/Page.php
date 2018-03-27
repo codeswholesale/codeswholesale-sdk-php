@@ -6,7 +6,6 @@ use CodesWholesale\Util\Magic;
 
 class Page extends Magic
 {
-
     private $offset;
     private $limit;
     private $items;

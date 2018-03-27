@@ -30,6 +30,7 @@ class ProductDescription extends Resource
      * @param $href
      * @param array $options
      * @return ProductDescription|object
+     * @throws \Exception
      */
     public static function get($href, array $options = array())
     {
@@ -37,11 +38,14 @@ class ProductDescription extends Resource
     }
 
     /**
-     * @return array
+     * @return LocalizedTitle[]
      */
     public function getLocalizedTitles()
     {
-        return $this->getProperty(self::LOCALIZED_TITLES);
+        return $this->dataStore->instantiateByArrayOf(
+            ProductDescriptionFieldContainer::LOCALIZED_TITLE,
+            $this->getProperty(self::LOCALIZED_TITLES)
+        );
     }
 
     /**
@@ -61,7 +65,7 @@ class ProductDescription extends Resource
     }
 
     /**
-     * @return array
+     * @return FactSheet[]
      */
     public function getFactSheets()
     {
@@ -72,7 +76,7 @@ class ProductDescription extends Resource
     }
 
     /**
-     * @return array
+     * @return Release[]
      */
     public function getReleases()
     {
@@ -83,7 +87,7 @@ class ProductDescription extends Resource
     }
 
     /**
-     * @return array
+     * @return string[]
      */
     public function getEditions()
     {
@@ -99,7 +103,7 @@ class ProductDescription extends Resource
     }
 
     /**
-     * @return string
+     * @return string[]
      */
     public function getKeywords()
     {
@@ -107,7 +111,7 @@ class ProductDescription extends Resource
     }
 
     /**
-     * @return array
+     * @return string[]
      */
     public function getGameLanguages()
     {
@@ -131,7 +135,7 @@ class ProductDescription extends Resource
     }
 
     /**
-     * @return array
+     * @return string[]
      */
     public function getEanCodes()
     {
@@ -147,15 +151,16 @@ class ProductDescription extends Resource
     }
 
     /**
-     * @return string
+     * @return string[]
      */
-    public function getCategory()
+    public function getCategories()
     {
-        return $this->getProperty(self::CATEGORY);
+        $categories = $this->getProperty(self::CATEGORY);
+        return explode(",", $categories);
     }
 
     /**
-     * @return array
+     * @return Photo[]
      */
     public function getPhotos()
     {
@@ -166,7 +171,7 @@ class ProductDescription extends Resource
     }
 
     /**
-     * @return array
+     * @return string[]
      */
     public function getExtensionPacks()
     {
@@ -174,7 +179,7 @@ class ProductDescription extends Resource
     }
 
     /**
-     * @return array
+     * @return Video[]
      */
     public function getVideos()
     {

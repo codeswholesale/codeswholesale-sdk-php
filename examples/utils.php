@@ -62,9 +62,12 @@ function displayProductDetailsWithDescription(\CodesWholesale\Resource\ProductDe
     echo "<b>Product Description</b>";
     echo "<hr>";
 
-    echo "<b>Localized Titles:</b>";
+    echo "<b>Localized Titles:</b><br />";
+
     foreach ($productDescription->getLocalizedTitles() as $localizedTitle) {
-        echo "Title: " . $localizedTitle;
+        /** @var $localizedTitle \CodesWholesale\Resource\LocalizedTitle */
+        echo "Title: " . $localizedTitle->getTitle() . "<br />";
+        echo "Territory: " . $localizedTitle->getTerritory() . "<br />";
     }
     echo "<br />";
     echo "Pegi Rating: " . $productDescription->getPegiRating();
@@ -118,7 +121,7 @@ function displayProductDetailsWithDescription(\CodesWholesale\Resource\ProductDe
     echo "<br />";
     echo "Developer Name: " . $productDescription->getDeveloperName();
     echo "<br />";
-    echo "<b>Game Languages</b>";
+    echo "<b>Ean Codes</b>";
     echo "<br />";
     foreach ($productDescription->getEanCodes() as $eanCode) {
         echo $eanCode . "<br />";
@@ -126,7 +129,10 @@ function displayProductDetailsWithDescription(\CodesWholesale\Resource\ProductDe
     echo "<br />";
     echo "Last Update: " . $productDescription->getLastUpdate();
     echo "<br />";
-    echo "Category: " . $productDescription->getCategory();
+    echo "<b>Category: </b>" . "<br>";
+    foreach ($productDescription->getCategories() as $category) {
+        echo $category . "<br>";
+    }
     echo "<br />";
 
     echo "<b>Photos</b>";

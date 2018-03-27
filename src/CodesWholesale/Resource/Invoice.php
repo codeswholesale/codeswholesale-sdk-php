@@ -17,9 +17,11 @@ class Invoice extends Resource
     const FILE_NAME = "body";
 
     const INVOICE_PATH = "/orders/";
+
     /**
      * @param $orderId
      * @return Invoice|object
+     * @throws \Exception
      */
     public static function get($orderId)
     {

@@ -8,7 +8,6 @@ class Photo extends Resource
     const TERRITORY = "territory";
     const TYPE = "type";
 
-
     /**
      * @return string
      */

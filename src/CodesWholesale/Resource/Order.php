@@ -45,8 +45,9 @@ class Order extends Resource
     }
 
     /**
-     * @param string $orderId
-     * @return object|Order
+     * @param $orderId
+     * @return Order|object
+     * @throws \Exception
      */
     public static function getOrder($orderId)
     {
@@ -54,14 +55,21 @@ class Order extends Resource
     }
 
     /**
-     * @param string $orderId
-     * @return object
+     * @param $orderId
+     * @return Invoice|object
+     * @throws \Exception
      */
     public static function getInvoice($orderId)
     {
         return Client::get(self::ORDER_ENDPOINT_V2 . "/$orderId/invoice", CodesWholesale::INVOICE);
     }
 
+    /**
+     * @param string $from
+     * @param string $to
+     * @return OrderList|object
+     * @throws \Exception
+     */
     public static function getHistory($from = null, $to = null)
     {
         $options = [];

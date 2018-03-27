@@ -16,11 +16,17 @@ class ProductOrdered extends Resource
 
     const PATH = "productsOrdered";
 
+    /**
+     * @return string
+     */
     public function getProductOrderedId()
     {
         return $this->getProperty(self::PRODUCT_ORDERED_ID);
     }
 
+    /**
+     * @return string
+     */
     public function getOrderId()
     {
         return $this->getProperty(self::ORDER_ID);

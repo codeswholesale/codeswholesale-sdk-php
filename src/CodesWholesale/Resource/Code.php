@@ -26,16 +26,27 @@ class Code extends Resource
 
     const CODE_PATH = "codes/";
 
+    /**
+     * @param $codeId
+     * @return Code|object
+     * @throws \Exception
+     */
     public static function get($codeId)
     {
         return Client::get(self::CODE_PATH . $codeId, CodesWholesale::CODE);
     }
 
+    /**
+     * @return string
+     */
     public function getCodeId()
     {
         return $this->getProperty(self::CODE_ID);
     }
 
+    /**
+     * @return Code
+     */
     public function getCode()
     {
         $code = trim($this->getProperty(self::CODE));
@@ -46,16 +57,25 @@ class Code extends Resource
         return $this->getProperty(self::CODE);
     }
 
+    /**
+     * @return bool
+     */
     public function isText()
     {
         return $this->getStatus() == self::TEXT;
     }
 
+    /**
+     * @return bool
+     */
     public function getStatus()
     {
         return $this->getProperty(self::STATUS);
     }
 
+    /**
+     * @return string
+     */
     public function getFileName()
     {
         if ($this->isImage()) {
@@ -64,11 +84,17 @@ class Code extends Resource
         throw new RuntimeException("Image code is not available");
     }
 
+    /**
+     * @return bool
+     */
     public function isImage()
     {
         return $this->getStatus() == self::IMAGE;
     }
 
+    /**
+     * @return bool
+     */
     public function isPreOrder()
     {
         return $this->getStatus() == self::PRE_ORDER;

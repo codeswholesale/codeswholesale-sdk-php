@@ -15,4 +15,5 @@ class ProductDescriptionFieldContainer
     const RELEASE = "Release";
     const VIDEO = "Video";
     const FACT_SHEET = "FactSheet";
+    const LOCALIZED_TITLE = "LocalizedTitle";
 }
