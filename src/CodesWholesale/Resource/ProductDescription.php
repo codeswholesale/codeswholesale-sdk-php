@@ -160,7 +160,7 @@ class ProductDescription extends Resource
 
         $trimmedCategories = [];
         foreach ($categories as $category) {
-             $trimmedCategories[] = ltrim($category);
+             $trimmedCategories[] = trim($category);
         }
         return $trimmedCategories;
     }
