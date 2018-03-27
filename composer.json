@@ -11,7 +11,6 @@
     "cd-keys"
   ],
   "homepage": "https://github.com/codeswholesale/codeswholesale-sdk-php",
-  "license": "Apache 2.0",
   "authors": [
     {
       "name": "CodesWholesale.com",
