@@ -133,6 +133,7 @@ function displayProductDetailsWithDescription(\CodesWholesale\Resource\ProductDe
     foreach ($productDescription->getCategories() as $category) {
         echo $category . "<br>";
     }
+    exit;
     echo "<br />";
 
     echo "<b>Photos</b>";
@@ -198,6 +199,13 @@ function displayFilters($filters)
 {
     foreach ($filters as $filter) {
         echo $filter->getName() . "<br>";
+    }
+}
+
+function displayTerritories($territories)
+{
+    foreach ($territories as $territory) {
+        echo $territory->getTerritory() . "<br>";
     }
 }
 

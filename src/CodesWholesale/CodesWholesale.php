@@ -58,6 +58,9 @@ class CodesWholesale
     const LANGUAGE_LIST         = "LanguageList";
     const LANGUAGE              = "Language";
 
+    const TERRITORY_LIST        = "TerritoryList";
+    const TERRITORY             = "Territory";
+
     const ORDER_REQUEST         = "OrderRequest";
     const PRODUCT_ENTRY_REQUEST = "ProductEntryRequest";
 

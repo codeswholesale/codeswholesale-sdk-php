@@ -28,6 +28,12 @@ class Base64Writer
         return $fullPath;
     }
 
+    /**
+     * @param Invoice $invoiceV2
+     * @param $whereToSaveDirectory
+     * @return string
+     * @throws Exception
+     */
     public static function writeInvoice(Invoice $invoiceV2, $whereToSaveDirectory)
     {
         $fullPath = self::prepareDirectory($whereToSaveDirectory, $invoiceV2->getInvoiceNumber());

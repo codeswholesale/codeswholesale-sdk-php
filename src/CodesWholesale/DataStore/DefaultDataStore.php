@@ -43,6 +43,13 @@ class DefaultDataStore implements InternalDataStore
         return $this->resourceFactory->instantiate($className, $propertiesArr);
     }
 
+    /**
+     * @param $href
+     * @param $className
+     * @param array $options
+     * @return object
+     * @throws Exception
+     */
     public function getResource($href, $className, array $options = [])
     {
         if ($this->needsToBeFullyQualified($href)) {

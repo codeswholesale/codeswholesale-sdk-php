@@ -8,6 +8,7 @@ use CodesWholesale\Resource\Account;
 use CodesWholesale\Resource\Postback;
 use CodesWholesale\Resource\ProductList;
 use CodesWholesale\Resource\Resource;
+use CodesWholesale\Resource\TerritoryList;
 use CodesWholesale\Util\HashingUtil;
 use CodesWholesale\Util\Magic;
 
@@ -174,6 +175,20 @@ class Client extends Magic
             CodesWholesale::API_VERSION_V2 . '/products',
             CodesWholesale::PRODUCT_LIST,
             $options
+        );
+    }
+
+    /**
+     * @param array $options
+     * @return TerritoryList|object
+     * @throws \Exception
+     */
+    public function getTerritories(array $options = [])
+    {
+        return $this->dataStore->getResource(
+          CodesWholesale::API_VERSION_V2 . '/territory',
+          CodesWholesale::TERRITORY_LIST,
+          $options
         );
     }
 
