@@ -55,11 +55,22 @@ try {
      */
     $products = $client->getProducts();
 
+
     /**
-     * List products by filters
+     * List products by last stock availability
      */
 //    $products = $client->getProducts([
-//        "inStockDaysAgo" => 100
+//        "inStockDaysAgo" => 60
+//    ]);
+
+    /**
+     * List products by product id's
+     */
+//    $products = $client->getProducts([
+//        "productIds" => [
+//            "33e3e81d-2b78-475a-8886-9848116f5133",
+//            "04aeaf1e-f7b5-4ba9-ba19-91003a04db0a"
+//        ]
 //    ]);
 
     /**
