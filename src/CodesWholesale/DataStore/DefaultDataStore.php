@@ -169,8 +169,12 @@ class DefaultDataStore implements InternalDataStore
 
     private function toStdClass(Resource $resource)
     {
+
         $propertyNames = $resource->getPropertyNames();
         $properties = new \stdClass();
+
+        print_r($propertyNames);
+        exit;
 
         foreach ($propertyNames as $name) {
             $property = $resource->getProperty($name);

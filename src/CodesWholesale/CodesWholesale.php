@@ -35,51 +35,55 @@ spl_autoload_register('CodesWholesale\CodesWholesale_autoload');
 
 class CodesWholesale
 {
-    const ACCOUNT               = "Account";
+    const ACCOUNT                = "Account";
 
-    const CODE                  = "Code";
-    const CODE_LIST             = "CodeList";
+    const CODE                   = "Code";
+    const CODE_LIST              = "CodeList";
 
-    const ORDER                 = "Order";
-    const ORDER_LIST            = "OrderList";
+    const ORDER                  = "Order";
+    const ORDER_LIST             = "OrderList";
 
-    const PRODUCT               = "Product";
-    const PRODUCT_RESPONSE      = "ProductResponse";
-    const PRODUCT_DESCRIPTION   = "ProductDescription";
-    const PRODUCT_LIST          = "ProductList";
-    const PRODUCT_ORDERED       = "ProductOrdered";
+    const PRODUCT                = "Product";
+    const PRODUCT_RESPONSE       = "ProductResponse";
+    const PRODUCT_DESCRIPTION    = "ProductDescription";
+    const PRODUCT_LIST           = "ProductList";
+    const PRODUCT_ORDERED        = "ProductOrdered";
 
-    const REGION_LIST           = "RegionList";
-    const REGION                = "Region";
+    const REGION_LIST            = "RegionList";
+    const REGION                 = "Region";
 
-    const PLATFORM_LIST         = "PlatformList";
-    const PLATFORM              = "Platform";
+    const PLATFORM_LIST          = "PlatformList";
+    const PLATFORM               = "Platform";
 
-    const LANGUAGE_LIST         = "LanguageList";
-    const LANGUAGE              = "Language";
+    const LANGUAGE_LIST          = "LanguageList";
+    const LANGUAGE               = "Language";
 
-    const TERRITORY_LIST        = "TerritoryList";
-    const TERRITORY             = "Territory";
+    const TERRITORY_LIST         = "TerritoryList";
+    const TERRITORY              = "Territory";
 
-    const ORDER_REQUEST         = "OrderRequest";
-    const PRODUCT_ENTRY_REQUEST = "ProductEntryRequest";
+    const ORDER_REQUEST          = "OrderRequest";
+    const PRODUCT_ENTRY_REQUEST  = "ProductEntryRequest";
 
-    const INVOICE               = "Invoice";
+    const INVOICE                = "Invoice";
 
-    const EXCEPTION_RESOURCE    = "ExceptionResource";
+    const EXCEPTION_RESOURCE     = "ExceptionResource";
 
-    const SECURITY              = "Security";
-    const SECURITY_REQUEST      = "SecurityRequest";
+    const SECURITY               = "Security";
+    const SECURITY_REQUEST       = "SecurityRequest";
 
-    const PRICE                 = "Price";
-    const POSTBACK              = "Postback";
-    const STOCK_AND_PRICE       = "StockAndPriceChange";
-    const NOTIFICATION          = "Notification";
-    const ASSIGNED_PRE_ORDER    = "AssignedPreOrder";
+    const PRICE                  = "Price";
+    const POSTBACK               = "Postback";
+    const STOCK_AND_PRICE        = "StockAndPriceChange";
+    const NOTIFICATION           = "Notification";
+    const ASSIGNED_PRE_ORDER     = "AssignedPreOrder";
 
+    const IMPORT                 = "Import";
+    const IMPORT_LIST            = "ImportList";
+    const IMPORT_REQUEST         = "ImportRequest";
+    const IMPORT_FILTERS_REQUEST = "ImportFiltersRequest";
 
-    const API_VERSION_V2        = 'v2';
+    const API_VERSION_V2         = 'v2';
 
-    const SANDBOX_ENDPOINT      = 'https://sandbox.codeswholesale.com';
-    const LIVE_ENDPOINT         = 'https://api.codeswholesale.com';
+    const SANDBOX_ENDPOINT       = 'http://api-uat.codeswholesale.com';
+    const LIVE_ENDPOINT          = 'https://api.codeswholesale.com';
 }

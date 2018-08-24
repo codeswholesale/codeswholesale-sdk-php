@@ -5,6 +5,8 @@ namespace CodesWholesale;
 use CodesWholesale\DataStore\DefaultDataStore;
 use CodesWholesale\Http\HttpClientRequestExecutor;
 use CodesWholesale\Resource\Account;
+use CodesWholesale\Resource\Import;
+use CodesWholesale\Resource\ImportRequest;
 use CodesWholesale\Resource\Postback;
 use CodesWholesale\Resource\ProductList;
 use CodesWholesale\Resource\Resource;
@@ -144,6 +146,18 @@ class Client extends Magic
     }
 
     /**
+     * @param $href
+     * @param Resource $resource
+     * @param $returnType
+     * @return Resource|Import
+     */
+    public function registerImport(Resource $resource, $returnType)
+    {
+        return self::getInstance()->dataStore
+            ->create(CodesWholesale::API_VERSION_V2 . "/imports", $resource, $returnType, []);
+    }
+
+    /**
      * @param array $options
      * @return Account|object
      * @throws \Exception
@@ -186,9 +200,9 @@ class Client extends Magic
     public function getTerritories(array $options = [])
     {
         return $this->dataStore->getResource(
-          CodesWholesale::API_VERSION_V2 . '/territory',
-          CodesWholesale::TERRITORY_LIST,
-          $options
+            CodesWholesale::API_VERSION_V2 . '/territory',
+            CodesWholesale::TERRITORY_LIST,
+            $options
         );
     }
 
@@ -231,26 +245,41 @@ class Client extends Magic
         );
     }
 
+    /**
+     * @param callable $callback
+     */
     public function registerHidingProductHandler(callable $callback)
     {
         $this->hiddenProductCallback = $callback;
     }
 
+    /**
+     * @param callable $callback
+     */
     public function registerUpdateProductHandler(callable $callback)
     {
         $this->updateProductCallback = $callback;
     }
 
+    /**
+     * @param callable $callback
+     */
     public function registerNewProductHandler(callable $callback)
     {
         $this->newProductCallback = $callback;
     }
 
+    /**
+     * @param callable $callback
+     */
     public function registerStockAndPriceChangeHandler(callable $callback)
     {
         $this->stockAndPriceCallback = $callback;
     }
 
+    /**
+     * @param callable $callback
+     */
     public function registerPreOrderAssignedHandler(callable $callback)
     {
         $this->preOrderAssignmentCallback = $callback;

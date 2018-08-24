@@ -209,6 +209,11 @@ function displayTerritories($territories)
     }
 }
 
+function displayRegisteredImport($registeredImport)
+{
+
+}
+
 function displayOrder(\CodesWholesale\Resource\Order $createdOrder)
 {
     echo "<hr>";
@@ -279,14 +284,15 @@ function displaySecurityCheck(Security $security)
     $domainBlackListed = $security->isDomainBlacklisted() ? "true" : "false";
     $subdomain = $security->isSubDomain() ? "true" : "false";
 
-    echo "Order Risk Score: " . $security->getRiskScore() .  " <br>";
+    echo "Order Risk Score: " . $security->getRiskScore() . " <br>";
     echo "Blacklisted IP? " . $ipBlacklisted . " <br>";
     echo "IP from TOR? " . $torIp . " <br>";
     echo "Blacklisted domain? " . $domainBlackListed . " <br>";
     echo "Subdomain? " . $subdomain . " <br>";
 }
 
-function displayOrderHistory(\CodesWholesale\Resource\OrderList $orderList) {
+function displayOrderHistory(\CodesWholesale\Resource\OrderList $orderList)
+{
 
     foreach ($orderList as $order) {
         /**
