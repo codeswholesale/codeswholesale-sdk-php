@@ -42,7 +42,6 @@ $params = [
 $clientBuilder = new \CodesWholesale\ClientBuilder($params);
 $client = $clientBuilder->build();
 try {
-
     $registeredImport = Import::registerImport([
         "filters" => [
             "regions" => [
@@ -60,12 +59,7 @@ try {
         "territory" => "english",
         "webHookUrl" => "http://test.url"
     ]);
-
     displayRegisteredImport($registeredImport);
-
-
 } catch (Exception $exception) {
-
     echo $exception->getMessage();
-
 }
