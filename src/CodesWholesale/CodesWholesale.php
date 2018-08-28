@@ -80,7 +80,7 @@ class CodesWholesale
     const IMPORT                 = "Import";
     const IMPORT_LIST            = "ImportList";
     const IMPORT_REQUEST         = "ImportRequest";
-    const IMPORT_FILTERS_REQUEST = "ImportFiltersRequest";
+    const IMPORT_FILTERS_REQUEST = "ImportFilterRequest";
 
     const API_VERSION_V2         = 'v2';
 

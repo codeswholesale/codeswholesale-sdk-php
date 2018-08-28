@@ -20,6 +20,12 @@ class HttpClientRequestExecutor implements RequestExecutor
         $this->cwClient = $cwClient;
     }
 
+    /**
+     * @param Request $request
+     * @param int $redirectsLimit
+     * @return DefaultResponse
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     */
     public function executeRequest(Request $request, $redirectsLimit = 10)
     {
         $this->addClientHeaders($request);
@@ -35,6 +41,10 @@ class HttpClientRequestExecutor implements RequestExecutor
             'query' => $request->getQueryString(),
             'body' => $request->getBody()
         ]);
+
+        if($response->getStatusCode() == 208) {
+            throw new \Exception("Already reported.", 208);
+        }
 
         if ($response->getStatusCode() != 200 && $redirectsLimit) {
             $request->setResourceUrl($response->getHeader('location'));

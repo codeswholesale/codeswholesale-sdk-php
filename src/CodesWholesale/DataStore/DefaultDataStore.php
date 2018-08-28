@@ -73,6 +73,24 @@ class DefaultDataStore implements InternalDataStore
         }
     }
 
+    /**
+     * @param $href
+     * @throws Exception
+     */
+    public function patch($href) {
+        try {
+            $this->executeRequest(Request::METHOD_PATCH, $href, '', []);
+        } catch (ClientException $exception) {
+            /**
+             * @var ExceptionResource $exceptionResources
+             */
+            $exceptionResource = $this->resourceFactory->instantiate(CodesWholesale::EXCEPTION_RESOURCE, [
+                json_decode($exception->getResponse()->getBody()->getContents()), ""
+            ]);
+            throw new Exception($exceptionResource->getMessage(), $exceptionResource->getCode());
+        }
+    }
+
     protected function needsToBeFullyQualified($href)
     {
         return stripos($href, 'http') === false;

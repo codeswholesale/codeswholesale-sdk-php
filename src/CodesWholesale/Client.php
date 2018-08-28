@@ -86,9 +86,23 @@ class Client extends Magic
         if ($path and stripos($href, $path) === false) {
             $resultingHref = is_numeric(stripos($href, $path)) ? $href : "$path/$href";
         }
-
         return self::getInstance()->dataStore->getResource($resultingHref, $className, $options);
     }
+
+    /**
+     * @param $href
+     * @param string $path
+     * @throws \Exception
+     */
+    public static function patch($href, $path = CodesWholesale::API_VERSION_V2) {
+        $resultingHref = $href;
+        if ($path and stripos($href, $path) === false) {
+            $resultingHref = is_numeric(stripos($href, $path)) ? $href : "$path/$href";
+        }
+        return self::getInstance()->dataStore->patch($resultingHref);
+    }
+
+
 
     /**
      * @return Client

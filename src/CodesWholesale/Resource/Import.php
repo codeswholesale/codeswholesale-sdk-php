@@ -11,6 +11,7 @@ namespace CodesWholesale\Resource;
 
 use CodesWholesale\Client;
 use CodesWholesale\CodesWholesale;
+use function CodesWholesale\toObject;
 
 class Import extends Resource
 {
@@ -27,7 +28,14 @@ class Import extends Resource
      */
     public static function registerImport(array $importRequest)
     {
-        $import = Client::instantiate(CodesWholesale::IMPORT_REQUEST, $importRequest);
+        if (isset($importRequest['filters'])) {
+            $filters = Client::instantiate(CodesWholesale::IMPORT_FILTERS_REQUEST, $importRequest['filters']);
+        }
+        $import = Client::instantiate(CodesWholesale::IMPORT_REQUEST, toObject([
+            "filters" => !empty($filters) ? $filters : null,
+            "territory" => isset($importRequest["territory"]) ? $importRequest["territory"] : null,
+            "webHookUrl" => isset($importRequest["webHookUrl"]) ? $importRequest["webHookUrl"] : null
+        ]));
         return Client::getInstance()->registerImport($import, CodesWholesale::IMPORT);
     }
 
@@ -48,5 +56,46 @@ class Import extends Resource
     public static function getImport($importId)
     {
         return Client::get(self::IMPORT_ENDPOINT_V2 . "/" . $importId, CodesWholesale::IMPORT);
+    }
+
+    /**
+     * @param $importId
+     * @throws \Exception
+     */
+    public static function cancelImport($importId)
+    {
+        Client::patch(self::IMPORT_ENDPOINT_V2 . "/" . $importId);
+    }
+
+    /**
+     * @return string
+     */
+    public function getImportId()
+    {
+        return $this->getProperty(self::IMPORT_ID);
+    }
+
+    /**
+     * @return string
+     */
+    public function getImportStatus()
+    {
+        return $this->getProperty(self::IMPORT_STATUS);
+    }
+
+    /**
+     * @return int
+     */
+    public function getNumberOfFails()
+    {
+        return $this->getProperty(self::NUMBER_OF_FAILS);
+    }
+
+    /**
+     * @return string
+     */
+    public function getMessage()
+    {
+        return $this->getProperty(self::MESSAGE);
     }
 }

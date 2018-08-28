@@ -42,22 +42,8 @@ $params = [
 $clientBuilder = new \CodesWholesale\ClientBuilder($params);
 $client = $clientBuilder->build();
 
-$registeredImport = Import::registerImport([
-    "filters" => [
-        "regions"        => [
-            "WORLDWIDE"
-        ],
-        "languages"      => [
-            "Multilanguage"
-        ],
-        "platforms"      => [
-            "Steam"
-        ],
-        "productIds"     => [],
-        "inStockDaysAgo" => 0
-    ],
-    "territory" => "english",
-    "webHookUrl" => "http://your_post_back_url.com"
-]);
+Import::cancelImport("9a90aaf2-e92d-4598-b858-bf3f1cfad28d");
 
-displayRegisteredImport($registeredImport);
+$import = Import::getImport("9a90aaf2-e92d-4598-b858-bf3f1cfad28d");
+
+displayRegisteredImport($import);

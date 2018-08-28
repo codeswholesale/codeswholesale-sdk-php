@@ -209,9 +209,12 @@ function displayTerritories($territories)
     }
 }
 
-function displayRegisteredImport($registeredImport)
+function displayRegisteredImport(\CodesWholesale\Resource\Import $registeredImport)
 {
-
+    echo "Import ID: " . $registeredImport->getImportId() . "<br>";
+    echo "Import status: " . $registeredImport->getImportStatus() . "<br>";
+    echo "Import number of fails: " . $registeredImport->getNumberOfFails() . "<br>";
+    echo "Import message: " . $registeredImport->getMessage() . "<br>";
 }
 
 function displayOrder(\CodesWholesale\Resource\Order $createdOrder)
@@ -293,7 +296,6 @@ function displaySecurityCheck(Security $security)
 
 function displayOrderHistory(\CodesWholesale\Resource\OrderList $orderList)
 {
-
     foreach ($orderList as $order) {
         /**
          * @var \CodesWholesale\Resource\Order $order
@@ -305,5 +307,4 @@ function displayOrderHistory(\CodesWholesale\Resource\OrderList $orderList)
         echo "Created on: " . $order->getCreatedOn() . " <br>";
         echo "<hr>";
     }
-
 }
