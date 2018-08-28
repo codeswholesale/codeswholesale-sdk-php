@@ -72,6 +72,7 @@ class CodesWholesaleApi
      * @param $uri
      * @param array $options
      * @return mixed|\Psr\Http\Message\ResponseInterface
+     * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function get($uri, array $options = [])
     {
@@ -83,6 +84,7 @@ class CodesWholesaleApi
      * @param $uri
      * @param array $options
      * @return mixed|\Psr\Http\Message\ResponseInterface
+     * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function request($method, $uri, array $options = [])
     {
@@ -93,6 +95,7 @@ class CodesWholesaleApi
      * @param $uri
      * @param array $options
      * @return mixed|\Psr\Http\Message\ResponseInterface
+     * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function post($uri, array $options = [])
     {

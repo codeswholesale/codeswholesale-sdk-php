@@ -6,7 +6,6 @@ use CodesWholesale\DataStore\DefaultDataStore;
 use CodesWholesale\Http\HttpClientRequestExecutor;
 use CodesWholesale\Resource\Account;
 use CodesWholesale\Resource\Import;
-use CodesWholesale\Resource\ImportRequest;
 use CodesWholesale\Resource\Postback;
 use CodesWholesale\Resource\ProductList;
 use CodesWholesale\Resource\Resource;
@@ -201,8 +200,7 @@ class Client extends Magic
     {
         return $this->dataStore->getResource(
             CodesWholesale::API_VERSION_V2 . '/territory',
-            CodesWholesale::TERRITORY_LIST,
-            $options
+            CodesWholesale::TERRITORY_LIST, $options
         );
     }
 

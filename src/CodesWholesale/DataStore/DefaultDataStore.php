@@ -169,14 +169,11 @@ class DefaultDataStore implements InternalDataStore
 
     private function toStdClass(Resource $resource)
     {
-
         $propertyNames = $resource->getPropertyNames();
         $properties = new \stdClass();
 
-        print_r($propertyNames);
-        exit;
-
         foreach ($propertyNames as $name) {
+
             $property = $resource->getProperty($name);
 
             if ($property instanceof \stdClass) {
@@ -190,7 +187,9 @@ class DefaultDataStore implements InternalDataStore
     private function toSimpleReferences(\stdClass $properties)
     {
         $products = (array)$properties;
+
         $simpleReferences = [];
+
         foreach ($products as $product) {
             $simpleReferences[] = (object)$product->getProperties();
         }

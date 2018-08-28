@@ -84,6 +84,6 @@ class CodesWholesale
 
     const API_VERSION_V2         = 'v2';
 
-    const SANDBOX_ENDPOINT       = 'http://api-uat.codeswholesale.com';
+    const SANDBOX_ENDPOINT       = 'https://sandbox.codeswholesale.com';
     const LIVE_ENDPOINT          = 'https://api.codeswholesale.com';
 }

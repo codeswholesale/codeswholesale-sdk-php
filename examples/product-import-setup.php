@@ -18,8 +18,8 @@ $params = [
      * API Keys
      * These are common api keys, you can use it to test integration.
      */
-    'cw.client_id' => '664700994a02e6e887e3a80e5f454a9e',
-    'cw.client_secret' => '$2a$10$zqSM3hnJGjB9GvDqcTUsYO6uKm1Nd.bVmpPmA1HYPuJqMXDRpBy4q',
+    'cw.client_id' => 'ff72ce315d1259e822f47d87d02d261e',
+    'cw.client_secret' => '$2a$10$E2jVWDADFA5gh6zlRVcrlOOX01Q/HJoT6hXuDMJxek.YEo.lkO2T6',
     /**
      * CodesWholesale ENDPOINT
      */
@@ -42,7 +42,6 @@ $params = [
 $clientBuilder = new \CodesWholesale\ClientBuilder($params);
 $client = $clientBuilder->build();
 
-
 $registeredImport = Import::registerImport([
     "filters" => [
         "regions"        => [
@@ -54,9 +53,7 @@ $registeredImport = Import::registerImport([
         "platforms"      => [
             "Steam"
         ],
-        "productIds"     => [
-
-        ],
+        "productIds"     => [],
         "inStockDaysAgo" => 0
     ],
     "territory" => "english",
