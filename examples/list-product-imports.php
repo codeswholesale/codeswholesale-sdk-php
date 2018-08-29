@@ -44,4 +44,7 @@ $client = $clientBuilder->build();
 
 $imports = Import::getImports();
 
-print_r($imports);
+foreach ($imports as $import) {
+    displayRegisteredImport($import);
+    echo "<br>";
+}
