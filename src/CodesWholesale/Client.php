@@ -54,6 +54,11 @@ class Client extends Magic
     private $preOrderAssignmentCallback;
 
     /**
+     * @var callable
+     */
+    private $fullProductCallback;
+
+    /**
      * @var DefaultDataStore $dataStore
      */
     private $dataStore;
@@ -94,14 +99,14 @@ class Client extends Magic
      * @param string $path
      * @throws \Exception
      */
-    public static function patch($href, $path = CodesWholesale::API_VERSION_V2) {
+    public static function patch($href, $path = CodesWholesale::API_VERSION_V2)
+    {
         $resultingHref = $href;
         if ($path and stripos($href, $path) === false) {
             $resultingHref = is_numeric(stripos($href, $path)) ? $href : "$path/$href";
         }
         return self::getInstance()->dataStore->patch($resultingHref);
     }
-
 
 
     /**
@@ -297,6 +302,14 @@ class Client extends Magic
         $this->preOrderAssignmentCallback = $callback;
     }
 
+    /**
+     * @param callable $callback
+     */
+    public function registerFullProductHandler(callable $callback)
+    {
+        $this->fullProductCallback = $callback;
+    }
+
     public function handle()
     {
         $json = file_get_contents('php://input');
@@ -330,6 +343,10 @@ class Client extends Magic
             "PRODUCT_HIDDEN" => [
                 "class_name" => CodesWholesale::NOTIFICATION,
                 "callback" => $this->hiddenProductCallback,
+            ],
+            "NEW_FULL_PRODUCT" => [
+                "class_name" => CodesWholesale::FULL_PRODUCT,
+                "callback" => $this->fullProductCallback
             ]
         ];
 

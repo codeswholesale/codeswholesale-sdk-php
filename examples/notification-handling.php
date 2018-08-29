@@ -3,6 +3,7 @@
 use CodesWholesale\ClientBuilder;
 use CodesWholesale\CodesWholesale;
 use CodesWholesale\Resource\AssignedPreOrder;
+use CodesWholesale\Resource\FullProduct;
 use CodesWholesale\Resource\Notification;
 use CodesWholesale\Resource\Price;
 use CodesWholesale\Resource\StockAndPriceChange;
@@ -75,6 +76,11 @@ $client->registerNewProductHandler(function(Notification $notification) {
      * It can be image, name or other product params.
      */
     echo $notification->getProductId();
+});
+
+$client->registerFullProductHandler(function (FullProduct $fullProduct) {
+
+    $mateuszTOChuj = $fullProduct;
 });
 
 $client->handle();

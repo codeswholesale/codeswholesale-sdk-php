@@ -76,6 +76,7 @@ class CodesWholesale
     const STOCK_AND_PRICE        = "StockAndPriceChange";
     const NOTIFICATION           = "Notification";
     const ASSIGNED_PRE_ORDER     = "AssignedPreOrder";
+    const FULL_PRODUCT           = "FullProduct";
 
     const IMPORT                 = "Import";
     const IMPORT_LIST            = "ImportList";
