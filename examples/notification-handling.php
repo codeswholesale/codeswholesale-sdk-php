@@ -79,8 +79,9 @@ $client->registerNewProductHandler(function(Notification $notification) {
 });
 
 $client->registerFullProductHandler(function (FullProduct $fullProduct) {
-
-    $mateuszTOChuj = $fullProduct;
+    /**
+     * Here you can fetch product data.
+     */
 });
 
 $client->handle();
