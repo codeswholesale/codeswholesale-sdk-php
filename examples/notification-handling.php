@@ -78,7 +78,10 @@ $client->registerNewProductHandler(function(Notification $notification) {
     echo $notification->getProductId();
 });
 
-$client->registerFullProductHandler(function (FullProduct $fullProduct) {
+/**
+ * @param FullProduct[]
+ */
+$client->registerFullProductHandler(function (array $fullProducts) {
     /**
      * Here you can fetch product data.
      */

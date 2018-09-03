@@ -355,14 +355,27 @@ class Client extends Magic
         if (isset($changingOptions[$postback->getType()]) && $authHash === $postback->getAuthHash()) {
             $changingOption = $changingOptions[$postback->getType()];
             if ($postback->getType() === "STOCK") {
-                $instance = [];
-                foreach (json_decode($json)->products as $product) {
-                    $instance[] = $this->dataStore->instantiate($changingOption["class_name"], $product);
-                }
+                $instance = $this->processNotificationToArray(json_decode($json)->products, $changingOption["class_name"]);
+            } elseif ($postback->getType() === "NEW_FULL_PRODUCT") {
+                $instance = $this->processNotificationToArray(json_decode($json)->products, $changingOption["class_name"]);
             } else {
                 $instance = $this->dataStore->instantiate($changingOption["class_name"], json_decode($json));
             }
             $changingOption["callback"]($instance);
         }
+    }
+
+    /**
+     * @param $toIterate
+     * @param $className
+     * @return array
+     */
+    private function processNotificationToArray($toIterate, $className)
+    {
+        $instance = [];
+        foreach ($toIterate as $item) {
+            $instance[] = $this->dataStore->instantiate($className, $item);
+        }
+        return $instance;
     }
 }
