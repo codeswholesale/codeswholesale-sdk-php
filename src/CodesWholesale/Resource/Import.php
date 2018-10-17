@@ -36,6 +36,7 @@ class Import extends Resource
             "territory" => isset($importRequest["territory"]) ? $importRequest["territory"] : null,
             "webHookUrl" => isset($importRequest["webHookUrl"]) ? $importRequest["webHookUrl"] : null
         ]));
+
         return Client::getInstance()->registerImport($import, CodesWholesale::IMPORT);
     }
 

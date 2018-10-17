@@ -77,7 +77,8 @@ class DefaultDataStore implements InternalDataStore
      * @param $href
      * @throws Exception
      */
-    public function patch($href) {
+    public function patch($href)
+    {
         try {
             $this->executeRequest(Request::METHOD_PATCH, $href, '', []);
         } catch (ClientException $exception) {
@@ -194,11 +195,23 @@ class DefaultDataStore implements InternalDataStore
 
             $property = $resource->getProperty($name);
 
+            if ($property instanceof Resource) {
+                $additionalProperties = new \stdClass();
+                foreach ($property->getPropertyNames() as $propertyName) {
+                    $additionalProperty = $property->getProperty($propertyName);
+                    $additionalProperties->$propertyName = (array) $additionalProperty;
+                }
+                $properties->$name = $additionalProperties;
+                continue;
+            }
+
             if ($property instanceof \stdClass) {
                 $property = $this->toSimpleReferences($property);
             }
+
             $properties->$name = $property;
         }
+
         return $properties;
     }
 
