@@ -192,14 +192,16 @@ class DefaultDataStore implements InternalDataStore
         $properties = new \stdClass();
 
         foreach ($propertyNames as $name) {
-
             $property = $resource->getProperty($name);
-
             if ($property instanceof Resource) {
                 $additionalProperties = new \stdClass();
                 foreach ($property->getPropertyNames() as $propertyName) {
                     $additionalProperty = $property->getProperty($propertyName);
-                    $additionalProperties->$propertyName = (array) $additionalProperty;
+                    if($additionalProperty instanceof \stdClass) {
+                        $additionalProperties->$propertyName = (array) $additionalProperty;
+                    } else {
+                        $additionalProperties->$propertyName = $additionalProperty;
+                    }
                 }
                 $properties->$name = $additionalProperties;
                 continue;
