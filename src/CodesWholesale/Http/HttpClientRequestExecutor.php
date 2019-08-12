@@ -46,7 +46,7 @@ class HttpClientRequestExecutor implements RequestExecutor
             throw new \Exception("Already reported.", 208);
         }
 
-        if ($response->getStatusCode() != 200 && $redirectsLimit) {
+        if ($response->getStatusCode() != (200 || 204) && $redirectsLimit) {
             $request->setResourceUrl($response->getHeader('location'));
             return $this->executeRequest($request, --$redirectsLimit);
         }

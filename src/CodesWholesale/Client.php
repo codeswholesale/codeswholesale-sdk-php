@@ -10,6 +10,7 @@ use CodesWholesale\Resource\Postback;
 use CodesWholesale\Resource\ProductList;
 use CodesWholesale\Resource\Resource;
 use CodesWholesale\Resource\TerritoryList;
+use CodesWholesale\Resource\Webhook;
 use CodesWholesale\Util\HashingUtil;
 use CodesWholesale\Util\Magic;
 
@@ -108,6 +109,28 @@ class Client extends Magic
         return self::getInstance()->dataStore->patch($resultingHref);
     }
 
+    public static function put($href, $body, $path = CodesWholesale::API_VERSION_V2)
+    {
+        $resultingHref = $href;
+        if ($path and stripos($href, $path) === false) {
+            $resultingHref = is_numeric(stripos($href, $path)) ? $href : "$path/$href";
+        }
+        return self::getInstance()->dataStore->put($resultingHref, $body);
+    }
+
+    /**
+     * @param $href
+     * @param string $path
+     * @return mixed|string
+     */
+    public static function delete($href, $path = CodesWholesale::API_VERSION_V2)
+    {
+        $resultingHref = $href;
+        if ($path and stripos($href, $path) === false) {
+            $resultingHref = is_numeric(stripos($href, $path)) ? $href : "$path/$href";
+        }
+        return self::getInstance()->dataStore->deleteByHref($resultingHref);
+    }
 
     /**
      * @return Client

@@ -92,6 +92,25 @@ class DefaultDataStore implements InternalDataStore
         }
     }
 
+    /**
+     * @param $href
+     * @throws Exception
+     */
+    public function put($href, $body)
+    {
+        try {
+            $this->executeRequest(Request::METHOD_PUT, $href, $body, []);
+        } catch (ClientException $exception) {
+            /**
+             * @var ExceptionResource $exceptionResources
+             */
+            $exceptionResource = $this->resourceFactory->instantiate(CodesWholesale::EXCEPTION_RESOURCE, [
+                json_decode($exception->getResponse()->getBody()->getContents()), ""
+            ]);
+            throw new Exception($exceptionResource->getMessage(), $exceptionResource->getCode());
+        }
+    }
+
     protected function needsToBeFullyQualified($href)
     {
         return stripos($href, 'http') === false;
@@ -133,6 +152,7 @@ class DefaultDataStore implements InternalDataStore
         $this->applyDefaultRequestHeaders($request);
 
         $response = $this->requestExecutor->executeRequest($request);
+
         $result = $response->getBody() ? json_decode($response->getBody()) : '';
 
         if ($response->isError()) {
@@ -255,5 +275,10 @@ class DefaultDataStore implements InternalDataStore
     public function delete(Resource $resource)
     {
         return $this->executeRequest(Request::METHOD_DELETE, $resource->getHref());
+    }
+
+    public function deleteByHref($href)
+    {
+        return $this->executeRequest(Request::METHOD_DELETE, $href);
     }
 }

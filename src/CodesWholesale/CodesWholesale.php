@@ -83,6 +83,8 @@ class CodesWholesale
     const IMPORT_REQUEST         = "ImportRequest";
     const IMPORT_FILTERS_REQUEST = "ImportFilterRequest";
 
+    const WEBHOOK                = "Webhook";
+
     const API_VERSION_V2         = 'v2';
 
     const SANDBOX_ENDPOINT       = 'https://sandbox.codeswholesale.com';
