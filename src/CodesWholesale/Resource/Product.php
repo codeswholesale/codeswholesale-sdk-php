@@ -177,7 +177,7 @@ class Product extends Resource
      */
     public function getBuyHref()
     {
-        return $this->getHrefRel(self::BUY_HREF_REL_NAME);
+       return $this->dataStore->qualify( "/orders?productId=" . $this->getProductId());
     }
 
     /**

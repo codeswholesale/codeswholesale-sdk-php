@@ -116,7 +116,7 @@ class DefaultDataStore implements InternalDataStore
         return stripos($href, 'http') === false;
     }
 
-    protected function qualify($href)
+    public function qualify($href)
     {
         $slashAdded = '';
 
@@ -174,6 +174,7 @@ class DefaultDataStore implements InternalDataStore
         $headers = $request->getHeaders();
         $headers['Accept'] = 'application/json';
         $headers['User-Agent'] = 'CW Plugin version:' . Version::SDK_VERSION . '';
+        $headers['Accept-Encoding'] = 'gzip';
 
         if ($request->getBody()) {
             $headers['Content-Type'] = 'application/json';
