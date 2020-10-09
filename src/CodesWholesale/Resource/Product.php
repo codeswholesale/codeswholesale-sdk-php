@@ -148,11 +148,14 @@ class Product extends Resource
     public function getDefaultPrice()
     {
         $prices = $this->getPrices();
-        foreach ($prices as $price) {
-            if ($price->from == 1) {
-                return $price->value;
+        if (!empty($prices)) {
+            foreach ($prices as $price) {
+                if ($price->from == 1) {
+                    return $price->value;
+                }
             }
         }
+        return null;
     }
 
     /**
@@ -163,13 +166,16 @@ class Product extends Resource
     public function getLowestPrice()
     {
         $prices = $this->getPrices();
-        $lowest = $prices[0]->value;
-        foreach ($prices as $price) {
-            if ($price->value < $lowest) {
-                $lowest = $price->value;
+        if (!empty($prices)) {
+            $lowest = $prices[0]->value;
+            foreach ($prices as $price) {
+                if ($price->value < $lowest) {
+                    $lowest = $price->value;
+                }
             }
+            return $lowest;
         }
-        return $lowest;
+        return null;
     }
 
     /**
@@ -177,7 +183,7 @@ class Product extends Resource
      */
     public function getBuyHref()
     {
-       return $this->dataStore->qualify( "/orders?productId=" . $this->getProductId());
+        return $this->dataStore->qualify("/orders?productId=" . $this->getProductId());
     }
 
     /**
