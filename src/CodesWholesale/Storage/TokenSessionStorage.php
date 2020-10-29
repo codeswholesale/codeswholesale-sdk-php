@@ -21,11 +21,11 @@ class TokenSessionStorage implements Storage
 
     public function getAccessToken($clientConfigId)
     {
-        if (!isset($_SESSION['php-oauth-client']['access_token'])) {
+        if (!isset($_SESSION['php-oauth-client']['access_token_' . $clientConfigId])) {
             return false;
         }
 
-        foreach ($_SESSION['php-oauth-client']['access_token'] as $t) {
+        foreach ($_SESSION['php-oauth-client']['access_token_' . $clientConfigId] as $t) {
             $token = unserialize($t);
 
             if ($token) {
@@ -37,27 +37,27 @@ class TokenSessionStorage implements Storage
 
     public function storeAccessToken(AccessToken $accessToken, $clientConfigId)
     {
-        if (!isset($_SESSION['php-oauth-client']['access_token'])) {
-            $_SESSION['php-oauth-client']['access_token'] = array();
+        if (!isset($_SESSION['php-oauth-client']['access_token_' . $clientConfigId])) {
+            $_SESSION['php-oauth-client']['access_token_' . $clientConfigId] = array();
         }
 
-        array_push($_SESSION['php-oauth-client']['access_token'], serialize($accessToken));
+        array_push($_SESSION['php-oauth-client']['access_token_' . $clientConfigId], serialize($accessToken));
 
         return true;
     }
 
     public function deleteAccessToken(AccessToken $accessToken, $clientConfigId)
     {
-        if (!isset($_SESSION['php-oauth-client']['access_token'])) {
+        if (!isset($_SESSION['php-oauth-client']['access_token_' . $clientConfigId])) {
             return false;
         }
 
-        foreach ($_SESSION['php-oauth-client']['access_token'] as $k => $t) {
+        foreach ($_SESSION['php-oauth-client']['access_token_' . $clientConfigId] as $k => $t) {
             $token = unserialize($t);
             if ($accessToken->getToken() !== $token->getToken()) {
                 continue;
             }
-            unset($_SESSION['php-oauth-client']['access_token'][$k]);
+            unset($_SESSION['php-oauth-client']['access_token_' . $clientConfigId][$k]);
 
             return true;
         }
