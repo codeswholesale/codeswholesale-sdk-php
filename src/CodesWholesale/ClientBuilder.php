@@ -4,13 +4,13 @@ namespace CodesWholesale;
 
 class ClientBuilder
 {
-    const CONFIGURATION_ID = "codeswholesale-config-id";
-
+    private $uniqueConfigId;
     private $clientConfig;
     private $oauthApi;
 
-    public function __construct(array $params)
+    public function __construct(array $params, $uniqueConfigId = "codeswholesale-config-id")
     {
+        $this->uniqueConfigId = $uniqueConfigId;
         $this->clientConfig = new CodesWholesaleClientConfig($params);
         $this->init();
     }
@@ -18,7 +18,7 @@ class ClientBuilder
     protected function init()
     {
         if (!$this->oauthApi) {
-            $this->oauthApi = new CodesWholesaleApi(self::CONFIGURATION_ID, $this->clientConfig);
+            $this->oauthApi = new CodesWholesaleApi($this->uniqueConfigId, $this->clientConfig);
         }
     }
 
