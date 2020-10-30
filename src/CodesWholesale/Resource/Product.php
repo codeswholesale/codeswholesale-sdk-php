@@ -183,7 +183,7 @@ class Product extends Resource
      */
     public function getBuyHref()
     {
-        return $this->dataStore->qualify("/orders?productId=" . $this->getProductId());
+        return $this->dataStore->qualify("/" . CodesWholesale::API_VERSION_V2 . "/orders?productId=" . $this->getProductId());
     }
 
     /**
@@ -191,6 +191,6 @@ class Product extends Resource
      */
     public function getDescriptionHref()
     {
-        return $this->getHrefRel(self::DESCRIPTION_HREF_REL_NAME);
+        return $this->dataStore->qualify( "/" . self::PATH . "/" . $this->getProductId() . "/description");
     }
 }
