@@ -62,14 +62,7 @@ class DefaultDataStore implements InternalDataStore
             $data = $this->executeRequest(Request::METHOD_GET, $href, '', $queryString);
             return $this->resourceFactory->instantiate($className, [$data, $queryString]);
         } catch (ClientException $exception) {
-            /**
-             * @var ExceptionResource $exceptionResource
-             */
-            $exceptionResource = $this->resourceFactory->instantiate(CodesWholesale::EXCEPTION_RESOURCE, [
-                json_decode($exception->getResponse()->getBody()->getContents()),
-                $queryString
-            ]);
-            throw new Exception($exceptionResource->getMessage(), $exceptionResource->getCode());
+            throw $exception;
         }
     }
 
@@ -147,7 +140,8 @@ class DefaultDataStore implements InternalDataStore
             $query,
             array(),
             $body,
-            strlen($body));
+            strlen($body)
+        );
 
         $this->applyDefaultRequestHeaders($request);
 
