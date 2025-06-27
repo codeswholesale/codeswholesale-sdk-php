@@ -49,7 +49,7 @@ class Code extends Resource
      */
     public function getCode()
     {
-        $code = trim($this->getProperty(self::CODE));
+        $code = trim((string)$this->getProperty(self::CODE));
         if (empty($code) || strlen($code) == 0) {
             $resource = $this->dataStore->getResource($this->getHref(), CodesWholesale::CODE, []);
             $this->setProperties($resource->getProperties());

@@ -52,7 +52,7 @@ abstract class AbstractCollectionResource extends Resource implements \IteratorA
         return $this->values;
     }
 
-    public function getIterator()
+    public function getIterator(): \Traversable
     {
         return new \ArrayIterator($this->getCurrentPage()->getItems());
     }
@@ -63,7 +63,7 @@ abstract class AbstractCollectionResource extends Resource implements \IteratorA
         return new Page(0, count($items), $items);
     }
 
-    public function count()
+    public function count(): int
     {
         return count($this->getValues());
     }

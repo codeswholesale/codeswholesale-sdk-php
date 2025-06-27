@@ -14,6 +14,9 @@ class Resource
     protected $dataStore;
     protected $properties;
     protected $options;
+    protected $dirty;
+    protected $dirtyProperties;
+    protected $materialized;
 
     public function __construct(DataStore $dataStore = null, \stdClass $properties = null, array $options = array())
     {
@@ -30,7 +33,7 @@ class Resource
     protected function getHrefRel($linkRel)
     {
         $links = $this->getProperty(self::LINKS_PROP_NAME);
-        foreach ($links as $link) {
+        foreach ((array)$links as $link) {
             if ($link->rel == $linkRel) {
                 return $link->href;
             }
