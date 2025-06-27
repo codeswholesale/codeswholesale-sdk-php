@@ -47,12 +47,12 @@ abstract class AbstractCollectionResource extends Resource implements \IteratorA
         return $this->dataStore->instantiate($className, $properties);
     }
 
-    public function getIterator()
+    public function getIterator(): \Traversable
     {
         return new \ArrayIterator($this->getCurrentPage()->getItems());
     }
 
-    public function count() {
+    public function count(): int {
         return count($this->getValues());
     }
 

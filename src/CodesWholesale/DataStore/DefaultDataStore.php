@@ -101,7 +101,7 @@ class DefaultDataStore implements InternalDataStore
         return stripos($href, 'http') === false;
     }
 
-    protected function qualify($href)
+    public function qualify($href)
     {
         $slashAdded = '';
 
