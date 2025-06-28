@@ -18,7 +18,7 @@ class Resource
     protected $dirtyProperties;
     protected $materialized;
 
-    public function __construct(DataStore $dataStore = null, \stdClass $properties = null, array $options = array())
+    public function __construct(?DataStore $dataStore = null, ?\stdClass $properties = null, array $options = array())
     {
         $this->dataStore = $dataStore;
         $this->properties = $properties;
@@ -66,7 +66,7 @@ class Resource
         return array_keys((array)$this->properties);
     }
 
-    public function setProperties(\stdClass $properties = null)
+    public function setProperties(?\stdClass $properties = null)
     {
         $this->dirty = false;
 

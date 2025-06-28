@@ -25,7 +25,7 @@ class DefaultDataStore implements InternalDataStore
         $this->baseUrl = $baseUrl;
     }
 
-    public function instantiate($className, \stdClass $properties = null, array $options = array())
+    public function instantiate($className, ?\stdClass $properties = null, array $options = array())
     {
         $propertiesArr = array($properties, $options);
 
@@ -194,7 +194,7 @@ class DefaultDataStore implements InternalDataStore
         return $properties;
     }
 
-    private function toSimpleReference($propertyName, \stdClass $properties)
+    private function toSimpleReference($propertyName, ?\stdClass $properties)
     {
         $hrefPropName = Resource::HREF_PROP_NAME;
 
