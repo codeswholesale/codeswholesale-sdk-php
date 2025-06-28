@@ -37,7 +37,7 @@ class DefaultDataStore implements InternalDataStore
         return $parsedObjects;
     }
 
-    public function instantiate($className, \stdClass $properties = null, array $options = [])
+    public function instantiate($className, ?\stdClass $properties = null, array $options = [])
     {
         $propertiesArr = [$properties, $options];
         return $this->resourceFactory->instantiate($className, $propertiesArr);
