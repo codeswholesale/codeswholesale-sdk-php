@@ -55,7 +55,7 @@ class TokenSessionStorage implements Storage
 
         foreach ($_SESSION['php-oauth-client']['access_token'] as $k => $t) {
             $token = unserialize($t);
-            if ($accessToken->getToken() !== $token()) {
+            if (!($token instanceof AccessToken) || $accessToken->getToken() !== $token->getToken()) {
                 continue;
             }
             unset($_SESSION['php-oauth-client']['access_token'][$k]);
